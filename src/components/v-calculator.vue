@@ -6,32 +6,42 @@
           color="#444fee"
           text
           outlined
-          v-for="i in category"
-          :key="i"
-          @click="choice(i.id_cat)"
+          v-for="index in category"
+          :key="index"
+          @click="choice(index.id_cat)"
           class="btn-cat"
-          >{{ i.name }}
+          >{{ index.name }}
         </v-btn>
       </v-col>
       <v-col class="md-6 main-windows">
-        <v-flex
-          v-for="i in resultTileAdhesive"
-          :key="i"
-          class="d-flex align-content-center"
-        >
-          <v-checkbox :v-model="i.idAdhesive"></v-checkbox>
-          <div class="d-flex align-self-center choice-table">
-            <span> {{ i.text }} </span>{{ i.name }}
-          </div>
-        </v-flex>
-        <v-flex class="d-flex text-left mt-4">
-          <v-btn class="btn-choice" text outlined color="#444fee"
-            >Выбрать</v-btn
+        <form @submit.prevent="filterData">
+          <v-flex
+            v-for="index in resultTileAdhesive"
+            :key="index"
+            class="d-flex align-content-center"
           >
-        </v-flex>
+            <v-checkbox
+              :v-model="index.idInn"
+              @change="selectData(index.idInn)"
+            ></v-checkbox>
+            <div class="d-flex align-self-center choice-table">
+              <span> {{ index.text }} </span>{{ index.name }}
+            </div>
+          </v-flex>
+          <v-flex class="d-flex text-left mt-4">
+            <v-btn
+              type="submit"
+              class="btn-choice"
+              text
+              outlined
+              color="#444fee"
+              >Выбрать</v-btn
+            >
+          </v-flex>
+        </form>
       </v-col>
     </v-row>
-    <v-row class="text-center mt-8">
+    <v-row v-if="flagOutEstimate" class="text-center mt-8">
       <v-row class="d-flex">
         <v-flex class="result-name">Название</v-flex>
         <v-flex class="result-thickness">Рекомендуемая толщина(мм)</v-flex>
@@ -42,37 +52,39 @@
       </v-row>
       <v-col class="main-windows" md="12">
         <v-flex
-          v-for="i in tileAdhesive"
-          :key="i"
+          v-for="index in resultEstimate"
+          :key="index"
           class="d-flex align-content-center choice-table-down"
         >
           <v-flex class="d-flex align-self-center result-name">
-            <span> {{ i.text }} </span>{{ i.name }}</v-flex
+            <span> {{ index.text }} </span>{{ index.name }}</v-flex
           >
           <v-flex class="d-flex align-self-center result-thickness">
-            {{ i.thickness }}</v-flex
+            {{ index.thickness }}</v-flex
           >
-          <label class="result-thickness-input">
-            <input
-              class="input"
+
+            <v-text-field
+              class="result-thickness-input"
               id="custom"
               required
               v-model="customThickness"
               type="text"
               placeholder="...толщина"
+              @keyup.enter="filterData"
             />
-          </label>
-          <label class="result-square">
-            <input
-              class="input"
+
+
+
+            <v-text-field class="result-square"
               id="square"
               required
               v-model="customSquare"
               type="text"
               placeholder="...площадь"
+              @keyup.enter="filterData"
             />
-          </label>
-          <v-flex class="result-consumption">счет</v-flex>
+
+          <v-flex class="result-consumption">{{resultCalc}}</v-flex>
           <v-flex class="result-delete"
             ><v-icon @click="deleteItem"> mdi-delete</v-icon></v-flex
           >
@@ -83,15 +95,18 @@
 </template>
 
 <script>
-let tileAdhesive;
 export default {
   name: "v-calculator",
   data: () => ({
+    outEstimate: [],
+    resultCalc: "",
+    flagOutEstimate: false,
     newTileAdhesive: "",
     customThickness: "",
     customSquare: "",
+    flagCategory: "",
     category: [
-      { id_cat: 1, name: "Плиточный клей", meta: tileAdhesive },
+      { id_cat: 1, name: "Плиточный клей" },
       { id_cat: 2, name: "Кладочно-монтажная смесь" },
       { id_cat: 3, name: "Гипсовая штукатурка" },
       { id_cat: 4, name: "Декоративная штукатурка" },
@@ -166,24 +181,44 @@ export default {
       }
     ]
   }),
+
   computed: {
+    resultEstimate() {
+      return this.outEstimate;
+    },
     resultTileAdhesive() {
       return this.newTileAdhesive;
     }
   },
   methods: {
     choice(i) {
+      this.flagCategory=""
       if (i === 1) {
         this.newTileAdhesive = this.tileAdhesive;
+        this.flagCategory="tileAdhesive"
       } else if (i === 2) {
         this.newTileAdhesive = this.mountingMixtures;
+        this.flagCategory="mountingMixtures"
       }
     },
     deleteItem() {
       return true;
+    },
+    selectData(i) {
+      this.flagOutEstimate = true;
+      if(this.flagCategory === "mountingMixtures" ){
+        this.outEstimate.push(this.mountingMixtures[i - 1]);
+      }else if (this.flagCategory === "tileAdhesive"){
+        this.outEstimate.push(this.tileAdhesive[i - 1]);
+      }
+    },
+    filterData() {
+      alert(this.customThickness)
+      alert(this.customSquare)
+      this.resultCalc= Math.ceil((this.customThickness*this.customSquare)*(14/10))
     }
-  }
-};
+  },
+ };
 </script>
 <style lang="scss">
 .result-name {
