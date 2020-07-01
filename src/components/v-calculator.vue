@@ -34,12 +34,12 @@
       <v-col class="main-windows" md="12">
         <div class="d-flex">
           <v-flex class="result-name">Название</v-flex>
-          <v-flex class="result-thickness">Рекомендуемая толщина(мм)</v-flex>
-          <v-flex class="result-thickness-input">Толщина слоя(мм)</v-flex>
-          <v-flex class="result-square">Площадь (кв.м)</v-flex>
-          <v-flex class="result-consumption">Расход (кг)</v-flex>
-          <v-flex class="result-need">Требуется</v-flex>
-          <v-flex class="result-delete">Очистить</v-flex>
+          <v-flex class="result-100 ">Рекомендуемая толщина(мм)</v-flex>
+          <v-flex class="result-100 ">Толщина слоя(мм)</v-flex>
+          <v-flex class="result-100 ">Площадь (кв.м)</v-flex>
+          <v-flex class="result-100 ">Расход (кг)</v-flex>
+          <v-flex class="result-100 ">Требуется</v-flex>
+          <v-flex class="result-100 ">Очистить</v-flex>
         </div>
 
         <v-flex
@@ -50,12 +50,12 @@
           <v-flex class="d-flex align-self-center result-name">
             {{ index.name }}</v-flex
           >
-          <v-flex class="d-flex align-self-center justify-center result-thickness">
+          <v-flex class="d-flex align-self-center justify-center result-100">
             {{ index.thickness }}</v-flex
           >
 
           <v-text-field
-            class="result-thickness-input"
+            class="result-100"
             id="custom"
             required
             v-model.number="index.customThickness"
@@ -65,7 +65,7 @@
           />
 
           <v-text-field
-            class="result-square"
+            class="result-100"
             id="square"
             required
             v-model.number="index.customSquare"
@@ -74,9 +74,9 @@
             @keyup.enter="filterData(index.type)"
           />
 
-          <v-flex class="result-consumption d-flex align-self-center">{{ index.resultCalc }}</v-flex>
-          <v-flex class="result-need d-flex d-flex align-self-center ">{{ index.need }}</v-flex>
-          <v-flex class="result-delete d-flex align-self-center justify-center text-center"
+          <v-flex class="result-100  d-flex d-flex align-self-center justify-center ">{{ index.resultCalc }}</v-flex>
+          <v-flex class="result-100  d-flex align-self-center justify-center ">{{ index.need }}</v-flex>
+          <v-flex class="result-100 d-flex align-self-center justify-center "
             ><v-icon :id="index.type"  @click="deleteItem(index.type)"> mdi-delete</v-icon></v-flex
           >
         </v-flex>
@@ -316,14 +316,8 @@ export default {
   text-align: left;
 }
 
-
-
-.result-thickness,
-.result-consumption,
-.result-thickness-input,
-.result-square, .result-delete{
+.result-100 {
   width: 100px;
-  text-align: center;
 }
 
 .btn-choice {
