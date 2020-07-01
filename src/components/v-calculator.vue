@@ -57,34 +57,33 @@
           class="d-flex align-content-center choice-table-down"
         >
           <v-flex class="d-flex align-self-center result-name">
-            <span> {{ index.text }} </span>{{ index.name }}</v-flex
+            {{ index.name }}</v-flex
           >
           <v-flex class="d-flex align-self-center result-thickness">
             {{ index.thickness }}</v-flex
           >
 
-            <v-text-field
-              class="result-thickness-input"
-              id="custom"
-              required
-              v-model="customThickness"
-              type="text"
-              placeholder="...толщина"
-              @keyup.enter="filterData"
-            />
+          <v-text-field
+            class="result-thickness-input"
+            id="custom"
+            required
+            v-model.number="customThickness"
+            type="text"
+            placeholder="...толщина"
+            @keyup.enter="filterData"
+          />
 
+          <v-text-field
+            class="result-square"
+            id="square"
+            required
+            v-model.number="customSquare"
+            type="text"
+            placeholder="...площадь"
+            @keyup.enter="filterData"
+          />
 
-
-            <v-text-field class="result-square"
-              id="square"
-              required
-              v-model="customSquare"
-              type="text"
-              placeholder="...площадь"
-              @keyup.enter="filterData"
-            />
-
-          <v-flex class="result-consumption">{{resultCalc}}</v-flex>
+          <v-flex class="result-consumption">{{ resultCalc }}</v-flex>
           <v-flex class="result-delete"
             ><v-icon @click="deleteItem"> mdi-delete</v-icon></v-flex
           >
@@ -119,21 +118,39 @@ export default {
     tileAdhesive: [
       {
         idInn: 1,
+        type: "tileAdhesive1",
         text: "Плиточный клей",
-        name: "Стандарт, 25кг",
-        thickness: "3-10мм"
+        name: "Плиточный клей Стандарт, 25кг",
+        thickness: "3-10мм",
+        density: 1.4,
+        weight: 25
       },
       {
         idInn: 2,
+        type: "tileAdhesive2",
         text: "Плиточный клей",
-        name: "Гранит, 25кг",
-        thickness: "3-10мм"
+        name: "Плиточный клей Гранит, 25кг",
+        thickness: "3-10мм",
+        density: 1.45,
+        weight: 25
       },
       {
         idInn: 3,
+        type: "tileAdhesive3",
         text: "Плиточный клей",
-        name: "Профи, 25кг",
-        thickness: "3-10мм"
+        name: "Плиточный клей Профи, 25кг",
+        thickness: "3-10мм",
+        density: 1.35,
+        weight: 25
+      },
+      {
+        idInn: 4,
+        type: "tileAdhesive4",
+        text: "Плиточный клей",
+        name: "MIX BEST Клей плиточный базовый, 20кг",
+        thickness: "3-10мм",
+        density: 1.4,
+        weight: 20
       }
     ],
     mountingMixtures: [
@@ -192,13 +209,13 @@ export default {
   },
   methods: {
     choice(i) {
-      this.flagCategory=""
+      this.flagCategory = "";
       if (i === 1) {
         this.newTileAdhesive = this.tileAdhesive;
-        this.flagCategory="tileAdhesive"
+        this.flagCategory = "tileAdhesive";
       } else if (i === 2) {
         this.newTileAdhesive = this.mountingMixtures;
-        this.flagCategory="mountingMixtures"
+        this.flagCategory = "mountingMixtures";
       }
     },
     deleteItem() {
@@ -206,19 +223,21 @@ export default {
     },
     selectData(i) {
       this.flagOutEstimate = true;
-      if(this.flagCategory === "mountingMixtures" ){
+      if (this.flagCategory === "mountingMixtures") {
         this.outEstimate.push(this.mountingMixtures[i - 1]);
-      }else if (this.flagCategory === "tileAdhesive"){
+      } else if (this.flagCategory === "tileAdhesive") {
         this.outEstimate.push(this.tileAdhesive[i - 1]);
       }
     },
     filterData() {
-      alert(this.customThickness)
-      alert(this.customSquare)
-      this.resultCalc= Math.ceil((this.customThickness*this.customSquare)*(14/10))
+      alert(this.customThickness);
+      alert(this.customSquare);
+      this.resultCalc = Math.ceil(
+        this.customThickness * this.customSquare * (14 / 10)
+      );
     }
-  },
- };
+  }
+};
 </script>
 <style lang="scss">
 .result-name {
