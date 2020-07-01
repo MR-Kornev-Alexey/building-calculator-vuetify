@@ -14,22 +14,20 @@
         </v-btn>
       </v-col>
       <v-col class="md-6 main-windows">
-        <form @submit.prevent="filterData">
-          <v-flex
+         <v-flex
             v-for="index in resultTileAdhesive"
             :key="index"
-            class="d-flex align-content-center"
+            class="d-flex align-self-center"
           >
             <v-checkbox
               :v-model="index.idInn"
               @change="selectData(index.idInn)"
             ></v-checkbox>
-            <v-flex class="choice-table text-left">
+            <v-flex class="choice-table text-left align-self-center">
              {{ index.name }}
             </v-flex>
           </v-flex>
-         </form>
-      </v-col>
+       </v-col>
     </v-row>
     <v-row v-if="flagOutEstimate" class="text-center mt-8">
 
