@@ -242,8 +242,7 @@ export default {
   // Note that this doesn't handle
   // toString and valueOf enumeration bugs in IE < 9
   for (const key in obj) {
-    let hasOwnProperty;
-    if (hasOwnProperty.call(obj, key)) return false;
+     if (hasOwnProperty.call(obj, key)) return false;
   }
 
   return true;
