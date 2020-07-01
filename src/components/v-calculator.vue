@@ -24,43 +24,35 @@
               :v-model="index.idInn"
               @change="selectData(index.idInn)"
             ></v-checkbox>
-            <div class="d-flex align-self-center choice-table">
-              <span> {{ index.text }} </span>{{ index.name }}
-            </div>
+            <v-flex class="choice-table text-left">
+             {{ index.name }}
+            </v-flex>
           </v-flex>
-          <v-flex class="d-flex text-left mt-4">
-            <v-btn
-              type="submit"
-              class="btn-choice"
-              text
-              outlined
-              color="#444fee"
-              >Выбрать</v-btn
-            >
-          </v-flex>
-        </form>
+         </form>
       </v-col>
     </v-row>
     <v-row v-if="flagOutEstimate" class="text-center mt-8">
-      <v-row class="d-flex">
-        <v-flex class="result-name">Название</v-flex>
-        <v-flex class="result-thickness">Рекомендуемая толщина(мм)</v-flex>
-        <v-flex class="result-thickness-input">Толщина слоя(мм)</v-flex>
-        <v-flex class="result-square">Площадь (кв.м)</v-flex>
-        <v-flex class="result-consumption">Расход (кг)</v-flex>
-        <v-flex class="result-need">Требуется</v-flex>
-        <v-flex class="result-delete">Очистить</v-flex>
-      </v-row>
+
       <v-col class="main-windows" md="12">
+        <div class="d-flex">
+          <v-flex class="result-name">Название</v-flex>
+          <v-flex class="result-thickness">Рекомендуемая толщина(мм)</v-flex>
+          <v-flex class="result-thickness-input">Толщина слоя(мм)</v-flex>
+          <v-flex class="result-square">Площадь (кв.м)</v-flex>
+          <v-flex class="result-consumption">Расход (кг)</v-flex>
+          <v-flex class="result-need">Требуется</v-flex>
+          <v-flex class="result-delete">Очистить</v-flex>
+        </div>
+
         <v-flex
           v-for="index in resultEstimate"
-          :key="index"
+          :key="index.idInn"
           class="d-flex align-content-center choice-table-down"
         >
           <v-flex class="d-flex align-self-center result-name">
             {{ index.name }}</v-flex
           >
-          <v-flex class="d-flex align-self-center result-thickness">
+          <v-flex class="d-flex align-self-center justify-center result-thickness">
             {{ index.thickness }}</v-flex
           >
 
@@ -71,7 +63,7 @@
             v-model.number="index.customThickness"
             type="text"
             placeholder="...толщина"
-            @keyup.enter="filterData(index)"
+            @keyup.enter="filterData(index.type)"
           />
 
           <v-text-field
@@ -81,12 +73,12 @@
             v-model.number="index.customSquare"
             type="text"
             placeholder="...площадь"
-            @keyup.enter="filterData(index)"
+            @keyup.enter="filterData(index.type)"
           />
 
-          <v-flex class="result-consumption">{{ index.resultCalc }}</v-flex>
-          <v-flex class="result-need">{{ index.need }}</v-flex>
-          <v-flex class="result-delete"
+          <v-flex class="result-consumption d-flex align-self-center">{{ index.resultCalc }}</v-flex>
+          <v-flex class="result-need d-flex d-flex align-self-center ">{{ index.need }}</v-flex>
+          <v-flex class="result-delete d-flex align-self-center justify-center text-center"
             ><v-icon :id="index.type"  @click="deleteItem(index.type)"> mdi-delete</v-icon></v-flex
           >
         </v-flex>
@@ -171,42 +163,91 @@ export default {
     mountingMixtures: [
       {
         idInn: 1,
+        type: "mountingMix1",
+        customThickness:0,
+        customSquare:0,
+        density: 1.4,
+        weight: 25,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
         name: "Техно, 25 кг (Клей для кладки блоков)",
         thickness: "3-10мм"
       },
       {
         idInn: 2,
+        type: "mountingMix2",
+        customThickness:0,
+        customSquare:0,
+        density: 1.5,
+        weight: 25,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
         name: "Пескобетон М-300, 25кг",
         thickness: "более 3мм"
       },
       {
         idInn: 3,
+        type: "mountingMix3",
+        customThickness:0,
+        customSquare:0,
+        density: 1.45,
+        weight: 25,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
         name: "Цементно песчанная смесь М-150, 25кг",
         thickness: "более 3мм"
       },
       {
         idInn: 4,
+        type: "mountingMix4",
+        customThickness:0,
+        customSquare:0,
+        density: 5,
+        weight: 25,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
         name: "КТП 500, 25кг (Клей для приклеивания теплоизоляции)",
-        thickness: ""
+        thickness: "-"
       },
       {
         idInn: 5,
+        type: "mountingMix5",
+        customThickness:0,
+        customSquare:0,
+        density: 5,
+        weight: 25,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
-        name: "КТУ 1000 (Клей для приклеивания и армирования теплоизоляции)",
-        thickness: "более 3мм"
+        name: "КТУ 1000, 25кг (Клей для приклеивания и армирования теплоизоляции)",
+        thickness: "-"
       },
       {
         idInn: 6,
+        type: "mountingMix6",
+        customThickness:0,
+        customSquare:0,
+        density: 5,
+        weight: 20,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
         name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
-        thickness: ""
+        thickness: "-"
       },
       {
         idInn: 7,
+        type: "mountingMix7",
+        customThickness:0,
+        customSquare:0,
+        density: 1.45,
+        weight: 20,
+        resultCalc: 0,
+        need: 0,
         text: "Кладочно-монтажная смесь",
         name: "MIX BEST Смесь цементно-песчаная, 20кг",
         thickness: "более 3мм"
@@ -224,27 +265,13 @@ export default {
   },
   methods: {
     isEmpty(obj) {
-
-  // null and undefined are "empty"
   if (obj == null) return true;
-
-  // Assume if it has a length property with a non-zero value
-  // that that property is correct.
   if (obj.length > 0) return false;
   if (obj.length === 0) return true;
-
-  // If it isn't an object at this point
-  // it is empty, but it can't be anything *but* empty
-  // Is it empty?  Depends on your application.
   if (typeof obj !== "object") return true;
-
-  // Otherwise, does it have any properties of its own?
-  // Note that this doesn't handle
-  // toString and valueOf enumeration bugs in IE < 9
   for (const key in obj) {
      if (hasOwnProperty.call(obj, key)) return false;
   }
-
   return true;
 },
     choice(i) {
@@ -258,8 +285,7 @@ export default {
       }
     },
     deleteItem(id) {
-      alert(id)
-      this.flagOutEstimate = false;
+     this.flagOutEstimate = false;
       delete this.outEstimate[id]
      if (!this.isEmpty(this.outEstimate)){
         this.flagOutEstimate = true;
@@ -268,44 +294,40 @@ export default {
     selectData(i) {
       this.flagOutEstimate = false;
       if (this.flagCategory === "mountingMixtures") {
-        this.outEstimate.push(this.mountingMixtures[i - 1]);
+        const valueOfType = this.mountingMixtures[i - 1].type
+        this.outEstimate[valueOfType] = this.mountingMixtures[i - 1]
+        this.flagOutEstimate = true;
       } else if (this.flagCategory === "tileAdhesive") {
           const valueOfType = this.tileAdhesive[i - 1].type
-        this.outEstimate[valueOfType] = this.tileAdhesive[i - 1];
+        this.outEstimate[valueOfType] = this.tileAdhesive[i - 1]
         this.flagOutEstimate = true;
       }
     },
     filterData(value) {
-      alert(value)
-      alert(value.customThickness);
-      alert(value.customSquare);
-      value.resultCalc = Math.ceil(
-              value.customThickness * value.customSquare * value.density)
-       value.need = Math.ceil(
-               value.resultCalc / value.weight)
+      this.outEstimate[value].resultCalc = Math.ceil(
+              this.outEstimate[value].customThickness * this.outEstimate[value].customSquare * this.outEstimate[value].density)
+      this.outEstimate[value].need = Math.ceil(
+              this.outEstimate[value].resultCalc / this.outEstimate[value].weight)
      }
   }
 };
 </script>
 <style lang="scss">
 .result-name {
-  width: 500px;
-}
-.result-thickness,
-.result-consumption {
-  width: 100px;
-}
-.result-thickness-input,
-.result-square {
-  width: 180px;
-  input {
-    width: 150px;
-  }
+  width: 400px;
+  text-align: left;
 }
 
-.result-delete {
+
+
+.result-thickness,
+.result-consumption,
+.result-thickness-input,
+.result-square, .result-delete{
   width: 100px;
+  text-align: center;
 }
+
 .btn-choice {
   padding: 0 6px;
 }
@@ -324,7 +346,6 @@ export default {
 .choice-table-down {
   border-bottom: 2px solid #444fee;
   margin: 6px 0;
-  padding-bottom: 6px;
   span {
     color: #444fee;
     text-transform: uppercase;
