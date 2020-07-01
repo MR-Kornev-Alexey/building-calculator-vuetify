@@ -48,6 +48,7 @@
         <v-flex class="result-thickness-input">Толщина слоя(мм)</v-flex>
         <v-flex class="result-square">Площадь (кв.м)</v-flex>
         <v-flex class="result-consumption">Расход (кг)</v-flex>
+        <v-flex class="result-need">Требуется</v-flex>
         <v-flex class="result-delete">Очистить</v-flex>
       </v-row>
       <v-col class="main-windows" md="12">
@@ -70,6 +71,7 @@
             v-model.number="index.customThickness"
             type="text"
             placeholder="...толщина"
+            @keyup.enter="filterData(index)"
           />
 
           <v-text-field
@@ -83,6 +85,7 @@
           />
 
           <v-flex class="result-consumption">{{ index.resultCalc }}</v-flex>
+          <v-flex class="result-need">{{ index.need }}</v-flex>
           <v-flex class="result-delete"
             ><v-icon :id="index.type"  @click="deleteItem(index.type)"> mdi-delete</v-icon></v-flex
           >
@@ -122,7 +125,8 @@ export default {
         customSquare:0,
         density: 1.4,
         weight: 25,
-        resultCalc: 0
+        resultCalc: 0,
+        need: 0
       },
       {
         idInn: 2,
@@ -134,7 +138,8 @@ export default {
         customThickness:0,
         customSquare:0,
         weight: 25,
-        resultCalc: 0
+        resultCalc: 0,
+        need: 0,
       },
       {
         idInn: 3,
@@ -146,7 +151,8 @@ export default {
         customThickness:0,
         customSquare:0,
         weight: 25,
-        resultCalc: 0
+        resultCalc: 0,
+        need: 0
       },
       {
         idInn: 4,
@@ -158,7 +164,8 @@ export default {
         customSquare:0,
         density: 1.4,
         weight: 20,
-        resultCalc: 0
+        resultCalc: 0,
+        need: 0
       }
     ],
     mountingMixtures: [
@@ -234,7 +241,8 @@ export default {
   // Otherwise, does it have any properties of its own?
   // Note that this doesn't handle
   // toString and valueOf enumeration bugs in IE < 9
-  for (var key in obj) {
+  for (const key in obj) {
+    let hasOwnProperty;
     if (hasOwnProperty.call(obj, key)) return false;
   }
 
@@ -273,9 +281,10 @@ export default {
       alert(value.customThickness);
       alert(value.customSquare);
       value.resultCalc = Math.ceil(
-              value.customThickness * value.customSquare * value.density
-      );
-    }
+              value.customThickness * value.customSquare * value.density)
+       value.need = Math.ceil(
+               value.resultCalc / value.weight)
+     }
   }
 };
 </script>
