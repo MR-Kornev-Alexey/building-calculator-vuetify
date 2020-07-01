@@ -16,9 +16,9 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-calculator />
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

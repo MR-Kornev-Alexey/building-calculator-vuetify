@@ -67,25 +67,24 @@
             class="result-thickness-input"
             id="custom"
             required
-            v-model.number="customThickness"
+            v-model.number="index.customThickness"
             type="text"
             placeholder="...толщина"
-            @keyup.enter="filterData"
           />
 
           <v-text-field
             class="result-square"
             id="square"
             required
-            v-model.number="customSquare"
+            v-model.number="index.customSquare"
             type="text"
             placeholder="...площадь"
-            @keyup.enter="filterData"
+            @keyup.enter="filterData(index)"
           />
 
-          <v-flex class="result-consumption">{{ resultCalc }}</v-flex>
+          <v-flex class="result-consumption">{{ index.resultCalc }}</v-flex>
           <v-flex class="result-delete"
-            ><v-icon @click="deleteItem"> mdi-delete</v-icon></v-flex
+            ><v-icon :id="index.type"  @click="deleteItem(index.type)"> mdi-delete</v-icon></v-flex
           >
         </v-flex>
       </v-col>
@@ -97,12 +96,9 @@
 export default {
   name: "v-calculator",
   data: () => ({
-    outEstimate: [],
-    resultCalc: "",
+    outEstimate: {},
     flagOutEstimate: false,
     newTileAdhesive: "",
-    customThickness: "",
-    customSquare: "",
     flagCategory: "",
     category: [
       { id_cat: 1, name: "Плиточный клей" },
@@ -122,8 +118,11 @@ export default {
         text: "Плиточный клей",
         name: "Плиточный клей Стандарт, 25кг",
         thickness: "3-10мм",
+        customThickness:0,
+        customSquare:0,
         density: 1.4,
-        weight: 25
+        weight: 25,
+        resultCalc: 0
       },
       {
         idInn: 2,
@@ -132,7 +131,10 @@ export default {
         name: "Плиточный клей Гранит, 25кг",
         thickness: "3-10мм",
         density: 1.45,
-        weight: 25
+        customThickness:0,
+        customSquare:0,
+        weight: 25,
+        resultCalc: 0
       },
       {
         idInn: 3,
@@ -141,7 +143,10 @@ export default {
         name: "Плиточный клей Профи, 25кг",
         thickness: "3-10мм",
         density: 1.35,
-        weight: 25
+        customThickness:0,
+        customSquare:0,
+        weight: 25,
+        resultCalc: 0
       },
       {
         idInn: 4,
@@ -149,8 +154,11 @@ export default {
         text: "Плиточный клей",
         name: "MIX BEST Клей плиточный базовый, 20кг",
         thickness: "3-10мм",
+        customThickness:0,
+        customSquare:0,
         density: 1.4,
-        weight: 20
+        weight: 20,
+        resultCalc: 0
       }
     ],
     mountingMixtures: [
@@ -208,6 +216,30 @@ export default {
     }
   },
   methods: {
+    isEmpty(obj) {
+
+  // null and undefined are "empty"
+  if (obj == null) return true;
+
+  // Assume if it has a length property with a non-zero value
+  // that that property is correct.
+  if (obj.length > 0) return false;
+  if (obj.length === 0) return true;
+
+  // If it isn't an object at this point
+  // it is empty, but it can't be anything *but* empty
+  // Is it empty?  Depends on your application.
+  if (typeof obj !== "object") return true;
+
+  // Otherwise, does it have any properties of its own?
+  // Note that this doesn't handle
+  // toString and valueOf enumeration bugs in IE < 9
+  for (var key in obj) {
+    if (hasOwnProperty.call(obj, key)) return false;
+  }
+
+  return true;
+},
     choice(i) {
       this.flagCategory = "";
       if (i === 1) {
@@ -218,22 +250,30 @@ export default {
         this.flagCategory = "mountingMixtures";
       }
     },
-    deleteItem() {
-      return true;
+    deleteItem(id) {
+      alert(id)
+      this.flagOutEstimate = false;
+      delete this.outEstimate[id]
+     if (!this.isEmpty(this.outEstimate)){
+        this.flagOutEstimate = true;
+      }
     },
     selectData(i) {
-      this.flagOutEstimate = true;
+      this.flagOutEstimate = false;
       if (this.flagCategory === "mountingMixtures") {
         this.outEstimate.push(this.mountingMixtures[i - 1]);
       } else if (this.flagCategory === "tileAdhesive") {
-        this.outEstimate.push(this.tileAdhesive[i - 1]);
+          const valueOfType = this.tileAdhesive[i - 1].type
+        this.outEstimate[valueOfType] = this.tileAdhesive[i - 1];
+        this.flagOutEstimate = true;
       }
     },
-    filterData() {
-      alert(this.customThickness);
-      alert(this.customSquare);
-      this.resultCalc = Math.ceil(
-        this.customThickness * this.customSquare * (14 / 10)
+    filterData(value) {
+      alert(value)
+      alert(value.customThickness);
+      alert(value.customSquare);
+      value.resultCalc = Math.ceil(
+              value.customThickness * value.customSquare * value.density
       );
     }
   }
