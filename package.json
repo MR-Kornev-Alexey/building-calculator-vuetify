@@ -10,6 +10,8 @@
   "dependencies": {
     "@mdi/font": "^3.6.95",
     "core-js": "^3.6.5",
+    "html-pdf-adaptive": "^1.0.1",
+    "html2pdf": "0.0.11",
     "roboto-fontface": "*",
     "vue": "^2.6.11",
     "vuetify": "^2.2.11",

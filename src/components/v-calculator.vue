@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="text-center justify-center mt-8">
-      <v-col cols="4" >
+      <v-col cols="4">
         <v-btn
           color="#444fee"
           text
@@ -29,7 +29,11 @@
         </v-flex>
       </v-col>
     </v-row>
-    <v-row v-if="flagOutEstimate" class="text-center justify-center mt-8">
+    <v-row
+      id="element-to-print"
+      v-if="flagOutEstimate"
+      class="text-center forPrint justify-center mt-8"
+    >
       <v-col class="main-windows" cols="10">
         <div class="d-flex">
           <v-flex class="result-name">Название</v-flex>
@@ -89,10 +93,19 @@
         </v-flex>
       </v-col>
     </v-row>
+    <v-btn
+      color="#444fee"
+      text
+      outlined
+      @click="startPrinting()"
+      class="btn-cat"
+      >Печать
+    </v-btn>
   </v-container>
 </template>
 
 <script>
+  import html2PDF from "html-pdf-adaptive"
 export default {
   name: "v-calculator",
   data: () => ({
@@ -110,7 +123,6 @@ export default {
       { id_cat: 7, name: "MIX BEST" },
       { id_cat: 8, name: "ЛКМ" }
     ],
-
     tileAdhesive: [
       {
         idInn: 1,
@@ -542,6 +554,21 @@ export default {
     }
   },
   methods: {
+    startPrinting() {
+      const el = document.querySelector("#element-to-print")
+      html2PDF(el, {
+        mode: 'adaptive',
+        pagesplit: true,
+        offset: {
+          x: 20,
+          y: 20
+        },
+        outputType: 'save',
+        isToggleStyle: true,
+        useCORS: true,
+        useDefaultFoot: true,
+       })
+    },
     isEmpty(obj) {
       if (obj == null) return true;
       if (obj.length > 0) return false;
