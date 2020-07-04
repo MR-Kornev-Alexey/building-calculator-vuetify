@@ -15,7 +15,7 @@
           v-model.number="squareWarm"
           type="text"
           placeholder="...m2"
-          @keyup.enter="filterData(index.type)"
+          @keyup.enter="inputSquareWarm(squareWarm)"
         />
       </v-col>
     </v-row>
@@ -26,12 +26,12 @@
       <v-col cols="2">
         <v-text-field
           class="result-100"
-          id="custom"
+          id="custom2"
           required
           v-model.number="lengthDoors"
           type="text"
           placeholder="...m2"
-          @keyup.enter="filterData(index.type)"
+          @keyup.enter="inputSquareWarm(lengthDoors)"
         />
       </v-col>
     </v-row>
@@ -42,12 +42,12 @@
       <v-col cols="2">
         <v-text-field
           class="result-100"
-          id="custom"
+          id="custom1"
           required
-          v-model.number="lengthDoors"
+          v-model.number="lengthWin"
           type="text"
           placeholder="...m2"
-          @keyup.enter="filterData(index.type)"
+          @keyup.enter="inputSquareWarm(lengthWin)"
         />
       </v-col>
     </v-row>
@@ -57,7 +57,7 @@
           color="#444fee"
           text
           outlined
-          v-for="index in categoryWarm"
+          v-for="index in registry.categoryWarm"
           :key="index.id_cat"
           @click="choiceWarm(index.id_cat)"
           class="btn-cat"
@@ -88,7 +88,7 @@
         <div class="d-flex">
           <v-flex class="result-name">Наименование материала</v-flex>
           <v-flex class="result-100 ">Площадь (кв.м)</v-flex>
-          <v-flex class="result-100 ">Расход (кг)</v-flex>
+          <v-flex class="result-100 ">Расход</v-flex>
           <v-flex class="result-100 ">Требуется</v-flex>
           <v-flex class="result-100 ">Очистить</v-flex>
         </div>
@@ -99,23 +99,23 @@
           class="d-flex align-content-center choice-table-down"
         >
           <v-flex class="d-flex align-self-center result-name">
-            {{ index.name }}</v-flex
-          >
+            {{ index.name }}
+          </v-flex>
           <v-flex class="d-flex align-self-center justify-center result-110">
+            {{ squareWarm }}
           </v-flex>
           <v-flex
             class="result-100  d-flex d-flex align-self-center justify-center "
-            >{{ index.resultCalc }}</v-flex
-          >
-          <v-flex
-            class="result-100  d-flex align-self-center justify-center "
-            >{{ index.need }}</v-flex
-          >
-          <v-flex class="result-100 d-flex align-self-center justify-center "
-            ><v-icon :id="index.type" @click="deleteItemWarm(index.type)">
-              mdi-delete</v-icon
-            ></v-flex
-          >
+            >{{ index.resultCalc }} {{ index.unit }}
+          </v-flex>
+          <v-flex class="result-100  d-flex align-self-center justify-center "
+            >{{ index.need }} шт.
+          </v-flex>
+          <v-flex class="result-100 d-flex align-self-center justify-center ">
+            <v-icon :id="index.type" @click="deleteItemWarm(index.type)">
+              mdi-delete
+            </v-icon>
+          </v-flex>
         </v-flex>
       </v-col>
     </v-row>
@@ -123,253 +123,83 @@
 </template>
 
 <script>
+const constantRegistry = require("../common/product_registry.js");
+const isEm = require("../common/isEmty");
 export default {
   name: "v-warm",
   data: () => ({
+    lengthWin:0,
     outEstimateWarm: {},
-    flagWarmEstimate: true,
+    flagWarmEstimate: false,
     squareWarm: 0,
     lengthDoors: 0,
     warmWindows: "",
     flagCategoryWarm: "",
-    categoryWarm: [
-      { id_cat: 1, name: "Утеплитель" },
-      { id_cat: 2, name: "Декоративная штукатурка" },
-      { id_cat: 3, name: "Краска фасадная" }
-    ],
-    tileInsulation: [
-      {
-        idInn: 1,
-        type: "warmAdhesive1",
-        name:
-          "Грунт глубокопроникающий акриловый, 5л (для подготовки основания к монтажу плит)",
-        unit: "литров",
-        density: 0.15,
-        weight: 5,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 2,
-        type: "warmAdhesive2",
-        name:
-          "Кварц-грунт, 6кг (для подготовки бетонного основания к монтажу плит)",
-        unit: "кг",
-        density: 0.3,
-        weight: 5,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 3,
-        type: "warmAdhesive3",
-        name: "Минераловатная плита 1200×600×100 мм ",
-        unit: "шт.",
-        density: 1.4,
-        weight: 3,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 4,
-        type: "warmAdhesive4",
-        name: "Пенополистирол ПСБ-С 25Ф 1200×100×100 мм",
-        unit: "шт.",
-        density: 0.8,
-        weight: 1,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 5,
-        type: "warmAdhesive5",
-        name: "КТП 500, 25кг (Клей для приклеивания теплоизоляции)",
-        unit: "кг",
-        density: 5,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 6,
-        type: "warmAdhesive6",
-        name: "Дюбель тарельчатый с металическим стержнем и термоголовкой",
-        unit: "шт.",
-        density: 5,
-        weight: 0,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 7,
-        type: "warmAdhesive7",
-        name:
-          "КТУ 1000, 25кг (Клеевой состав для нанесения армирующего штукатурного слоя)",
-        unit: "кг.",
-        density: 5,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 8,
-        type: "warmAdhesive8",
-        name: "Армирующая сетка из стекловолокна щелочестойкая",
-        unit: "м2",
-        density: 1.1,
-        weight: 50,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 9,
-        type: "warmAdhesive9",
-        name:
-          "Уголок с армирующей сеткой и сердечником из ПВХ  150/100мм, (2,5м)",
-        unit: "шт.",
-        density: 0.4,
-        weight: 1,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 10,
-        type: "warmAdhesive10",
-        name: "Профиль примыкания оконный с сеткой (2,4м)",
-        unit: "шт.",
-        density: 0.42,
-        weight: 1,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 11,
-        type: "warmAdhesive11",
-        name:
-          "Грунт глубокопроникающий акриловый, 5л (для подготовки основания под нанесение декоративной штукатурки)",
-        unit: "литров",
-        density: 0.15,
-        weight: 5,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 12,
-        type: "warmAdhesive12",
-        name:
-          "Кварц-грунт, 6кг  (для подготовки основания под нанесение декоративной штукатурки) ",
-        unit: "кг",
-        density: 0.3,
-        weight: 6,
-        resultCalc: 0,
-        need: 0
-      }
-    ],
-    plastering: [
-      {
-        idInn: 1,
-        type: "plastering1",
-        name: "Декоративная штукатурка «Короед» зерно 2,0 мм",
-        unit: "кг",
-        density: 3,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 2,
-        type: "plastering2",
-        name: "Декоративная штукатурка «Короед» зерно 3,0 мм",
-        unit: "кг",
-        density: 4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 3,
-        type: "plastering3",
-        name: "Декоративная штукатурка «Шуба» зерно 1,0 мм",
-        unit: "кг",
-        density: 2,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 4,
-        type: "plastering4",
-        name: "Декоративная штукатурка «Шуба» зерно 2,0 мм",
-        unit: "кг",
-        density: 3,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      },
-      {
-        idInn: 5,
-        type: "plastering5",
-        name: "Декоративная штукатурка «Короед» зерно 3,0 мм",
-        unit: "кг",
-        density: 4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0
-      }
-    ],
-    tilePainting: [
-      {
-        idInn: 1,
-        type: "tilePainting1",
-        name: "Краска фасадная 2 слоя",
-        unit: "кг",
-        density: 0.35,
-        weight: 20,
-        resultCalc: 0,
-        need: 0
-      }
-    ]
+    registry: constantRegistry
   }),
   computed: {
     resultEstimateWarm() {
-       return this.outEstimateWarm;
+      return this.outEstimateWarm;
     },
     resultTileWarm() {
       return this.warmWindows;
     }
   },
   methods: {
-    deleteItemWarm(i) {
-      alert(i);
+    changeDataSquare(array, v) {
+      Object.keys(array).map(index => {
+        if(array[index].winDoors){
+          array[index].resultCalc = Math.ceil((this.lengthDoors + this.lengthWin)/array[index].density  )
+          array[index].need = Math.ceil(
+                  array[index].resultCalc / array[index].weight
+          );
+             return
+        }
+        if(array[index].winOnly){
+          array[index].resultCalc = Math.ceil( this.lengthWin/array[index].density )
+          array[index].need = Math.ceil(
+                  array[index].resultCalc / array[index].weight
+          );
+          return
+        }
+        array[index].resultCalc = Math.ceil(array[index].density * v);
+        array[index].need = Math.ceil(
+          array[index].resultCalc / array[index].weight
+        );
+      });
+
+
+    },
+    inputSquareWarm(value) {
+      this.flagWarmEstimate = false;
+      this.changeDataSquare(this.outEstimateWarm, value);
+      this.flagWarmEstimate = true;
+    },
+
+    deleteItemWarm(id) {
+      this.flagWarmEstimate = false;
+      delete this.outEstimateWarm[id];
+      if (!isEm.isEmpty(this.outEstimateWarm)) {
+        this.flagWarmEstimate = true;
+      }
     },
     selectDataWarm(i) {
       this.flagWarmEstimate = false;
-      if (this.flagCategoryWarm === "tileInsulation") {
-        const valueOfType = this.tileInsulation[i - 1].type;
-        this.outEstimateWarm[valueOfType] = this.tileInsulation[i - 1];
-        this.flagWarmEstimate = true;
-      } else if (this.flagCategoryWarm === "plastering") {
-        const valueOfType = this.plastering[i - 1].type;
-        this.outEstimateWarm[valueOfType] = this.plastering[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategoryWarm === "tilePainting") {
-        const valueOfTypeWarm = this.tilePainting[i - 1].type;
-        alert(valueOfTypeWarm);
-        this.outEstimateWarm[valueOfTypeWarm] = this.tilePainting[i - 1];
-        alert(this.outEstimateWarm[valueOfTypeWarm]);
-        this.flagOutEstimate = true;
-      }
+      const entry = this.registry[this.flagCategoryWarm][i - 1];
+      this.outEstimateWarm[entry.type] = entry;
+      this.changeDataSquare(this.outEstimateWarm, this.squareWarm);
+      this.flagWarmEstimate = true;
     },
     choiceWarm(i) {
       this.flagCategoryWarm = "";
       if (i === 1) {
-        this.warmWindows = this.tileInsulation;
+        this.warmWindows = this.registry.tileInsulation;
         this.flagCategoryWarm = "tileInsulation";
       } else if (i === 2) {
-        this.warmWindows = this.plastering;
+        this.warmWindows = this.registry.plastering;
         this.flagCategoryWarm = "plastering";
       } else if (i === 3) {
-        this.warmWindows = this.tilePainting;
+        this.warmWindows = this.registry.tilePainting;
         this.flagCategoryWarm = "tilePainting";
       }
     }

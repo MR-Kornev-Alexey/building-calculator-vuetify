@@ -179,6 +179,7 @@ import html2PDF from "html-pdf-adaptive";
 import vPrint from "./v-print";
 import Vue from "vue";
 import SocialSharing from "vue-social-sharing";
+const isEm = require("../common/isEmty");
 
 Vue.use(SocialSharing);
 
@@ -637,7 +638,6 @@ export default {
     startPrinting() {
       document.querySelector("#element-to-print").className = "online-table";
       const el = document.querySelector("#element-to-print");
-
       html2PDF(el, {
         mode: "adaptive",
         pagesplit: true,
@@ -651,16 +651,6 @@ export default {
         useDefaultFoot: true
       });
       document.querySelector("#element-to-print").className = "table";
-    },
-    isEmpty(obj) {
-      if (obj == null) return true;
-      if (obj.length > 0) return false;
-      if (obj.length === 0) return true;
-      if (typeof obj !== "object") return true;
-      for (const key in obj) {
-        if (hasOwnProperty.call(obj, key)) return false;
-      }
-      return true;
     },
     choice(i) {
       this.flagCategory = "";
@@ -693,7 +683,7 @@ export default {
     deleteItem(id) {
       this.flagOutEstimate = false;
       delete this.outEstimate[id];
-      if (!this.isEmpty(this.outEstimate)) {
+      if (!isEm.isEmpty(this.outEstimate)) {
         this.flagOutEstimate = true;
       }
     },
