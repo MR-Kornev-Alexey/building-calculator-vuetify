@@ -11,26 +11,26 @@
           width="40"
         />
       </div>
-      <v-flex class="main_sight">Строительный калькулятор</v-flex>
-
+      <v-flex class="mt-4 mb-4">
+        <router-link   class="router-input mx-4" to="/">
+          <v-btn outlined color="indigo lighten-4" dark >Материалы</v-btn>
+        </router-link>
+        <router-link  class="router-input mx-4" to="/warm">
+          <v-btn outlined color="indigo lighten-4" dark >Теплоизоляция</v-btn>
+        </router-link>
+      </v-flex>
       <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-main>
-      <v-calculator />
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import vCalculator from "./components/v-calculator";
-
 export default {
   name: "App",
-
-  components: {
-    vCalculator
-  },
 
   data: () => ({
     //
