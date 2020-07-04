@@ -30,7 +30,6 @@
       </v-col>
     </v-row>
     <v-row
-      id="element-to-print"
       v-if="flagOutEstimate"
       class="text-center forPrint justify-center mt-8"
     >
@@ -93,21 +92,99 @@
         </v-flex>
       </v-col>
     </v-row>
-    <v-btn
-      color="#444fee"
-      text
-      outlined
-      @click="startPrinting()"
-      class="btn-cat"
-      >Печать
-    </v-btn>
+    <v-row>
+      <table id="element-to-print">
+        <tr>
+          <th>Название</th>
+          <th>Рек.Толщина</th>
+          <th>Толщина</th>
+          <th>Площадь</th>
+          <th>Расход</th>
+          <th>Требуется</th>
+        </tr>
+        <tr v-for="index in resultEstimate" :key="index.idInn">
+          <td>{{ index.name }}</td>
+          <td>{{ index.thickness }}</td>
+          <td>{{ index.customThickness }}</td>
+          <td>{{ index.resultCalc }}</td>
+          <td>{{ index.customSquare }}</td>
+          <td>{{ index.need }}</td>
+        </tr>
+      </table>
+    </v-row>
+    <v-row class="d-flex mt-6">
+      <v-btn
+        color="#444fee"
+        text
+        outlined
+        @click="startPrinting()"
+        class="btn-cat"
+        >Сохранить PDF
+      </v-btn>
+      <vPrint />
+    </v-row>
+    <v-row>
+      <social-sharing url="https://vuejs.org/" inline-template>
+        <div class="ml-6 d-flex">
+          <div class="mr-4 share-network">
+            Поделиться
+          </div>
+          <div class="mr-4 share-network">
+            <ShareNetwork
+              network="whatsapp"
+              url="http://calc.mrk.digital/"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              quote="Онлайн-расчет количества необходимых материалов"
+              hashtags="строительныйкалькулятор"
+            >
+              Whatsapp
+            </ShareNetwork>
+          </div>
+          <div class="mr-4 share-network">
+            <ShareNetwork
+              network="vk"
+              url="http://calc.mrk.digital/"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              quote="Онлайн-расчет количества необходимых материалов"
+              hashtags="строительныйкалькулятор"
+            >
+              ВКонтакте
+            </ShareNetwork>
+          </div>
+          <div class="mr-4 share-network">
+            <ShareNetwork
+              network="facebook"
+              url="http://calc.mrk.digital/"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              quote="Онлайн-расчет количества необходимых материалов"
+              hashtags="строительныйкалькулятор"
+            >
+              Facebook
+            </ShareNetwork>
+          </div>
+        </div>
+      </social-sharing>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-  import html2PDF from "html-pdf-adaptive"
+import html2PDF from "html-pdf-adaptive";
+import vPrint from "./v-print";
+import Vue from "vue";
+import SocialSharing from "vue-social-sharing";
+
+Vue.use(SocialSharing);
+
 export default {
   name: "v-calculator",
+  components: {
+    vPrint,
+    SocialSharing
+  },
   data: () => ({
     outEstimate: {},
     flagOutEstimate: false,
@@ -555,19 +632,22 @@ export default {
   },
   methods: {
     startPrinting() {
-      const el = document.querySelector("#element-to-print")
+      document.querySelector("#element-to-print").className = "online-table";
+      const el = document.querySelector("#element-to-print");
+
       html2PDF(el, {
-        mode: 'adaptive',
+        mode: "adaptive",
         pagesplit: true,
         offset: {
           x: 20,
           y: 20
         },
-        outputType: 'save',
+        outputType: "save",
         isToggleStyle: true,
         useCORS: true,
-        useDefaultFoot: true,
-       })
+        useDefaultFoot: true
+      });
+      document.querySelector("#element-to-print").className = "table";
     },
     isEmpty(obj) {
       if (obj == null) return true;
@@ -704,6 +784,9 @@ export default {
   }
 }
 
+.print-windows {
+  border: 2px solid #000;
+}
 .main-windows {
   border: 2px solid #444fee;
 }
@@ -724,6 +807,39 @@ export default {
   }
   .result-110 {
     width: 90px;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  display: none;
+}
+.online-table {
+  border-collapse: collapse;
+  width: 100%;
+  display: table;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.share-network {
+  text-transform: uppercase;
+  font-weight: 500;
+
+  a {
+    color: #4e4e4e !important;
   }
 }
 </style>

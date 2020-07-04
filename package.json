@@ -12,8 +12,10 @@
     "core-js": "^3.6.5",
     "html-pdf-adaptive": "^1.0.1",
     "html2pdf": "0.0.11",
+    "printd": "^1.4.2",
     "roboto-fontface": "*",
     "vue": "^2.6.11",
+    "vue-social-sharing": "^3.0.0-beta.11",
     "vuetify": "^2.2.11",
     "vuex": "^3.4.0"
   },
