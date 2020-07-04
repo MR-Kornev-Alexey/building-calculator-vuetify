@@ -12,11 +12,11 @@
         />
       </div>
       <v-flex class="mt-4 mb-4">
-        <router-link   class="router-input mx-4" to="/">
-          <v-btn outlined color="indigo lighten-4" dark >Материалы</v-btn>
+        <router-link class="router-input mx-4" to="/">
+          <v-btn outlined color="indigo lighten-4" dark>Материалы</v-btn>
         </router-link>
-        <router-link  class="router-input mx-4" to="/warm">
-          <v-btn outlined color="indigo lighten-4" dark >Теплоизоляция</v-btn>
+        <router-link class="router-input mx-4" to="/warm">
+          <v-btn outlined color="indigo lighten-4" dark>Теплоизоляция</v-btn>
         </router-link>
       </v-flex>
       <v-spacer></v-spacer>

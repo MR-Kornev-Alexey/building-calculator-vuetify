@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <h1>Расчет необходимого количества строительных материалов </h1>
+      <h1>Расчет необходимого количества строительных материалов</h1>
     </v-row>
     <v-row class="text-center justify-center mt-8">
       <v-col cols="4">
