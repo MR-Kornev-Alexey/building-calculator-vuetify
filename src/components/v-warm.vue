@@ -3,53 +3,54 @@
     <v-row>
       <h1>Расчет системы фасадной теплоизоляции</h1>
     </v-row>
-    <v-row class="d-flex align-content-center">
-      <v-col class="align-self-center" cols="6">
-        <h3>Введите площадь теплоизоляции</h3>
-      </v-col>
-      <v-col cols="2">
-        <v-text-field
-          class="result-100"
-          id="custom"
-          required
-          v-model.number="squareWarm"
-          type="text"
-          placeholder="...m2"
-          @keyup.enter="inputSquareWarm(squareWarm)"
-        />
-      </v-col>
-    </v-row>
-    <v-row class="d-flex align-content-center">
-      <v-col class="align-self-center" cols="6">
-        <h3>Введите длину углов здания и дверных проемов.</h3>
-      </v-col>
-      <v-col cols="2">
-        <v-text-field
-          class="result-100"
-          id="custom2"
-          required
-          v-model.number="lengthDoors"
-          type="text"
-          placeholder="...m2"
-          @keyup.enter="inputSquareWarm(lengthDoors)"
-        />
-      </v-col>
-    </v-row>
-    <v-row class="d-flex align-content-center">
-      <v-col class="align-self-center" cols="6">
-        <h3>Введите длину оконных проемов.</h3>
-      </v-col>
-      <v-col cols="2">
-        <v-text-field
-          class="result-100"
-          id="custom1"
-          required
-          v-model.number="lengthWin"
-          type="text"
-          placeholder="...m2"
-          @keyup.enter="inputSquareWarm(lengthWin)"
-        />
-      </v-col>
+    <v-row class="d-block align-content-center">
+      <div class="d-flex col-md-6  item-category">
+        <h3 class="d-flex align-self-center mr-4">
+          Введите площадь теплоизоляции
+        </h3>
+        <div class="result-100">
+          <v-text-field
+            id="custom"
+            required
+            v-model.number="squareWarm"
+            type="text"
+            placeholder="...m2"
+            @keyup.enter="inputSquareWarm(squareWarm)"
+          />
+        </div>
+      </div>
+      <div class="d-flex col-md-6 item-category">
+        <h3 class="d-flex align-self-center mr-4">
+          Введите длину углов здания и дверных проемов.
+        </h3>
+        <div class="result-100">
+          <v-text-field
+            class="result-100"
+            id="custom2"
+            required
+            v-model.number="lengthDoors"
+            type="text"
+            placeholder="...m2"
+            @keyup.enter="inputSquareWarm(lengthDoors)"
+          />
+        </div>
+      </div>
+      <div class="d-flex col-md-6 item-category">
+        <h3 class="d-flex align-self-center mr-4">
+          Введите длину оконных проемов.
+        </h3>
+        <div class="result-80">
+          <v-text-field
+            class="result-100"
+            id="custom1"
+            required
+            v-model.number="lengthWin"
+            type="text"
+            placeholder="...m2"
+            @keyup.enter="inputSquareWarm(lengthWin)"
+          />
+        </div>
+      </div>
     </v-row>
     <v-row class="text-center justify-center mt-8">
       <v-col cols="4">
@@ -128,7 +129,7 @@ const isEm = require("../common/isEmty");
 export default {
   name: "v-warm",
   data: () => ({
-    lengthWin:0,
+    lengthWin: 0,
     outEstimateWarm: {},
     flagWarmEstimate: false,
     squareWarm: 0,
@@ -147,28 +148,30 @@ export default {
   },
   methods: {
     changeDataSquare(array, v) {
-      Object.keys(array).map(index => {
-        if(array[index].winDoors){
-          array[index].resultCalc = Math.ceil((this.lengthDoors + this.lengthWin)/array[index].density  )
-          array[index].need = Math.ceil(
-                  array[index].resultCalc / array[index].weight
+      Object.keys(array).forEach(index => {
+        if (array[index].type === "warmAdhesive9") {
+          array[index].resultCalc = Math.ceil(
+            (this.lengthDoors + this.lengthWin) / array[index].density
           );
-             return
+          array[index].need = Math.ceil(
+            array[index].resultCalc / array[index].weight
+          );
+          return;
         }
-        if(array[index].winOnly){
-          array[index].resultCalc = Math.ceil( this.lengthWin/array[index].density )
-          array[index].need = Math.ceil(
-                  array[index].resultCalc / array[index].weight
+        if (array[index] === "warmAdhesive9") {
+          array[index].resultCalc = Math.ceil(
+            this.lengthWin / array[index].density
           );
-          return
+          array[index].need = Math.ceil(
+            array[index].resultCalc / array[index].weight
+          );
+          return;
         }
         array[index].resultCalc = Math.ceil(array[index].density * v);
         array[index].need = Math.ceil(
           array[index].resultCalc / array[index].weight
         );
       });
-
-
     },
     inputSquareWarm(value) {
       this.flagWarmEstimate = false;
@@ -207,4 +210,25 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.item-category,
+.v-text-field {
+  padding: 0;
+  margin: 0;
+}
+
+.result-100 {
+  width: 70px;
+
+  .v-text-field__slot input {
+    width: 30px;
+  }
+}
+
+#custom,
+#custom1,
+#custom2 {
+  max-width: 30px;
+  margin-left: 24px;
+}
+</style>
