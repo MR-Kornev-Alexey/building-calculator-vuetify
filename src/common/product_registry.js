@@ -1,10 +1,34 @@
 function needWithoutSurface(surfaceArea, lengthDoors, lengthWin, product) {
-    const resultCalc = resultCalcWithoutSurface(surfaceArea, lengthDoors, lengthWin, product);
+    const resultCalc = resultCalcWithoutSurface(
+        surfaceArea,
+        lengthDoors,
+        lengthWin,
+        product
+    );
     return Math.ceil(resultCalc / product.weight);
 }
 
-function resultCalcWithoutSurface(surfaceArea, lengthDoors, lengthWin, product) {
+function resultCalcWithoutSurface(
+    surfaceArea,
+    lengthDoors,
+    lengthWin,
+    product
+) {
     return Math.ceil((lengthDoors + lengthWin) / product.density);
+}
+
+/* eslint-disable no-unused-vars */
+function resultCalcWithSurface(surfaceArea, lengthDoors, lengthWin, product) {
+    return Math.ceil(+surfaceArea * product.density);
+}
+
+function needWitSurface(product) {
+    return Math.ceil(product.resultCalc / product.weight);
+}
+
+/* eslint-disable no-unused-vars */
+function resultSurface(surfaceArea, lengthDoors, lengthWin) {
+    return surfaceArea;
 }
 
 module.exports = {
@@ -22,8 +46,12 @@ module.exports = {
             unit: "литров",
             density: 0.15,
             weight: 5,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 2,
@@ -33,8 +61,12 @@ module.exports = {
             unit: "кг",
             density: 0.3,
             weight: 5,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 3,
@@ -43,8 +75,12 @@ module.exports = {
             unit: "шт.",
             density: 1.4,
             weight: 3,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 4,
@@ -53,8 +89,12 @@ module.exports = {
             unit: "шт.",
             density: 0.8,
             weight: 1,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 5,
@@ -63,8 +103,12 @@ module.exports = {
             unit: "кг",
             density: 5,
             weight: 25,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 6,
@@ -73,8 +117,12 @@ module.exports = {
             unit: "шт.",
             density: 5,
             weight: 1,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 7,
@@ -84,8 +132,12 @@ module.exports = {
             unit: "кг.",
             density: 5,
             weight: 25,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 8,
@@ -93,7 +145,8 @@ module.exports = {
             name: "Армирующая сетка из стекловолокна щелочестойкая",
             unit: "м2",
             density: 1.1,
-            weight: 50,
+            weight: 1,
+            surface: 0,
             resultCalc: 0,
             need: 0,
             needFormula: needWithoutSurface,
@@ -107,6 +160,7 @@ module.exports = {
             unit: "шт.",
             density: 2.5,
             weight: 1,
+            surface: 0,
             resultCalc: 0,
             need: 0
         },
@@ -117,8 +171,12 @@ module.exports = {
             unit: "шт.",
             density: 2.4,
             weight: 1,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 11,
@@ -128,8 +186,12 @@ module.exports = {
             unit: "литров",
             density: 0.15,
             weight: 5,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 12,
@@ -139,8 +201,12 @@ module.exports = {
             unit: "кг",
             density: 0.3,
             weight: 6,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         }
     ],
     plastering: [
@@ -151,8 +217,12 @@ module.exports = {
             unit: "кг",
             density: 3,
             weight: 25,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 2,
@@ -161,8 +231,12 @@ module.exports = {
             unit: "кг",
             density: 4,
             weight: 25,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 3,
@@ -172,7 +246,11 @@ module.exports = {
             density: 2,
             weight: 25,
             resultCalc: 0,
-            need: 0
+            surface: 0,
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 4,
@@ -182,7 +260,11 @@ module.exports = {
             density: 3,
             weight: 25,
             resultCalc: 0,
-            need: 0
+            surface: 0,
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         },
         {
             idInn: 5,
@@ -191,8 +273,12 @@ module.exports = {
             unit: "кг",
             density: 4,
             weight: 25,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         }
     ],
     tilePainting: [
@@ -203,8 +289,12 @@ module.exports = {
             unit: "кг",
             density: 0.35,
             weight: 20,
+            surface: 0,
             resultCalc: 0,
-            need: 0
+            need: 0,
+            needFormula: needWitSurface,
+            resultCalcFormula: resultCalcWithSurface,
+            resultSurfaceFormula: resultSurface
         }
     ]
 };

@@ -16,6 +16,7 @@
             type="text"
             placeholder="...m2"
             @keyup.enter="inputSquareWarm(squareWarm)"
+            @change="inputSquareWarm(squareWarm)"
           />
         </div>
       </div>
@@ -30,7 +31,7 @@
             required
             v-model.number="lengthDoors"
             type="text"
-            placeholder="...m2"
+            placeholder="...m"
             @keyup.enter="inputSquareWarm(lengthDoors)"
           />
         </div>
@@ -46,7 +47,7 @@
             required
             v-model.number="lengthWin"
             type="text"
-            placeholder="...m2"
+            placeholder="...m"
             @keyup.enter="inputSquareWarm(lengthWin)"
           />
         </div>
@@ -103,7 +104,7 @@
             {{ index.name }}
           </v-flex>
           <v-flex class="d-flex align-self-center justify-center result-110">
-            {{ squareWarm }}
+            {{ index.surface }}
           </v-flex>
           <v-flex
             class="result-100  d-flex d-flex align-self-center justify-center "
@@ -129,11 +130,11 @@ const isEm = require("../common/isEmty");
 export default {
   name: "v-warm",
   data: () => ({
-    lengthWin: 0,
+    lengthWin: "",
     outEstimateWarm: {},
     flagWarmEstimate: false,
-    squareWarm: 0,
-    lengthDoors: 0,
+    squareWarm: "",
+    lengthDoors: "",
     warmWindows: "",
     flagCategoryWarm: "",
     registry: constantRegistry
@@ -147,29 +148,22 @@ export default {
     }
   },
   methods: {
-    changeDataSquare(array, v) {
-      Object.keys(array).forEach(index => {
-        if (array[index].type === "warmAdhesive9") {
-          array[index].resultCalc = Math.ceil(
-            (this.lengthDoors + this.lengthWin) / array[index].density
-          );
-          array[index].need = Math.ceil(
-            array[index].resultCalc / array[index].weight
-          );
-          return;
-        }
-        if (array[index] === "warmAdhesive9") {
-          array[index].resultCalc = Math.ceil(
-            this.lengthWin / array[index].density
-          );
-          array[index].need = Math.ceil(
-            array[index].resultCalc / array[index].weight
-          );
-          return;
-        }
-        array[index].resultCalc = Math.ceil(array[index].density * v);
-        array[index].need = Math.ceil(
-          array[index].resultCalc / array[index].weight
+    changeDataSquare(newObj) {
+      Object.keys(newObj).forEach(index => {
+        const product = newObj[index];
+        product.surface = product.resultSurfaceFormula(
+          this.squareWarm,
+          this.lengthDoors,
+          this.lengthWin
+        );
+        product.resultCalc = product.resultCalcFormula(
+          this.squareWarm,
+          this.lengthDoors,
+          this.lengthWin,
+          product
+        );
+        product.need = product.needFormula(
+           product
         );
       });
     },
@@ -190,7 +184,7 @@ export default {
       this.flagWarmEstimate = false;
       const entry = this.registry[this.flagCategoryWarm][i - 1];
       this.outEstimateWarm[entry.type] = entry;
-      this.changeDataSquare(this.outEstimateWarm, this.squareWarm);
+      this.changeDataSquare(this.outEstimateWarm);
       this.flagWarmEstimate = true;
     },
     choiceWarm(i) {
@@ -228,7 +222,6 @@ export default {
 #custom,
 #custom1,
 #custom2 {
-  max-width: 30px;
-  margin-left: 24px;
+  margin-left: 10px;
 }
 </style>
