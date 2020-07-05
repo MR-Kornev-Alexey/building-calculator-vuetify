@@ -33,6 +33,7 @@
             type="text"
             placeholder="...m"
             @keyup.enter="inputSquareWarm(lengthDoors)"
+            @change="inputSquareWarm(squareWarm)"
           />
         </div>
       </div>
@@ -49,6 +50,7 @@
             type="text"
             placeholder="...m"
             @keyup.enter="inputSquareWarm(lengthWin)"
+            @change="inputSquareWarm(squareWarm)"
           />
         </div>
       </div>
@@ -89,7 +91,7 @@
       <v-col class="main-windows" cols="10">
         <div class="d-flex">
           <v-flex class="result-name">Наименование материала</v-flex>
-          <v-flex class="result-100 ">Площадь (кв.м)</v-flex>
+          <v-flex class="result-100 ">Размер</v-flex>
           <v-flex class="result-100 ">Расход</v-flex>
           <v-flex class="result-100 ">Требуется</v-flex>
           <v-flex class="result-100 ">Очистить</v-flex>
@@ -104,7 +106,7 @@
             {{ index.name }}
           </v-flex>
           <v-flex class="d-flex align-self-center justify-center result-110">
-            {{ index.surface }}
+            {{ index.surface }} {{ index.measure }}
           </v-flex>
           <v-flex
             class="result-100  d-flex d-flex align-self-center justify-center "
@@ -163,14 +165,19 @@ export default {
           product
         );
         product.need = product.needFormula(
-           product
+          this.squareWarm,
+          this.lengthDoors,
+          this.lengthWin,
+          product
         );
       });
     },
     inputSquareWarm(value) {
       this.flagWarmEstimate = false;
-      this.changeDataSquare(this.outEstimateWarm, value);
-      this.flagWarmEstimate = true;
+      if (!isEm.isEmpty(this.outEstimateWarm)) {
+        this.changeDataSquare(this.outEstimateWarm, value);
+        this.flagWarmEstimate = true;
+      }
     },
 
     deleteItemWarm(id) {
