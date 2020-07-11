@@ -31,7 +31,14 @@ tr:nth-child(even) {
 `;
 export default {
   name: "v-print",
-
+  props: {
+    printChoice: {
+      type: String,
+      default() {
+        return "";
+      }
+    }
+  },
   data() {
     return {
       output: null
@@ -42,7 +49,7 @@ export default {
   methods: {
     printing() {
       this.d = new Printd();
-      this.d.print(document.getElementById("element-to-print"), [cssText]);
+      this.d.print(document.getElementById(this.printChoice), [cssText]);
     }
   }
 };

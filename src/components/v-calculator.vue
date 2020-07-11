@@ -124,7 +124,7 @@
         class="btn-cat"
         >Сохранить PDF
       </v-btn>
-      <vPrint />
+      <vPrint :printChoice="this.flagPrint" />
     </v-row>
     <v-row>
       <social-sharing url="https://vuejs.org/" inline-template>
@@ -633,6 +633,9 @@ export default {
     resultTileAdhesive() {
       return this.newTileWindows;
     }
+  },
+  mounted() {
+    this.flagPrint = "element-to-print";
   },
   methods: {
     startPrinting() {

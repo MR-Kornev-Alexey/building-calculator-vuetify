@@ -75,6 +75,7 @@
           class="d-flex align-self-center"
         >
           <v-checkbox
+            :checked="checked"
             :v-model="index.idInn"
             @change="selectDataWarm(index.idInn)"
           ></v-checkbox>
@@ -123,15 +124,111 @@
         </v-flex>
       </v-col>
     </v-row>
+    <v-row>
+      <table id="element-to-print-warm">
+        <tr>
+          <th colspan="3">Площадь теплоизоляции</th>
+          <th>{{ this.squareWarm }}</th>
+        </tr>
+        <tr>
+          <th colspan="3">Длина углов здания и дверных проемов</th>
+          <th>{{ this.lengthDoors }}</th>
+        </tr>
+        <tr>
+          <th colspan="3">Длина оконных проемов</th>
+          <th>{{ this.lengthWin }}</th>
+        </tr>
+        <tr>
+          <th>Название</th>
+          <th>Размер</th>
+          <th>Расход</th>
+          <th>Требуется</th>
+        </tr>
+        <tr v-for="index in resultEstimateWarm" :key="index.idInn">
+          <td>{{ index.name }}</td>
+          <td>{{ index.surface }} {{ index.measure }}</td>
+          <td>{{ index.resultCalc }} {{ index.unit }}</td>
+          <td>{{ index.need }} шт.</td>
+        </tr>
+      </table>
+    </v-row>
+    <v-row class="d-flex mt-6">
+      <v-btn
+        color="#444fee"
+        text
+        outlined
+        @click="startPrinting()"
+        class="btn-cat"
+        >Сохранить PDF
+      </v-btn>
+      <vPrint :printChoice="this.flagPrint" />
+    </v-row>
+    <v-row>
+      <social-sharing url="https://vuejs.org/" inline-template>
+        <div class="ml-6 d-flex">
+          <div class="mr-4 share-network">
+            Поделиться
+          </div>
+          <div class="mr-4 share-network">
+            <ShareNetwork
+              network="whatsapp"
+              url="http://calc.mrk.digital/"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              quote="Онлайн-расчет количества необходимых материалов"
+              hashtags="строительныйкалькулятор"
+            >
+              Whatsapp
+            </ShareNetwork>
+          </div>
+          <div class="mr-4 share-network">
+            <ShareNetwork
+              network="vk"
+              url="http://calc.mrk.digital/"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              quote="Онлайн-расчет количества необходимых материалов"
+              hashtags="строительныйкалькулятор"
+            >
+              ВКонтакте
+            </ShareNetwork>
+          </div>
+          <div class="mr-4 share-network">
+            <ShareNetwork
+              network="facebook"
+              url="http://calc.mrk.digital/"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              quote="Онлайн-расчет количества необходимых материалов"
+              hashtags="строительныйкалькулятор"
+            >
+              Facebook
+            </ShareNetwork>
+          </div>
+        </div>
+      </social-sharing>
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import html2PDF from "html-pdf-adaptive";
 const constantRegistry = require("../common/product_registry.js");
 const isEm = require("../common/isEmty");
+import Vue from "vue";
+import SocialSharing from "vue-social-sharing";
+Vue.use(SocialSharing);
+import vPrint from "./v-print";
+
 export default {
   name: "v-warm",
+  components: {
+    SocialSharing,
+    vPrint
+  },
   data: () => ({
+    checked: false,
+    flagPrint: "",
     lengthWin: "",
     outEstimateWarm: {},
     flagWarmEstimate: false,
@@ -149,7 +246,28 @@ export default {
       return this.warmWindows;
     }
   },
+  mounted() {
+    this.flagPrint = "element-to-print-warm";
+  },
   methods: {
+    startPrinting() {
+      document.querySelector("#element-to-print-warm").className =
+        "online-table";
+      const el = document.querySelector("#element-to-print-warm");
+      html2PDF(el, {
+        mode: "adaptive",
+        pagesplit: true,
+        offset: {
+          x: 20,
+          y: 20
+        },
+        outputType: "save",
+        isToggleStyle: true,
+        useCORS: true,
+        useDefaultFoot: true
+      });
+      document.querySelector("#element-to-print-warm").className = "table";
+    },
     changeDataSquare(newObj) {
       Object.keys(newObj).forEach(index => {
         const product = newObj[index];
@@ -196,6 +314,7 @@ export default {
     },
     choiceWarm(i) {
       this.flagCategoryWarm = "";
+      this.checked = false;
       if (i === 1) {
         this.warmWindows = this.registry.tileInsulation;
         this.flagCategoryWarm = "tileInsulation";
