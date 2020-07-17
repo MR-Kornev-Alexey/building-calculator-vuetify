@@ -68,14 +68,14 @@
           <v-flex class="d-flex align-self-center result-name">
             {{ index.name }}
           </v-flex>
-          <v-flex class="d-flex align-self-center justify-center result-110">
+          <v-flex class="d-flex align-self-center justify-start result-110">
             {{ index.thickness }}
           </v-flex>
 
           <v-text-field
             @change="filterData(index.type)"
             @keyup.enter="filterData(index.type)"
-            class="result-100"
+            class="result-110"
             id="custom"
             placeholder="...толщина"
             required
@@ -84,7 +84,7 @@
             v-model.number="index.customThickness"
           />
           <v-flex
-            class="d-flex align-self-center justify-center result-110"
+            class="d-flex align-self-center justify-start result-110"
             v-if="!index.inputThickness"
           >
             {{ index.customThickness }}
@@ -92,7 +92,7 @@
           <v-text-field
             @change="filterData(index.type)"
             @keyup.enter="filterData(index.type)"
-            class="result-100"
+            class="result-110"
             id="square"
             placeholder="...площадь"
             required
@@ -101,11 +101,11 @@
           />
 
           <v-flex
-            class="result-100  d-flex d-flex align-self-center justify-center "
+            class="result-100  d-flex d-flex align-self-center pb-1 justify-center "
             >{{ index.resultCalc }}
           </v-flex>
           <v-flex class="result-100  d-flex align-self-center justify-center "
-            >{{ index.need }}
+            >{{ index.need }} {{ index.unit }}
           </v-flex>
           <v-flex class="result-100 d-flex align-self-center justify-center ">
             <v-icon :id="index.type" @click="deleteItem(index.type)">
@@ -114,6 +114,19 @@
           </v-flex>
         </v-flex>
       </v-col>
+
+    </v-row>
+    <v-row class="justify-center">
+      <div class="col-md-10 text-right">
+        <v-btn v-if="btnResetEstimate"
+                @click="resetMainEstimate()"
+                class="btn-reset"
+                color="#444fee"
+                outlined
+                text
+        >Очистить
+        </v-btn>
+      </div>
     </v-row>
     <v-row>
       <table id="element-to-print">
@@ -131,7 +144,7 @@
           <td>{{ index.customThickness }}</td>
           <td>{{ index.resultCalc }}</td>
           <td>{{ index.customSquare }}</td>
-          <td>{{ index.need }}</td>
+          <td>{{ index.need }} {{ index.unit }}</td>
         </tr>
       </table>
     </v-row>
@@ -212,6 +225,7 @@ export default {
     SocialSharing
   },
   data: () => ({
+    btnResetEstimate:false,
     btnReset: false,
     outEstimate: {},
     flagOutEstimate: false,
@@ -265,6 +279,9 @@ export default {
     this.flagPrint = "element-to-print";
   },
   methods: {
+    resetMainEstimate(){
+      this.outEstimate = {}
+    },
     resetMainWindows() {
       this.newTileWindows = "";
       this.btnReset = false;
@@ -287,7 +304,7 @@ export default {
       document.querySelector("#element-to-print").className = "table";
     },
     choice(i) {
-      this.newTileWindows = this.category[i].materials
+      this.newTileWindows = JSON.parse(JSON.stringify(this.category[i].materials));
       this.btnReset = true;
     },
     deleteItem(id) {
@@ -298,10 +315,13 @@ export default {
       }
     },
     selectData(i) {
-      this.flagOutEstimate = false;
-      const valueOfType = this.newTileWindows[i].type;
-      this.outEstimate[valueOfType] = this.newTileWindows[i];
-      this.flagOutEstimate = true;
+      if(this.newTileWindows[i].selected){
+        this.flagOutEstimate = false
+        this.outEstimate[this.newTileWindows[i].type] = this.newTileWindows[i]
+        this.btnResetEstimate = this.flagOutEstimate = true
+      }else {
+        return false
+      }
     },
     filterData(value) {
       this.outEstimate[value].resultCalc = Math.ceil(
@@ -331,11 +351,14 @@ export default {
 
   .v-text-field__slot input {
     width: 80px;
+    padding-top: 20px;
   }
 }
 
 .result-110 {
   width: 110px;
+  text-align: left;
+  padding-bottom: 10px;
 }
 
 .btn-choice {

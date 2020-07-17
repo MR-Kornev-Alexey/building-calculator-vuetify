@@ -13,7 +13,8 @@ module.exports.decorativePlasterDefault = () => {
       name: "Декоративная  штукатурка Короед 2, 25кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -28,7 +29,8 @@ module.exports.decorativePlasterDefault = () => {
       name: "Декоративная  штукатурка Короед 3, 25кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 2,
@@ -43,7 +45,8 @@ module.exports.decorativePlasterDefault = () => {
       name: "Декоративная  штукатурка Шуба 1, 25кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 3,
@@ -58,7 +61,8 @@ module.exports.decorativePlasterDefault = () => {
       name: "Декоративная  штукатурка Шуба 2, 25кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 4,
@@ -73,7 +77,8 @@ module.exports.decorativePlasterDefault = () => {
       name: "Декоративная  штукатурка Шуба 3, 25кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 5,
@@ -88,7 +93,8 @@ module.exports.decorativePlasterDefault = () => {
       name: "MIX BEST Декоративная штукатурка ШУБА, 20кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     }
   ]
 }
@@ -108,7 +114,8 @@ module.exports.mixBestDefault = () => {
       name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -123,7 +130,8 @@ module.exports.mixBestDefault = () => {
       name: "MIX BEST Декоративная штукатурка ШУБА, 20кг",
       thickness: "-",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 2,
@@ -138,7 +146,8 @@ module.exports.mixBestDefault = () => {
       name: "MIX BEST Смесь цементно-песчаная, 20кг",
       thickness: "более 3",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 3,
@@ -153,7 +162,8 @@ module.exports.mixBestDefault = () => {
       name: "MIX BEST Клей плиточный базовый, 20кг",
       thickness: "3-10",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     }
   ]
 }
@@ -173,7 +183,8 @@ module.exports.mixLKMDefault = () => {
       name: "Грунт глубокого проникновения акриловый универсальный, 5л",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "канистр"
     },
     {
       idInn: 1,
@@ -188,7 +199,8 @@ module.exports.mixLKMDefault = () => {
       name: "Кварц-грунт (бетоноконтакт) 6кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "ведро"
     },
     {
       idInn: 2,
@@ -203,7 +215,8 @@ module.exports.mixLKMDefault = () => {
       name: "Краска фасадная, 20кг (один слой)",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "ведро"
     },
     {
       idInn: 3,
@@ -218,7 +231,8 @@ module.exports.mixLKMDefault = () => {
       name: "Краска фасадная, 20кг (два слоя)",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "ведро"
     }
   ]
 }
@@ -237,7 +251,8 @@ module.exports.cementPlasterDefault = () => {
       name: "Пласт, 25кг (Штукатурка)",
       thickness: "2-20",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -252,7 +267,8 @@ module.exports.cementPlasterDefault = () => {
       name: "Пласт-Финиш, 20кг  (Шпатлевка)",
       thickness: "1-6",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     }
   ]
 }
@@ -271,7 +287,8 @@ module.exports.mixForFloorDefault = () => {
       name: "Идеал, 25кг (Наливной пол)",
       thickness: "2-10",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -286,7 +303,8 @@ module.exports.mixForFloorDefault = () => {
       name: "Конкрет, 25 кг (Стяжка для пола)",
       thickness: "5-80",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     }
   ]
 }
@@ -305,7 +323,8 @@ module.exports.gypsumPlasterDefault = () => {
       name: "Пласт Гипс, 30кг",
       thickness: "2-80мм",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -320,7 +339,8 @@ module.exports.gypsumPlasterDefault = () => {
       name: "Пласт Гипс Тонкий, 30кг",
       thickness: "2-20мм",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     }
   ]
 }
@@ -338,7 +358,8 @@ module.exports.mountingMixturesDefault = () => {
       name: "Техно, 25 кг (Клей для кладки блоков)",
       thickness: "3-10мм",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -353,7 +374,8 @@ module.exports.mountingMixturesDefault = () => {
       name: "Пескобетон М-300, 25кг",
       thickness: "более 3мм",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 2,
@@ -368,7 +390,8 @@ module.exports.mountingMixturesDefault = () => {
       name: "Цементно песчанная смесь М-150, 25кг",
       thickness: "более 3мм",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 3,
@@ -383,7 +406,8 @@ module.exports.mountingMixturesDefault = () => {
       name: "КТП 500, 25кг (Клей для приклеивания теплоизоляции)",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 4,
@@ -399,7 +423,8 @@ module.exports.mountingMixturesDefault = () => {
         "КТУ 1000, 25кг (Клей для приклеивания и армирования теплоизоляции)",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 5,
@@ -414,7 +439,8 @@ module.exports.mountingMixturesDefault = () => {
       name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
       thickness: "-",
       inputThickness: false,
-      customThickness: 1
+      customThickness: 1,
+      unit: "меш."
     },
     {
       idInn: 6,
@@ -429,7 +455,8 @@ module.exports.mountingMixturesDefault = () => {
       name: "MIX BEST Смесь цементно-песчаная, 20кг",
       thickness: "более 3мм",
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     }
   ]
 }
@@ -448,7 +475,8 @@ module.exports.tileAdhesiveDefault = () => {
       resultCalc: 0,
       need: 0,
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 1,
@@ -463,7 +491,8 @@ module.exports.tileAdhesiveDefault = () => {
       resultCalc: 0,
       need: 0,
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 2,
@@ -478,7 +507,8 @@ module.exports.tileAdhesiveDefault = () => {
       resultCalc: 0,
       need: 0,
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     },
     {
       idInn: 3,
@@ -493,7 +523,8 @@ module.exports.tileAdhesiveDefault = () => {
       resultCalc: 0,
       need: 0,
       inputThickness: true,
-      customThickness: 0
+      customThickness: 0,
+      unit: "меш."
     }
   ];
 };
