@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-    <v-flex class="mt-4 mb-4">
+      <v-flex class="mt-4 mb-4">
         <router-link class="router-input mx-4" to="/">
           <v-btn outlined color="indigo lighten-4" dark>Материалы</v-btn>
         </router-link>

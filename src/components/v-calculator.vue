@@ -2,49 +2,52 @@
   <v-container>
     <v-row justify="center">
       <h1>Расчет необходимого количества строительных материалов</h1>
-      <p class="estimate-text">Онлайн расчет носит информативный характер. Детали уточняйте у наших менеждеров.</p>
+      <p class="estimate-text">
+        Онлайн расчет носит информативный характер. Детали уточняйте у наших
+        менеждеров.
+      </p>
     </v-row>
     <v-row class="text-center justify-center mt-8">
-      <v-col md="4" cols="10" >
+      <v-col cols="10" md="4">
         <v-btn
-          color="#444fee"
-          text
-          outlined
-          v-for="index in category"
           :key="index.id_cat"
           @click="choice(index.id_cat)"
           class="btn-cat"
+          color="#444fee"
+          outlined
+          text
+          v-for="index in category"
           >{{ index.name }}
         </v-btn>
       </v-col>
-      <v-col md="6" cols="10" class=" main-windows">
+      <v-col class=" main-windows" cols="10" md="6">
         <v-flex
-          v-for="index in resultTileAdhesive"
           :key="index.idInn"
           class="d-flex align-self-center"
+          v-for="index in newTileWindows"
         >
           <v-checkbox
-            v-model="index.selected"
             @change="selectData(index.idInn)"
+            v-model="index.selected"
           ></v-checkbox>
           <v-flex class="choice-table text-left align-self-center">
             {{ index.name }}
           </v-flex>
-
         </v-flex>
-        <v-btn v-if="btnReset"
-                color="#444fee"
-                text
-                outlined
-                @click="resetMainWindows()"
-                class="btn-reset"
-        >Сбросить
+        <v-btn
+          @click="resetMainWindows()"
+          class="btn-reset"
+          color="#444fee"
+          outlined
+          text
+          v-if="btnReset"
+          >Сбросить
         </v-btn>
       </v-col>
     </v-row>
     <v-row
-      v-if="flagOutEstimate"
       class="text-center forPrint justify-center mt-8"
+      v-if="flagOutEstimate"
     >
       <v-col class="main-windows" cols="10">
         <div class="d-flex">
@@ -58,55 +61,57 @@
         </div>
 
         <v-flex
-          v-for="index in resultEstimate"
           :key="index.idInn"
           class="d-flex align-content-center choice-table-down"
+          v-for="index in outEstimate"
         >
           <v-flex class="d-flex align-self-center result-name">
-            {{ index.name }}</v-flex
-          >
+            {{ index.name }}
+          </v-flex>
           <v-flex class="d-flex align-self-center justify-center result-110">
-            {{ index.thickness }}</v-flex
-          >
+            {{ index.thickness }}
+          </v-flex>
 
-          <v-text-field v-if="index.inputThickness"
+          <v-text-field
+            @change="filterData(index.type)"
+            @keyup.enter="filterData(index.type)"
             class="result-100"
             id="custom"
-            required
-            v-model.number="index.customThickness"
-            type="text"
             placeholder="...толщина"
-            @keyup.enter="filterData(index.type)"
-            @change="filterData(index.type)"
+            required
+            type="text"
+            v-if="index.inputThickness"
+            v-model.number="index.customThickness"
           />
-          <v-flex v-if="!index.inputThickness"
-                  class="d-flex align-self-center justify-center result-110">
-            {{ index.customThickness }}</v-flex
+          <v-flex
+            class="d-flex align-self-center justify-center result-110"
+            v-if="!index.inputThickness"
           >
+            {{ index.customThickness }}
+          </v-flex>
           <v-text-field
+            @change="filterData(index.type)"
+            @keyup.enter="filterData(index.type)"
             class="result-100"
             id="square"
-            required
-            v-model.number="index.customSquare"
-            type="text"
             placeholder="...площадь"
-            @keyup.enter="filterData(index.type)"
-            @change="filterData(index.type)"
+            required
+            type="text"
+            v-model.number="index.customSquare"
           />
 
           <v-flex
             class="result-100  d-flex d-flex align-self-center justify-center "
-            >{{ index.resultCalc }}</v-flex
-          >
-          <v-flex
-            class="result-100  d-flex align-self-center justify-center "
-            >{{ index.need }}</v-flex
-          >
-          <v-flex class="result-100 d-flex align-self-center justify-center "
-            ><v-icon :id="index.type" @click="deleteItem(index.type)">
-              mdi-delete</v-icon
-            ></v-flex
-          >
+            >{{ index.resultCalc }}
+          </v-flex>
+          <v-flex class="result-100  d-flex align-self-center justify-center "
+            >{{ index.need }}
+          </v-flex>
+          <v-flex class="result-100 d-flex align-self-center justify-center ">
+            <v-icon :id="index.type" @click="deleteItem(index.type)">
+              mdi-delete
+            </v-icon>
+          </v-flex>
         </v-flex>
       </v-col>
     </v-row>
@@ -120,7 +125,7 @@
           <th>Расход</th>
           <th>Количество</th>
         </tr>
-        <tr v-for="index in resultEstimate" :key="index.idInn">
+        <tr :key="index.idInn" v-for="index in outEstimate">
           <td>{{ index.name }}</td>
           <td>{{ index.thickness }}</td>
           <td>{{ index.customThickness }}</td>
@@ -132,53 +137,53 @@
     </v-row>
     <v-row class="d-flex mt-6">
       <v-btn
-        color="#444fee"
-        text
-        outlined
         @click="startPrinting()"
         class="btn-cat"
+        color="#444fee"
+        outlined
+        text
         >Сохранить PDF
       </v-btn>
       <vPrint :printChoice="this.flagPrint" />
     </v-row>
     <v-row>
-      <social-sharing url="https://vuejs.org/" inline-template>
+      <social-sharing inline-template url="https://vuejs.org/">
         <div class="ml-6 d-flex">
           <div class="mr-4 share-network">
             Поделиться
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              network="whatsapp"
-              url="http://calc.mrk.digital/"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              quote="Онлайн-расчет количества необходимых материалов"
               hashtags="строительныйкалькулятор"
+              network="whatsapp"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               Whatsapp
             </ShareNetwork>
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              network="vk"
-              url="http://calc.mrk.digital/"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              quote="Онлайн-расчет количества необходимых материалов"
               hashtags="строительныйкалькулятор"
+              network="vk"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               ВКонтакте
             </ShareNetwork>
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              network="facebook"
-              url="http://calc.mrk.digital/"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              quote="Онлайн-расчет количества необходимых материалов"
               hashtags="строительныйкалькулятор"
+              network="facebook"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               Facebook
             </ShareNetwork>
@@ -191,9 +196,11 @@
 
 <script>
 import html2PDF from "html-pdf-adaptive";
+import buildMaterialsRegistry from "../common/buildMaterialsRegistry";
 import vPrint from "./v-print";
 import Vue from "vue";
 import SocialSharing from "vue-social-sharing";
+
 const isEm = require("../common/isEmty");
 
 Vue.use(SocialSharing);
@@ -205,525 +212,62 @@ export default {
     SocialSharing
   },
   data: () => ({
-    btnReset:false,
+    btnReset: false,
     outEstimate: {},
     flagOutEstimate: false,
     newTileWindows: "",
-    flagCategory: "",
+    flagPrint: "",
     category: [
-      { id_cat: 1, name: "Плиточный клей" },
-      { id_cat: 2, name: "Кладочно-монтажная смесь" },
-      { id_cat: 3, name: "Гипсовая штукатурка" },
-      { id_cat: 4, name: "Декоративная штукатурка" },
-      { id_cat: 5, name: "Цементная штукатурка и шпатлевка" },
-      { id_cat: 6, name: "Смесь для устройства пола" },
-      { id_cat: 7, name: "MIX BEST" },
-      { id_cat: 8, name: "ЛКМ" }
-    ],
-    tileAdhesive: [
       {
-        idInn: 1,
-        selected:false,
-        type: "tileAdhesive1",
-        text: "Плиточный клей",
-        name: "Плиточный клей Стандарт, 25кг",
-        thickness: "3-10мм",
-        customSquare: 0,
-        density: 1.4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        inputThickness:true,
-        customThickness: 0,
+        id_cat: 0,
+        name: "Плиточный клей",
+        materials: buildMaterialsRegistry.tileAdhesiveDefault()
       },
       {
-        idInn: 2,
-        selected:false,
-        type: "tileAdhesive2",
-        text: "Плиточный клей",
-        name: "Плиточный клей Гранит, 25кг",
-        thickness: "3-10мм",
-        density: 1.45,
-       customSquare: 0,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        inputThickness:true,
-        customThickness: 0,
+        id_cat: 1,
+        name: "Кладочно-монтажная смесь",
+        materials: buildMaterialsRegistry.mountingMixturesDefault()
       },
       {
-        idInn: 3,
-        selected:false,
-        type: "tileAdhesive3",
-        text: "Плиточный клей",
-        name: "Плиточный клей Профи, 25кг",
-        thickness: "3-10мм",
-        density: 1.35,
-        customSquare: 0,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        inputThickness:true,
-        customThickness: 0,
+        id_cat: 2,
+        name: "Гипсовая штукатурка",
+        materials: buildMaterialsRegistry.gypsumPlasterDefault()
       },
       {
-        idInn: 4,
-        selected:false,
-        type: "tileAdhesive4",
-        text: "Плиточный клей",
-        name: "MIX BEST Клей плиточный базовый, 20кг",
-        thickness: "3-10мм",
-        customSquare: 0,
-        density: 1.4,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        inputThickness:true,
-        customThickness: 0,
+        id_cat: 3,
+        name: "Декоративная штукатурка",
+        materials: buildMaterialsRegistry.decorativePlasterDefault()
+      },
+      {
+        id_cat: 4,
+        name: "Цементная штукатурка и шпатлевка",
+        materials: buildMaterialsRegistry.cementPlasterDefault()
+      },
+      {
+        id_cat: 5,
+        name: "Смесь для устройства пола",
+        materials: buildMaterialsRegistry.mixForFloorDefault()
+      },
+      {
+        id_cat: 6,
+        name: "MIX BEST",
+        materials: buildMaterialsRegistry.mixBestDefault()
+      },
+      {
+        id_cat: 7,
+        name: "ЛКМ",
+        materials: buildMaterialsRegistry.mixLKMDefault()
       }
     ],
-    mountingMixtures: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "mountingMix1",
-        density: 1.4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name: "Техно, 25 кг (Клей для кладки блоков)",
-        thickness: "3-10мм",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "mountingMix2",
-        customSquare: 0,
-        density: 1.5,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name: "Пескобетон М-300, 25кг",
-        thickness: "более 3мм",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 3,
-        selected:false,
-        type: "mountingMix3",
-        customSquare: 0,
-        density: 1.45,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name: "Цементно песчанная смесь М-150, 25кг",
-        thickness: "более 3мм",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 4,
-        selected:false,
-        type: "mountingMix4",
-        customSquare: 0,
-        density: 5,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name: "КТП 500, 25кг (Клей для приклеивания теплоизоляции)",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 5,
-        selected:false,
-        type: "mountingMix5",
-        customSquare: 0,
-        density: 5,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name:
-          "КТУ 1000, 25кг (Клей для приклеивания и армирования теплоизоляции)",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 6,
-        selected:false,
-        type: "mountingMix6",
-        customSquare: 0,
-        density: 5,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 7,
-        selected:false,
-        type: "mountingMix7",
-        customSquare: 0,
-        density: 1.45,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "Кладочно-монтажная смесь",
-        name: "MIX BEST Смесь цементно-песчаная, 20кг",
-        thickness: "более 3мм",
-        inputThickness:true,
-        customThickness: 0,
-      }
-    ],
-    gypsumPlaster: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "gypsumPlaster1",
-        density: 1.25,
-        weight: 30,
-        resultCalc: 0,
-        need: 0,
-        text: "Гипсовая штукатурка",
-        name: "Пласт Гипс, 30кг",
-        thickness: "2-80мм",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "gypsumPlaster2",
-        customSquare: 0,
-        density: 1,
-        weight: 30,
-        resultCalc: 0,
-        need: 0,
-        text: "Гипсовая штукатурка",
-        name: "Пласт Гипс Тонкий, 30кг",
-        thickness: "2-20мм",
-        inputThickness:true,
-        customThickness: 0,
-      }
-    ],
-    decorativePlaster: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "decorativePlaster1",
-         customSquare: 0,
-        density: 3,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Декоративная  штукатурка",
-        name: "Декоративная  штукатурка Короед 2, 25кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "decorativePlaster2",
-        customSquare: 0,
-        density: 4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Декоративная  штукатурка",
-        name: "Декоративная  штукатурка Короед 3, 25кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 3,
-        selected:false,
-        type: "decorativePlaster3",
-        customSquare: 0,
-        density: 2,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Декоративная  штукатурка",
-        name: "Декоративная  штукатурка Шуба 1, 25кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 4,
-        selected:false,
-        type: "decorativePlaster4",
-        customSquare: 0,
-        density: 3,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Декоративная  штукатурка",
-        name: "Декоративная  штукатурка Шуба 2, 25кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 5,
-        selected:false,
-        type: "decorativePlaster5",
-        customSquare: 0,
-        density: 4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Декоративная  штукатурка",
-        name: "Декоративная  штукатурка Шуба 3, 25кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 6,
-        selected:false,
-        type: "decorativePlaster6",
-        customSquare: 0,
-        density: 3,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "Декоративная  штукатурка",
-        name: "MIX BEST Декоративная штукатурка ШУБА, 20кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      }
-    ],
-    cementPlaster: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "cementPlaster1",
-        customSquare: 0,
-        density: 1.4,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Цементная штукатурка и шпатлевка",
-        name: "Пласт, 25кг (Штукатурка)",
-        thickness: "2-20",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "cementPlaster2",
-        customSquare: 0,
-        density: 0.9,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "Цементная штукатурка и шпатлевка",
-        name: "Пласт-Финиш, 20кг  (Шпатлевка)",
-        thickness: "1-6",
-        inputThickness:true,
-        customThickness: 0,
-      }
-    ],
-    mixForFloor: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "mixForFloor1",
-        customSquare: 0,
-        density: 1.3,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Смесь для устройства пола",
-        name: "Идеал, 25кг (Наливной пол)",
-        thickness: "2-10",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "mixForFloor2",
-        customSquare: 0,
-        density: 1.5,
-        weight: 25,
-        resultCalc: 0,
-        need: 0,
-        text: "Смесь для устройства пола",
-        name: "Конкрет, 25 кг (Стяжка для пола)",
-        thickness: "5-80",
-        inputThickness:true,
-        customThickness: 0,
-      }
-    ],
-    mixBest: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "mixBest1",
-        customSquare: 0,
-        density: 5,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "MIX BEST",
-        name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "mixBest2",
-        customSquare: 0,
-        density: 5,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "MIX BEST",
-        name: "MIX BEST Декоративная штукатурка ШУБА, 20кг",
-        thickness: "-",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 3,
-        selected:false,
-        type: "mixBest3",
-        customSquare: 0,
-        density: 1.45,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "MIX BEST",
-        name: "MIX BEST Смесь цементно-песчаная, 20кг",
-        thickness: "более 3",
-        inputThickness:true,
-        customThickness: 0,
-      },
-      {
-        idInn: 4,
-        selected:false,
-        type: "mixBest4",
-        customSquare: 0,
-        density: 1.4,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "MIX BEST",
-        name: "MIX BEST Клей плиточный базовый, 20кг",
-        thickness: "3-10",
-        inputThickness:true,
-        customThickness: 0,
-      }
-    ],
-    mixLKM: [
-      {
-        idInn: 1,
-        selected:false,
-        type: "mixLKM1",
-        customSquare: 0,
-        density: 0.125,
-        weight: 5,
-        resultCalc: 0,
-        need: 0,
-        text: "ЛКМ",
-        name: "Грунт глубокого проникновения акриловый универсальный, 5л",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 2,
-        selected:false,
-        type: "mixLKM2",
-        customSquare: 0,
-        density: 0.275,
-        weight: 6,
-        resultCalc: 0,
-        need: 0,
-        text: "ЛКМ",
-        name: "Кварц-грунт (бетоноконтакт) 6кг",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 3,
-        selected:false,
-        type: "mixLKM3",
-        customSquare: 0,
-        density: 0.2,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "ЛКМ",
-        name: "Краска фасадная, 20кг (один слой)",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      },
-      {
-        idInn: 4,
-        selected:false,
-        type: "mixLKM4",
-        customSquare: 0,
-        density: 0.35,
-        weight: 20,
-        resultCalc: 0,
-        need: 0,
-        text: "ЛКМ",
-        name: "Краска фасадная, 20кг (два слоя)",
-        thickness: "-",
-        inputThickness:false,
-        customThickness: 1,
-      }
-    ]
   }),
 
-  computed: {
-    resultEstimate() {
-      return this.outEstimate;
-    },
-    resultTileAdhesive() {
-      return this.newTileWindows;
-    }
-  },
   mounted() {
     this.flagPrint = "element-to-print";
   },
   methods: {
-    resetAllSelect(){
-      for(let index=0; index < this.tileAdhesive.length; index++ ){
-        alert(this.tileAdhesive[index].idInn)
-        this.tileAdhesive[index].selected = false
-      }
-    },
-    resetMainWindows(){
-      this.newTileWindows = ""
-      this.btnReset = false
-      this.resetAllSelect()
+    resetMainWindows() {
+      this.newTileWindows = "";
+      this.btnReset = false;
     },
     startPrinting() {
       document.querySelector("#element-to-print").className = "online-table";
@@ -743,33 +287,8 @@ export default {
       document.querySelector("#element-to-print").className = "table";
     },
     choice(i) {
-      this.flagCategory = "";
-      if (i === 1) {
-        this.newTileWindows = this.tileAdhesive;
-        this.flagCategory = "tileAdhesive";
-      } else if (i === 2) {
-        this.newTileWindows = this.mountingMixtures;
-        this.flagCategory = "mountingMixtures";
-      } else if (i === 3) {
-        this.newTileWindows = this.gypsumPlaster;
-        this.flagCategory = "gypsumPlaster";
-      } else if (i === 4) {
-        this.newTileWindows = this.decorativePlaster;
-        this.flagCategory = "decorativePlaster";
-      } else if (i === 5) {
-        this.newTileWindows = this.cementPlaster;
-        this.flagCategory = "cementPlaster";
-      } else if (i === 6) {
-        this.newTileWindows = this.mixForFloor;
-        this.flagCategory = "mixForFloor";
-      } else if (i === 7) {
-        this.newTileWindows = this.mixBest;
-        this.flagCategory = "mixBest";
-      } else if (i === 8) {
-        this.newTileWindows = this.mixLKM;
-        this.flagCategory = "mixLKM";
-      }
-      this.btnReset = true
+      this.newTileWindows = this.category[i].materials
+      this.btnReset = true;
     },
     deleteItem(id) {
       this.flagOutEstimate = false;
@@ -780,39 +299,9 @@ export default {
     },
     selectData(i) {
       this.flagOutEstimate = false;
-      if (this.flagCategory === "mountingMixtures") {
-        const valueOfType = this.mountingMixtures[i - 1].type;
-        this.outEstimate[valueOfType] = this.mountingMixtures[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "tileAdhesive") {
-        const valueOfType = this.tileAdhesive[i - 1].type;
-        this.outEstimate[valueOfType] = this.tileAdhesive[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "gypsumPlaster") {
-        const valueOfType = this.gypsumPlaster[i - 1].type;
-        this.outEstimate[valueOfType] = this.gypsumPlaster[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "decorativePlaster") {
-        const valueOfType = this.decorativePlaster[i - 1].type;
-        this.outEstimate[valueOfType] = this.decorativePlaster[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "cementPlaster") {
-        const valueOfType = this.cementPlaster[i - 1].type;
-        this.outEstimate[valueOfType] = this.cementPlaster[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "mixForFloor") {
-        const valueOfType = this.mixForFloor[i - 1].type;
-        this.outEstimate[valueOfType] = this.mixForFloor[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "mixBest") {
-        const valueOfType = this.mixBest[i - 1].type;
-        this.outEstimate[valueOfType] = this.mixBest[i - 1];
-        this.flagOutEstimate = true;
-      } else if (this.flagCategory === "mixLKM") {
-        const valueOfType = this.mixLKM[i - 1].type;
-        this.outEstimate[valueOfType] = this.mixLKM[i - 1];
-        this.flagOutEstimate = true;
-      }
+      const valueOfType = this.newTileWindows[i].type;
+      this.outEstimate[valueOfType] = this.newTileWindows[i];
+      this.flagOutEstimate = true;
     },
     filterData(value) {
       this.outEstimate[value].resultCalc = Math.ceil(
@@ -828,9 +317,10 @@ export default {
 };
 </script>
 <style lang="scss">
-  .estimate-text{
-    font-style: italic;
-  }
+.estimate-text {
+  font-style: italic;
+}
+
 .result-name {
   width: 400px;
   text-align: left;
@@ -838,10 +328,12 @@ export default {
 
 .result-100 {
   width: 100px;
+
   .v-text-field__slot input {
     width: 80px;
   }
 }
+
 .result-110 {
   width: 110px;
 }
@@ -849,16 +341,19 @@ export default {
 .btn-choice {
   padding: 0 6px;
 }
+
 .btn-reset {
   width: 120px;
   margin: 3px 0;
   color: #444fee;
 }
+
 .btn-cat {
   width: 360px;
   margin: 3px 0;
   color: #444fee;
 }
+
 .choice-table {
   span {
     color: #444fee;
@@ -866,9 +361,11 @@ export default {
     margin: 0 10px;
   }
 }
+
 .choice-table-down {
   border-bottom: 2px solid #444fee;
   margin: 6px 0;
+
   span {
     color: #444fee;
     text-transform: uppercase;
@@ -879,9 +376,11 @@ export default {
 .print-windows {
   border: 2px solid #000;
 }
+
 .main-windows {
   border: 2px solid #444fee;
 }
+
 @media (max-width: 768px) {
   .main-windows div {
     font-size: 12px;
@@ -893,6 +392,7 @@ export default {
 
   .result-100 {
     width: 70px;
+
     .v-text-field__slot input {
       width: 30px;
     }
@@ -907,6 +407,7 @@ table {
   width: 100%;
   display: none;
 }
+
 .online-table {
   border-collapse: collapse;
   width: 100%;
@@ -916,6 +417,7 @@ table {
   top: 0;
   left: 0;
 }
+
 td,
 th {
   border: 1px solid #dddddd;
@@ -926,6 +428,7 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
 .share-network {
   text-transform: uppercase;
   font-weight: 500;
