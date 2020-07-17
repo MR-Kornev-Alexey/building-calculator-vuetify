@@ -16,7 +16,7 @@
           >{{ index.name }}
         </v-btn>
       </v-col>
-      <v-col cols="6" class="md-6 main-windows">
+      <v-col cols="6" class=" main-windows">
         <v-flex
           v-for="index in resultTileAdhesive"
           :key="index.idInn"
@@ -29,7 +29,16 @@
           <v-flex class="choice-table text-left align-self-center">
             {{ index.name }}
           </v-flex>
+
         </v-flex>
+        <v-btn v-if="btnReset"
+                color="#444fee"
+                text
+                outlined
+                @click="resetMainWindows()"
+                class="btn-reset"
+        >Сбросить
+        </v-btn>
       </v-col>
     </v-row>
     <v-row
@@ -43,8 +52,8 @@
           <v-flex class="result-100 ">Толщина слоя(мм)</v-flex>
           <v-flex class="result-100 ">Площадь (кв.м)</v-flex>
           <v-flex class="result-100 ">Расход (кг)</v-flex>
-          <v-flex class="result-100 ">Требуется</v-flex>
-          <v-flex class="result-100 ">Очистить</v-flex>
+          <v-flex class="result-100 ">Количество</v-flex>
+          <v-flex class="result-100 "></v-flex>
         </div>
 
         <v-flex
@@ -103,7 +112,7 @@
           <th>Толщина</th>
           <th>Площадь</th>
           <th>Расход</th>
-          <th>Требуется</th>
+          <th>Количество</th>
         </tr>
         <tr v-for="index in resultEstimate" :key="index.idInn">
           <td>{{ index.name }}</td>
@@ -190,6 +199,7 @@ export default {
     SocialSharing
   },
   data: () => ({
+    btnReset:false,
     outEstimate: {},
     flagOutEstimate: false,
     newTileWindows: "",
@@ -638,6 +648,10 @@ export default {
     this.flagPrint = "element-to-print";
   },
   methods: {
+    resetMainWindows(){
+      this.newTileWindows = ""
+      this.btnReset = false
+    },
     startPrinting() {
       document.querySelector("#element-to-print").className = "online-table";
       const el = document.querySelector("#element-to-print");
@@ -682,6 +696,7 @@ export default {
         this.newTileWindows = this.mixLKM;
         this.flagCategory = "mixLKM";
       }
+      this.btnReset = true
     },
     deleteItem(id) {
       this.flagOutEstimate = false;
@@ -757,6 +772,11 @@ export default {
 
 .btn-choice {
   padding: 0 6px;
+}
+.btn-reset {
+  width: 120px;
+  margin: 3px 0;
+  color: #444fee;
 }
 .btn-cat {
   width: 360px;
