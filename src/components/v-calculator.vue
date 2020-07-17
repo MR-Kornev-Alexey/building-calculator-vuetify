@@ -1,10 +1,11 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="center">
       <h1>Расчет необходимого количества строительных материалов</h1>
+      <p class="estimate-text">Онлайн расчет носит информативный характер. Детали уточняйте у наших менеждеров.</p>
     </v-row>
     <v-row class="text-center justify-center mt-8">
-      <v-col cols="4">
+      <v-col md="4" cols="10" >
         <v-btn
           color="#444fee"
           text
@@ -16,14 +17,14 @@
           >{{ index.name }}
         </v-btn>
       </v-col>
-      <v-col cols="6" class=" main-windows">
+      <v-col md="6" cols="10" class=" main-windows">
         <v-flex
           v-for="index in resultTileAdhesive"
           :key="index.idInn"
           class="d-flex align-self-center"
         >
           <v-checkbox
-            :v-model="index.idInn"
+            v-model="index.selected"
             @change="selectData(index.idInn)"
           ></v-checkbox>
           <v-flex class="choice-table text-left align-self-center">
@@ -68,7 +69,7 @@
             {{ index.thickness }}</v-flex
           >
 
-          <v-text-field
+          <v-text-field v-if="index.inputThickness"
             class="result-100"
             id="custom"
             required
@@ -76,8 +77,12 @@
             type="text"
             placeholder="...толщина"
             @keyup.enter="filterData(index.type)"
+            @change="filterData(index.type)"
           />
-
+          <v-flex v-if="!index.inputThickness"
+                  class="d-flex align-self-center justify-center result-110">
+            {{ index.customThickness }}</v-flex
+          >
           <v-text-field
             class="result-100"
             id="square"
@@ -86,6 +91,7 @@
             type="text"
             placeholder="...площадь"
             @keyup.enter="filterData(index.type)"
+            @change="filterData(index.type)"
           />
 
           <v-flex
@@ -217,75 +223,84 @@ export default {
     tileAdhesive: [
       {
         idInn: 1,
+        selected:false,
         type: "tileAdhesive1",
         text: "Плиточный клей",
         name: "Плиточный клей Стандарт, 25кг",
         thickness: "3-10мм",
-        customThickness: 0,
         customSquare: 0,
         density: 1.4,
         weight: 25,
         resultCalc: 0,
-        need: 0
+        need: 0,
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 2,
+        selected:false,
         type: "tileAdhesive2",
         text: "Плиточный клей",
         name: "Плиточный клей Гранит, 25кг",
         thickness: "3-10мм",
         density: 1.45,
-        customThickness: 0,
-        customSquare: 0,
+       customSquare: 0,
         weight: 25,
         resultCalc: 0,
-        need: 0
+        need: 0,
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 3,
+        selected:false,
         type: "tileAdhesive3",
         text: "Плиточный клей",
         name: "Плиточный клей Профи, 25кг",
         thickness: "3-10мм",
         density: 1.35,
-        customThickness: 0,
         customSquare: 0,
         weight: 25,
         resultCalc: 0,
-        need: 0
+        need: 0,
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 4,
+        selected:false,
         type: "tileAdhesive4",
         text: "Плиточный клей",
         name: "MIX BEST Клей плиточный базовый, 20кг",
         thickness: "3-10мм",
-        customThickness: 0,
         customSquare: 0,
         density: 1.4,
         weight: 20,
         resultCalc: 0,
-        need: 0
+        need: 0,
+        inputThickness:true,
+        customThickness: 0,
       }
     ],
     mountingMixtures: [
       {
         idInn: 1,
+        selected:false,
         type: "mountingMix1",
-        customThickness: 0,
-        customSquare: 0,
         density: 1.4,
         weight: 25,
         resultCalc: 0,
         need: 0,
         text: "Кладочно-монтажная смесь",
         name: "Техно, 25 кг (Клей для кладки блоков)",
-        thickness: "3-10мм"
+        thickness: "3-10мм",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 2,
+        selected:false,
         type: "mountingMix2",
-        customThickness: 0,
         customSquare: 0,
         density: 1.5,
         weight: 25,
@@ -293,12 +308,14 @@ export default {
         need: 0,
         text: "Кладочно-монтажная смесь",
         name: "Пескобетон М-300, 25кг",
-        thickness: "более 3мм"
+        thickness: "более 3мм",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 3,
+        selected:false,
         type: "mountingMix3",
-        customThickness: 0,
         customSquare: 0,
         density: 1.45,
         weight: 25,
@@ -306,12 +323,14 @@ export default {
         need: 0,
         text: "Кладочно-монтажная смесь",
         name: "Цементно песчанная смесь М-150, 25кг",
-        thickness: "более 3мм"
+        thickness: "более 3мм",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 4,
+        selected:false,
         type: "mountingMix4",
-        customThickness: 0,
         customSquare: 0,
         density: 5,
         weight: 25,
@@ -319,12 +338,14 @@ export default {
         need: 0,
         text: "Кладочно-монтажная смесь",
         name: "КТП 500, 25кг (Клей для приклеивания теплоизоляции)",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 5,
+        selected:false,
         type: "mountingMix5",
-        customThickness: 0,
         customSquare: 0,
         density: 5,
         weight: 25,
@@ -333,12 +354,14 @@ export default {
         text: "Кладочно-монтажная смесь",
         name:
           "КТУ 1000, 25кг (Клей для приклеивания и армирования теплоизоляции)",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 6,
+        selected:false,
         type: "mountingMix6",
-        customThickness: 0,
         customSquare: 0,
         density: 5,
         weight: 20,
@@ -346,12 +369,14 @@ export default {
         need: 0,
         text: "Кладочно-монтажная смесь",
         name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 7,
+        selected:false,
         type: "mountingMix7",
-        customThickness: 0,
         customSquare: 0,
         density: 1.45,
         weight: 20,
@@ -359,27 +384,30 @@ export default {
         need: 0,
         text: "Кладочно-монтажная смесь",
         name: "MIX BEST Смесь цементно-песчаная, 20кг",
-        thickness: "более 3мм"
+        thickness: "более 3мм",
+        inputThickness:true,
+        customThickness: 0,
       }
     ],
     gypsumPlaster: [
       {
         idInn: 1,
+        selected:false,
         type: "gypsumPlaster1",
-        customThickness: 0,
-        customSquare: 0,
         density: 1.25,
         weight: 30,
         resultCalc: 0,
         need: 0,
         text: "Гипсовая штукатурка",
         name: "Пласт Гипс, 30кг",
-        thickness: "2-80мм"
+        thickness: "2-80мм",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 2,
+        selected:false,
         type: "gypsumPlaster2",
-        customThickness: 0,
         customSquare: 0,
         density: 1,
         weight: 30,
@@ -387,27 +415,31 @@ export default {
         need: 0,
         text: "Гипсовая штукатурка",
         name: "Пласт Гипс Тонкий, 30кг",
-        thickness: "2-20мм"
+        thickness: "2-20мм",
+        inputThickness:true,
+        customThickness: 0,
       }
     ],
     decorativePlaster: [
       {
         idInn: 1,
+        selected:false,
         type: "decorativePlaster1",
-        customThickness: 0,
-        customSquare: 0,
+         customSquare: 0,
         density: 3,
         weight: 25,
         resultCalc: 0,
         need: 0,
         text: "Декоративная  штукатурка",
         name: "Декоративная  штукатурка Короед 2, 25кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 2,
+        selected:false,
         type: "decorativePlaster2",
-        customThickness: 0,
         customSquare: 0,
         density: 4,
         weight: 25,
@@ -415,12 +447,14 @@ export default {
         need: 0,
         text: "Декоративная  штукатурка",
         name: "Декоративная  штукатурка Короед 3, 25кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 3,
+        selected:false,
         type: "decorativePlaster3",
-        customThickness: 0,
         customSquare: 0,
         density: 2,
         weight: 25,
@@ -428,12 +462,14 @@ export default {
         need: 0,
         text: "Декоративная  штукатурка",
         name: "Декоративная  штукатурка Шуба 1, 25кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 4,
+        selected:false,
         type: "decorativePlaster4",
-        customThickness: 0,
         customSquare: 0,
         density: 3,
         weight: 25,
@@ -441,12 +477,14 @@ export default {
         need: 0,
         text: "Декоративная  штукатурка",
         name: "Декоративная  штукатурка Шуба 2, 25кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 5,
+        selected:false,
         type: "decorativePlaster5",
-        customThickness: 0,
         customSquare: 0,
         density: 4,
         weight: 25,
@@ -454,12 +492,14 @@ export default {
         need: 0,
         text: "Декоративная  штукатурка",
         name: "Декоративная  штукатурка Шуба 3, 25кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 6,
+        selected:false,
         type: "decorativePlaster6",
-        customThickness: 0,
         customSquare: 0,
         density: 3,
         weight: 20,
@@ -467,14 +507,16 @@ export default {
         need: 0,
         text: "Декоративная  штукатурка",
         name: "MIX BEST Декоративная штукатурка ШУБА, 20кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       }
     ],
     cementPlaster: [
       {
         idInn: 1,
+        selected:false,
         type: "cementPlaster1",
-        customThickness: 0,
         customSquare: 0,
         density: 1.4,
         weight: 25,
@@ -482,12 +524,14 @@ export default {
         need: 0,
         text: "Цементная штукатурка и шпатлевка",
         name: "Пласт, 25кг (Штукатурка)",
-        thickness: "2-20"
+        thickness: "2-20",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 2,
+        selected:false,
         type: "cementPlaster2",
-        customThickness: 0,
         customSquare: 0,
         density: 0.9,
         weight: 20,
@@ -495,14 +539,16 @@ export default {
         need: 0,
         text: "Цементная штукатурка и шпатлевка",
         name: "Пласт-Финиш, 20кг  (Шпатлевка)",
-        thickness: "1-6"
+        thickness: "1-6",
+        inputThickness:true,
+        customThickness: 0,
       }
     ],
     mixForFloor: [
       {
         idInn: 1,
+        selected:false,
         type: "mixForFloor1",
-        customThickness: 0,
         customSquare: 0,
         density: 1.3,
         weight: 25,
@@ -510,12 +556,14 @@ export default {
         need: 0,
         text: "Смесь для устройства пола",
         name: "Идеал, 25кг (Наливной пол)",
-        thickness: "2-10"
+        thickness: "2-10",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 2,
+        selected:false,
         type: "mixForFloor2",
-        customThickness: 0,
         customSquare: 0,
         density: 1.5,
         weight: 25,
@@ -523,14 +571,16 @@ export default {
         need: 0,
         text: "Смесь для устройства пола",
         name: "Конкрет, 25 кг (Стяжка для пола)",
-        thickness: "5-80"
+        thickness: "5-80",
+        inputThickness:true,
+        customThickness: 0,
       }
     ],
     mixBest: [
       {
         idInn: 1,
+        selected:false,
         type: "mixBest1",
-        customThickness: 0,
         customSquare: 0,
         density: 5,
         weight: 20,
@@ -538,12 +588,14 @@ export default {
         need: 0,
         text: "MIX BEST",
         name: "MIX BEST Клей для теплоизоляции универсальный, 20кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 2,
+        selected:false,
         type: "mixBest2",
-        customThickness: 0,
         customSquare: 0,
         density: 5,
         weight: 20,
@@ -551,12 +603,14 @@ export default {
         need: 0,
         text: "MIX BEST",
         name: "MIX BEST Декоративная штукатурка ШУБА, 20кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 3,
+        selected:false,
         type: "mixBest3",
-        customThickness: 0,
         customSquare: 0,
         density: 1.45,
         weight: 20,
@@ -564,12 +618,14 @@ export default {
         need: 0,
         text: "MIX BEST",
         name: "MIX BEST Смесь цементно-песчаная, 20кг",
-        thickness: "более 3"
+        thickness: "более 3",
+        inputThickness:true,
+        customThickness: 0,
       },
       {
         idInn: 4,
+        selected:false,
         type: "mixBest4",
-        customThickness: 0,
         customSquare: 0,
         density: 1.4,
         weight: 20,
@@ -577,14 +633,16 @@ export default {
         need: 0,
         text: "MIX BEST",
         name: "MIX BEST Клей плиточный базовый, 20кг",
-        thickness: "3-10"
+        thickness: "3-10",
+        inputThickness:true,
+        customThickness: 0,
       }
     ],
     mixLKM: [
       {
         idInn: 1,
+        selected:false,
         type: "mixLKM1",
-        customThickness: 0,
         customSquare: 0,
         density: 0.125,
         weight: 5,
@@ -592,12 +650,14 @@ export default {
         need: 0,
         text: "ЛКМ",
         name: "Грунт глубокого проникновения акриловый универсальный, 5л",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 2,
+        selected:false,
         type: "mixLKM2",
-        customThickness: 0,
         customSquare: 0,
         density: 0.275,
         weight: 6,
@@ -605,12 +665,14 @@ export default {
         need: 0,
         text: "ЛКМ",
         name: "Кварц-грунт (бетоноконтакт) 6кг",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 3,
+        selected:false,
         type: "mixLKM3",
-        customThickness: 0,
         customSquare: 0,
         density: 0.2,
         weight: 20,
@@ -618,12 +680,14 @@ export default {
         need: 0,
         text: "ЛКМ",
         name: "Краска фасадная, 20кг (один слой)",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       },
       {
         idInn: 4,
+        selected:false,
         type: "mixLKM4",
-        customThickness: 0,
         customSquare: 0,
         density: 0.35,
         weight: 20,
@@ -631,7 +695,9 @@ export default {
         need: 0,
         text: "ЛКМ",
         name: "Краска фасадная, 20кг (два слоя)",
-        thickness: "-"
+        thickness: "-",
+        inputThickness:false,
+        customThickness: 1,
       }
     ]
   }),
@@ -648,9 +714,16 @@ export default {
     this.flagPrint = "element-to-print";
   },
   methods: {
+    resetAllSelect(){
+      for(let index=0; index < this.tileAdhesive.length; index++ ){
+        alert(this.tileAdhesive[index].idInn)
+        this.tileAdhesive[index].selected = false
+      }
+    },
     resetMainWindows(){
       this.newTileWindows = ""
       this.btnReset = false
+      this.resetAllSelect()
     },
     startPrinting() {
       document.querySelector("#element-to-print").className = "online-table";
@@ -755,6 +828,9 @@ export default {
 };
 </script>
 <style lang="scss">
+  .estimate-text{
+    font-style: italic;
+  }
 .result-name {
   width: 400px;
   text-align: left;
