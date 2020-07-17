@@ -96,8 +96,8 @@ module.exports.decorativePlasterDefault = () => {
       customThickness: 1,
       unit: "меш."
     }
-  ]
-}
+  ];
+};
 
 module.exports.mixBestDefault = () => {
   return [
@@ -165,8 +165,8 @@ module.exports.mixBestDefault = () => {
       customThickness: 0,
       unit: "меш."
     }
-  ]
-}
+  ];
+};
 
 module.exports.mixLKMDefault = () => {
   return [
@@ -234,8 +234,8 @@ module.exports.mixLKMDefault = () => {
       customThickness: 1,
       unit: "ведро"
     }
-  ]
-}
+  ];
+};
 module.exports.cementPlasterDefault = () => {
   return [
     {
@@ -270,8 +270,8 @@ module.exports.cementPlasterDefault = () => {
       customThickness: 0,
       unit: "меш."
     }
-  ]
-}
+  ];
+};
 module.exports.mixForFloorDefault = () => {
   return [
     {
@@ -306,8 +306,8 @@ module.exports.mixForFloorDefault = () => {
       customThickness: 0,
       unit: "меш."
     }
-  ]
-}
+  ];
+};
 module.exports.gypsumPlasterDefault = () => {
   return [
     {
@@ -342,8 +342,8 @@ module.exports.gypsumPlasterDefault = () => {
       customThickness: 0,
       unit: "меш."
     }
-  ]
-}
+  ];
+};
 module.exports.mountingMixturesDefault = () => {
   return [
     {
@@ -458,8 +458,8 @@ module.exports.mountingMixturesDefault = () => {
       customThickness: 0,
       unit: "меш."
     }
-  ]
-}
+  ];
+};
 module.exports.tileAdhesiveDefault = () => {
   return [
     {

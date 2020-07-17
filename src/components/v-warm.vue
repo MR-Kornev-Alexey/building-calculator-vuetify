@@ -10,13 +10,13 @@
         </h3>
         <div class="result-100">
           <v-text-field
-            id="custom"
-            required
-            v-model.number="squareWarm"
-            type="text"
-            placeholder="...m2"
-            @keyup.enter="inputSquareWarm(squareWarm)"
             @change="inputSquareWarm(squareWarm)"
+            @keyup.enter="inputSquareWarm(squareWarm)"
+            id="custom"
+            placeholder="...m2"
+            required
+            type="text"
+            v-model.number="squareWarm"
           />
         </div>
       </div>
@@ -26,14 +26,14 @@
         </h3>
         <div class="result-100">
           <v-text-field
+            @change="inputSquareWarm(squareWarm)"
+            @keyup.enter="inputSquareWarm(lengthDoors)"
             class="result-100"
             id="custom2"
-            required
-            v-model.number="lengthDoors"
-            type="text"
             placeholder="...m"
-            @keyup.enter="inputSquareWarm(lengthDoors)"
-            @change="inputSquareWarm(squareWarm)"
+            required
+            type="text"
+            v-model.number="lengthDoors"
           />
         </div>
       </div>
@@ -43,14 +43,14 @@
         </h3>
         <div class="result-80">
           <v-text-field
+            @change="inputSquareWarm(squareWarm)"
+            @keyup.enter="inputSquareWarm(lengthWin)"
             class="result-100"
             id="custom1"
-            required
-            v-model.number="lengthWin"
-            type="text"
             placeholder="...m"
-            @keyup.enter="inputSquareWarm(lengthWin)"
-            @change="inputSquareWarm(squareWarm)"
+            required
+            type="text"
+            v-model.number="lengthWin"
           />
         </div>
       </div>
@@ -58,26 +58,26 @@
     <v-row class="text-center justify-center mt-8">
       <v-col cols="4">
         <v-btn
-          color="#444fee"
-          text
-          outlined
-          v-for="index in registry.categoryWarm"
           :key="index.id_cat"
           @click="choiceWarm(index.id_cat)"
           class="btn-cat"
+          color="#444fee"
+          outlined
+          text
+          v-for="index in categoryWarm"
           >{{ index.name }}
         </v-btn>
       </v-col>
-      <v-col cols="6" class="md-6 main-windows">
+      <v-col class="md-6 main-windows" cols="6">
         <v-flex
-          v-for="index in resultTileWarm"
           :key="index.idInn"
           class="d-flex align-self-center"
+          v-for="index in warmWindows"
         >
           <v-checkbox
             :checked="checked"
-            :v-model="index.idInn"
             @change="selectDataWarm(index.idInn)"
+            v-model="index.selected"
           ></v-checkbox>
           <v-flex class="choice-table text-left align-self-center">
             {{ index.name }}
@@ -86,22 +86,22 @@
       </v-col>
     </v-row>
     <v-row
-      v-if="flagWarmEstimate"
       class="text-center forPrint justify-center mt-8"
+      v-if="flagWarmEstimate"
     >
       <v-col class="main-windows" cols="10">
         <div class="d-flex">
           <v-flex class="result-name">Наименование материала</v-flex>
           <v-flex class="result-100 ">Размер</v-flex>
           <v-flex class="result-100 ">Расход</v-flex>
-          <v-flex class="result-100 ">Требуется</v-flex>
-          <v-flex class="result-100 ">Очистить</v-flex>
+          <v-flex class="result-100 ">Количество</v-flex>
+          <v-flex class="result-100 "></v-flex>
         </div>
 
         <v-flex
-          v-for="index in resultEstimateWarm"
           :key="index.idInn"
           class="d-flex align-content-center choice-table-down"
+          v-for="index in outEstimateWarm"
         >
           <v-flex class="d-flex align-self-center result-name">
             {{ index.name }}
@@ -144,7 +144,7 @@
           <th>Расход</th>
           <th>Требуется</th>
         </tr>
-        <tr v-for="index in resultEstimateWarm" :key="index.idInn">
+        <tr :key="index.idInn" v-for="index in outEstimateWarm">
           <td>{{ index.name }}</td>
           <td>{{ index.surface }} {{ index.measure }}</td>
           <td>{{ index.resultCalc }} {{ index.unit }}</td>
@@ -154,53 +154,53 @@
     </v-row>
     <v-row class="d-flex mt-6">
       <v-btn
-        color="#444fee"
-        text
-        outlined
         @click="startPrinting()"
         class="btn-cat"
+        color="#444fee"
+        outlined
+        text
         >Сохранить PDF
       </v-btn>
       <vPrint :printChoice="this.flagPrint" />
     </v-row>
     <v-row>
-      <social-sharing url="https://vuejs.org/" inline-template>
+      <social-sharing inline-template url="https://vuejs.org/">
         <div class="ml-6 d-flex">
           <div class="mr-4 share-network">
             Поделиться
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              network="whatsapp"
-              url="http://calc.mrk.digital/"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              quote="Онлайн-расчет количества необходимых материалов"
               hashtags="строительныйкалькулятор"
+              network="whatsapp"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               Whatsapp
             </ShareNetwork>
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              network="vk"
-              url="http://calc.mrk.digital/"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              quote="Онлайн-расчет количества необходимых материалов"
               hashtags="строительныйкалькулятор"
+              network="vk"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               ВКонтакте
             </ShareNetwork>
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              network="facebook"
-              url="http://calc.mrk.digital/"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              quote="Онлайн-расчет количества необходимых материалов"
               hashtags="строительныйкалькулятор"
+              network="facebook"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               Facebook
             </ShareNetwork>
@@ -213,10 +213,13 @@
 
 <script>
 import html2PDF from "html-pdf-adaptive";
+import warmMaterials from "../common/buildWarmRegistry";
+
 const constantRegistry = require("../common/product_registry.js");
 const isEm = require("../common/isEmty");
 import Vue from "vue";
 import SocialSharing from "vue-social-sharing";
+
 Vue.use(SocialSharing);
 import vPrint from "./v-print";
 
@@ -227,6 +230,7 @@ export default {
     vPrint
   },
   data: () => ({
+    btnResetWarm: false,
     checked: false,
     flagPrint: "",
     lengthWin: "",
@@ -236,16 +240,25 @@ export default {
     lengthDoors: "",
     warmWindows: "",
     flagCategoryWarm: "",
-    registry: constantRegistry
+    registry: constantRegistry,
+    categoryWarm: [
+      {
+        id_cat: 0,
+        name: "Утеплитель",
+        materials: warmMaterials.tileInsulationDefault
+      },
+      {
+        id_cat: 1,
+        name: "Декоративная штукатурка",
+        materials: warmMaterials.plasteringDefault
+      },
+      {
+        id_cat: 2,
+        name: "Краска фасадная",
+        materials: warmMaterials.tilePaintingDefault
+      }
+    ]
   }),
-  computed: {
-    resultEstimateWarm() {
-      return this.outEstimateWarm;
-    },
-    resultTileWarm() {
-      return this.warmWindows;
-    }
-  },
   mounted() {
     this.flagPrint = "element-to-print-warm";
   },
@@ -307,24 +320,13 @@ export default {
     },
     selectDataWarm(i) {
       this.flagWarmEstimate = false;
-      const entry = this.registry[this.flagCategoryWarm][i - 1];
-      this.outEstimateWarm[entry.type] = entry;
+      this.outEstimateWarm[this.warmWindows[i].type] = this.warmWindows[i];
       this.changeDataSquare(this.outEstimateWarm);
       this.flagWarmEstimate = true;
     },
     choiceWarm(i) {
-      this.flagCategoryWarm = "";
-      this.checked = false;
-      if (i === 1) {
-        this.warmWindows = this.registry.tileInsulation;
-        this.flagCategoryWarm = "tileInsulation";
-      } else if (i === 2) {
-        this.warmWindows = this.registry.plastering;
-        this.flagCategoryWarm = "plastering";
-      } else if (i === 3) {
-        this.warmWindows = this.registry.tilePainting;
-        this.flagCategoryWarm = "tilePainting";
-      }
+      this.warmWindows = this.categoryWarm[i].materials()
+      this.btnResetWarm = true;
     }
   }
 };

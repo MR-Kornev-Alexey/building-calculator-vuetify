@@ -114,17 +114,17 @@
           </v-flex>
         </v-flex>
       </v-col>
-
     </v-row>
     <v-row class="justify-center">
       <div class="col-md-10 text-right">
-        <v-btn v-if="btnResetEstimate"
-                @click="resetMainEstimate()"
-                class="btn-reset"
-                color="#444fee"
-                outlined
-                text
-        >Очистить
+        <v-btn
+          v-if="btnResetEstimate"
+          @click="resetMainEstimate()"
+          class="btn-reset"
+          color="#444fee"
+          outlined
+          text
+          >Очистить
         </v-btn>
       </div>
     </v-row>
@@ -225,7 +225,7 @@ export default {
     SocialSharing
   },
   data: () => ({
-    btnResetEstimate:false,
+    btnResetEstimate: false,
     btnReset: false,
     outEstimate: {},
     flagOutEstimate: false,
@@ -272,15 +272,15 @@ export default {
         name: "ЛКМ",
         materials: buildMaterialsRegistry.mixLKMDefault()
       }
-    ],
+    ]
   }),
 
   mounted() {
     this.flagPrint = "element-to-print";
   },
   methods: {
-    resetMainEstimate(){
-      this.outEstimate = {}
+    resetMainEstimate() {
+      this.outEstimate = {};
     },
     resetMainWindows() {
       this.newTileWindows = "";
@@ -304,7 +304,9 @@ export default {
       document.querySelector("#element-to-print").className = "table";
     },
     choice(i) {
-      this.newTileWindows = JSON.parse(JSON.stringify(this.category[i].materials));
+      this.newTileWindows = JSON.parse(
+        JSON.stringify(this.category[i].materials)
+      );
       this.btnReset = true;
     },
     deleteItem(id) {
@@ -315,12 +317,12 @@ export default {
       }
     },
     selectData(i) {
-      if(this.newTileWindows[i].selected){
-        this.flagOutEstimate = false
-        this.outEstimate[this.newTileWindows[i].type] = this.newTileWindows[i]
-        this.btnResetEstimate = this.flagOutEstimate = true
-      }else {
-        return false
+      if (this.newTileWindows[i].selected) {
+        this.flagOutEstimate = false;
+        this.outEstimate[this.newTileWindows[i].type] = this.newTileWindows[i];
+        this.btnResetEstimate = this.flagOutEstimate = true;
+      } else {
+        return false;
       }
     },
     filterData(value) {

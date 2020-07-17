@@ -54,14 +54,121 @@ function resultSurface(surfaceArea, lengthDoors, lengthWin) {
 function resultOnlyWindows(surfaceArea, lengthDoors, lengthWin) {
   return lengthWin;
 }
+
 function resultWithoutSurface(surfaceArea, lengthDoors, lengthWin) {
   return lengthDoors + lengthWin;
 }
 
-module.exports = {
-  tileInsulation: [
+module.exports.plasteringDefault = () => {
+  return [
+    {
+      idInn: 0,
+      selected: false,
+      type: "plastering1",
+      name: "Декоративная штукатурка «Короед» зерно 2,0 мм",
+      unit: "кг",
+      density: 3,
+      weight: 25,
+      surface: 0,
+      resultCalc: 0,
+      need: 0,
+      measure: "m2",
+      needFormula: needWitSurface,
+      resultCalcFormula: resultCalcWithSurface,
+      resultSurfaceFormula: resultSurface
+    },
     {
       idInn: 1,
+      selected: false,
+      type: "plastering2",
+      name: "Декоративная штукатурка «Короед» зерно 3,0 мм",
+      unit: "кг",
+      density: 4,
+      weight: 25,
+      surface: 0,
+      resultCalc: 0,
+      need: 0,
+      measure: "m2",
+      needFormula: needWitSurface,
+      resultCalcFormula: resultCalcWithSurface,
+      resultSurfaceFormula: resultSurface
+    },
+    {
+      idInn: 2,
+      selected: false,
+      type: "plastering3",
+      name: "Декоративная штукатурка «Шуба» зерно 1,0 мм",
+      unit: "кг",
+      density: 2,
+      weight: 25,
+      resultCalc: 0,
+      surface: 0,
+      need: 0,
+      measure: "m2",
+      needFormula: needWitSurface,
+      resultCalcFormula: resultCalcWithSurface,
+      resultSurfaceFormula: resultSurface
+    },
+    {
+      idInn: 3,
+      selected: false,
+      type: "plastering4",
+      name: "Декоративная штукатурка «Шуба» зерно 2,0 мм",
+      unit: "кг",
+      density: 3,
+      weight: 25,
+      resultCalc: 0,
+      surface: 0,
+      need: 0,
+      measure: "m2",
+      needFormula: needWitSurface,
+      resultCalcFormula: resultCalcWithSurface,
+      resultSurfaceFormula: resultSurface
+    },
+    {
+      idInn: 4,
+      selected: false,
+      type: "plastering5",
+      name: "Декоративная штукатурка «Шуба» зерно 3,0 мм",
+      unit: "кг",
+      density: 4,
+      weight: 25,
+      surface: 0,
+      resultCalc: 0,
+      need: 0,
+      measure: "m2",
+      needFormula: needWitSurface,
+      resultCalcFormula: resultCalcWithSurface,
+      resultSurfaceFormula: resultSurface
+    }
+  ];
+};
+module.exports.tilePaintingDefault = () => {
+  return [
+    {
+      idInn: 0,
+      selected: false,
+      type: "tilePainting1",
+      name: "Краска фасадная 2 слоя",
+      unit: "кг",
+      density: 0.35,
+      weight: 20,
+      surface: 0,
+      resultCalc: 0,
+      need: 0,
+      measure: "m2",
+      needFormula: needWitSurface,
+      resultCalcFormula: resultCalcWithSurface,
+      resultSurfaceFormula: resultSurface
+    }
+  ];
+};
+
+module.exports.tileInsulationDefault = () => {
+  return [
+    {
+      idInn: 0,
+      selected: false,
       type: "warmAdhesive1",
       name:
         "Грунт глубокопроникающий акриловый, 5л (для подготовки основания к монтажу плит)",
@@ -77,7 +184,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 2,
+      idInn: 1,
+      selected: false,
       type: "warmAdhesive2",
       name:
         "Кварц-грунт, 6кг (для подготовки бетонного основания к монтажу плит)",
@@ -93,7 +201,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 3,
+      idInn: 2,
+      selected: false,
       type: "warmAdhesive3",
       name: "Минераловатная плита 1200×600×100 мм ",
       unit: "шт.",
@@ -108,7 +217,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 4,
+      idInn: 3,
+      selected: false,
       type: "warmAdhesive4",
       name: "Пенополистирол ПСБ-С 25Ф 1200×100×100 мм",
       unit: "шт.",
@@ -123,7 +233,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 5,
+      idInn: 4,
+      selected: false,
       type: "warmAdhesive5",
       name: "КТП 500, 25кг (Клей для приклеивания теплоизоляции)",
       unit: "кг",
@@ -138,8 +249,9 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 6,
+      idInn: 5,
       type: "warmAdhesive6",
+      selected: false,
       name: "Дюбель тарельчатый с металическим стержнем и термоголовкой",
       unit: "шт.",
       density: 5,
@@ -153,8 +265,9 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 7,
+      idInn: 6,
       type: "warmAdhesive7",
+      selected: false,
       name:
         "КТУ 1000, 25кг (Клеевой состав для нанесения армирующего штукатурного слоя)",
       unit: "кг.",
@@ -169,7 +282,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 8,
+      idInn: 7,
+      selected: false,
       type: "warmAdhesive8",
       name: "Армирующая сетка из стекловолокна щелочестойкая",
       unit: "м2",
@@ -184,7 +298,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 9,
+      idInn: 8,
+      selected: false,
       type: "warmAdhesive9",
       name:
         "Уголок с армирующей сеткой и сердечником из ПВХ  150/100мм, (2,5м)",
@@ -200,7 +315,8 @@ module.exports = {
       resultSurfaceFormula: resultWithoutSurface
     },
     {
-      idInn: 10,
+      idInn: 9,
+      selected: false,
       type: "warmAdhesive10",
       name: "Профиль примыкания оконный с сеткой (2,4м)",
       unit: "шт.",
@@ -215,7 +331,8 @@ module.exports = {
       resultSurfaceFormula: resultOnlyWindows
     },
     {
-      idInn: 11,
+      idInn: 10,
+      selected: false,
       type: "warmAdhesive11",
       name:
         "Грунт глубокопроникающий акриловый, 5л (для подготовки основания под нанесение декоративной штукатурки)",
@@ -231,7 +348,8 @@ module.exports = {
       resultSurfaceFormula: resultSurface
     },
     {
-      idInn: 12,
+      idInn: 11,
+      selected: false,
       type: "warmAdhesive12",
       name:
         "Кварц-грунт, 6кг  (для подготовки основания под нанесение декоративной штукатурки) ",
@@ -246,99 +364,5 @@ module.exports = {
       resultCalcFormula: resultCalcWithSurface,
       resultSurfaceFormula: resultSurface
     }
-  ],
-  plastering: [
-    {
-      idInn: 1,
-      type: "plastering1",
-      name: "Декоративная штукатурка «Короед» зерно 2,0 мм",
-      unit: "кг",
-      density: 3,
-      weight: 25,
-      surface: 0,
-      resultCalc: 0,
-      need: 0,
-      measure: "m2",
-      needFormula: needWitSurface,
-      resultCalcFormula: resultCalcWithSurface,
-      resultSurfaceFormula: resultSurface
-    },
-    {
-      idInn: 2,
-      type: "plastering2",
-      name: "Декоративная штукатурка «Короед» зерно 3,0 мм",
-      unit: "кг",
-      density: 4,
-      weight: 25,
-      surface: 0,
-      resultCalc: 0,
-      need: 0,
-      measure: "m2",
-      needFormula: needWitSurface,
-      resultCalcFormula: resultCalcWithSurface,
-      resultSurfaceFormula: resultSurface
-    },
-    {
-      idInn: 3,
-      type: "plastering3",
-      name: "Декоративная штукатурка «Шуба» зерно 1,0 мм",
-      unit: "кг",
-      density: 2,
-      weight: 25,
-      resultCalc: 0,
-      surface: 0,
-      need: 0,
-      measure: "m2",
-      needFormula: needWitSurface,
-      resultCalcFormula: resultCalcWithSurface,
-      resultSurfaceFormula: resultSurface
-    },
-    {
-      idInn: 4,
-      type: "plastering4",
-      name: "Декоративная штукатурка «Шуба» зерно 2,0 мм",
-      unit: "кг",
-      density: 3,
-      weight: 25,
-      resultCalc: 0,
-      surface: 0,
-      need: 0,
-      measure: "m2",
-      needFormula: needWitSurface,
-      resultCalcFormula: resultCalcWithSurface,
-      resultSurfaceFormula: resultSurface
-    },
-    {
-      idInn: 5,
-      type: "plastering5",
-      name: "Декоративная штукатурка «Короед» зерно 3,0 мм",
-      unit: "кг",
-      density: 4,
-      weight: 25,
-      surface: 0,
-      resultCalc: 0,
-      need: 0,
-      measure: "m2",
-      needFormula: needWitSurface,
-      resultCalcFormula: resultCalcWithSurface,
-      resultSurfaceFormula: resultSurface
-    }
-  ],
-  tilePainting: [
-    {
-      idInn: 1,
-      type: "tilePainting1",
-      name: "Краска фасадная 2 слоя",
-      unit: "кг",
-      density: 0.35,
-      weight: 20,
-      surface: 0,
-      resultCalc: 0,
-      need: 0,
-      measure: "m2",
-      needFormula: needWitSurface,
-      resultCalcFormula: resultCalcWithSurface,
-      resultSurfaceFormula: resultSurface
-    }
-  ]
+  ];
 };
