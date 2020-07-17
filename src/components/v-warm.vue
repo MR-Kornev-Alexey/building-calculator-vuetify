@@ -58,38 +58,38 @@
     <v-row class="text-center justify-center mt-8">
       <v-col cols="4">
         <v-btn
-          :key="index.id_cat"
-          @click="choiceWarm(index.id_cat)"
+          :key="categoryKey"
+          @click="chooseCategory(categoryKey)"
           class="btn-cat"
           color="#444fee"
           outlined
           text
-          v-for="index in categoryWarm"
-          >{{ index.name }}
+          v-for="(category, categoryKey) in allProducts()"
+          >{{ category.name }}
         </v-btn>
       </v-col>
       <v-col class="md-6 main-windows" cols="6">
         <v-flex
-          :key="index.idInn"
+          :key="product.idInn"
           class="d-flex align-self-center"
-          v-for="index in warmWindows"
+          v-for="product in categoryProductsList()"
         >
           <v-checkbox
-            :checked="checked"
-            @change="selectDataWarm(index.idInn)"
-            v-model="index.selected"
+            @change="
+              selectDataWarm(product.category, product.id, !product.selected)
+            "
+            v-model="product.selected"
           ></v-checkbox>
           <v-flex class="choice-table text-left align-self-center">
-            {{ index.name }}
+            {{ product.name }}
           </v-flex>
         </v-flex>
       </v-col>
     </v-row>
     <v-row
-      class="text-center forPrint justify-center mt-8"
-      v-if="flagWarmEstimate"
+      class="text-center forPrint justify-center mt-8" key="receipt"
     >
-      <v-col class="main-windows" cols="10">
+      <v-col class="main-windows" cols="10" :key="receiptOnChange">
         <div class="d-flex">
           <v-flex class="result-name">Наименование материала</v-flex>
           <v-flex class="result-100 ">Размер</v-flex>
@@ -99,25 +99,25 @@
         </div>
 
         <v-flex
-          :key="index.idInn"
+          :key="product.key"
           class="d-flex align-content-center choice-table-down"
-          v-for="index in outEstimateWarm"
+          v-for="product in renderReceipt()"
         >
           <v-flex class="d-flex align-self-center result-name">
-            {{ index.name }}
+            {{ product.name }}
           </v-flex>
           <v-flex class="d-flex align-self-center justify-center result-110">
-            {{ index.surface }} {{ index.measure }}
+            {{ product.surface }} {{ product.measure }}
           </v-flex>
           <v-flex
             class="result-100  d-flex d-flex align-self-center justify-center "
-            >{{ index.resultCalc }} {{ index.unit }}
+            >{{ product.resultCalc }} {{ product.unit }}
           </v-flex>
           <v-flex class="result-100  d-flex align-self-center justify-center "
-            >{{ index.need }} шт.
+            >{{ product.need }} шт.
           </v-flex>
           <v-flex class="result-100 d-flex align-self-center justify-center ">
-            <v-icon :id="index.type" @click="deleteItemWarm(index.type)">
+            <v-icon :id="`icon-${product.key}`" @click="deleteItemWarm(product.categoryName, product.productId)">
               mdi-delete
             </v-icon>
           </v-flex>
@@ -144,11 +144,11 @@
           <th>Расход</th>
           <th>Требуется</th>
         </tr>
-        <tr :key="index.idInn" v-for="index in outEstimateWarm">
-          <td>{{ index.name }}</td>
-          <td>{{ index.surface }} {{ index.measure }}</td>
-          <td>{{ index.resultCalc }} {{ index.unit }}</td>
-          <td>{{ index.need }} шт.</td>
+        <tr :key="product.idInn" v-for="product in renderReceipt()">
+          <td>{{ product.name }}</td>
+          <td>{{ product.surface }} {{ product.measure }}</td>
+          <td>{{ product.resultCalc }} {{ product.unit }}</td>
+          <td>{{ product.need }} шт.</td>
         </tr>
       </table>
     </v-row>
@@ -212,16 +212,17 @@
 </template>
 
 <script>
+import Receipt from "../common/receipt";
 import html2PDF from "html-pdf-adaptive";
 import warmMaterials from "../common/buildWarmRegistry";
+import Vue from "vue";
+import SocialSharing from "vue-social-sharing";
+import vPrint from "./v-print";
 
 const constantRegistry = require("../common/product_registry.js");
 const isEm = require("../common/isEmty");
-import Vue from "vue";
-import SocialSharing from "vue-social-sharing";
 
 Vue.use(SocialSharing);
-import vPrint from "./v-print";
 
 export default {
   name: "v-warm",
@@ -230,6 +231,9 @@ export default {
     vPrint
   },
   data: () => ({
+    receiptOnChange: 0,
+    receipt: new Receipt(),
+    categorySelected: "tileInsulation",
     btnResetWarm: false,
     checked: false,
     flagPrint: "",
@@ -240,29 +244,46 @@ export default {
     lengthDoors: "",
     warmWindows: "",
     flagCategoryWarm: "",
-    registry: constantRegistry,
-    categoryWarm: [
-      {
-        id_cat: 0,
-        name: "Утеплитель",
-        materials: warmMaterials.tileInsulationDefault
-      },
-      {
-        id_cat: 1,
-        name: "Декоративная штукатурка",
-        materials: warmMaterials.plasteringDefault
-      },
-      {
-        id_cat: 2,
-        name: "Краска фасадная",
-        materials: warmMaterials.tilePaintingDefault
-      }
-    ]
+    registry: constantRegistry
   }),
   mounted() {
     this.flagPrint = "element-to-print-warm";
   },
   methods: {
+    allProducts() {
+      return warmMaterials;
+    },
+    renderReceipt() {
+      const allProducts = this.allProducts();
+      const receipt = this.receipt.getAll();
+      return Object.keys(receipt).map(key => {
+        const entry = receipt[key]
+        const product = allProducts[entry.categoryName].products[entry.productId];
+        return {
+          key: key,
+          name: product.name,
+          productId: product.idInn,
+          categoryName: entry.categoryName,
+          surface: 0,
+          measure: 0,
+          resultCalc: 0,
+          unit: 0,
+          need: 0
+        };
+      });
+    },
+    categoryProductsList() {
+      const category = this.categorySelected;
+      return warmMaterials.registry[category].products.map(product =>
+        Object.assign(
+          {
+            selected: this.receipt.has(category, product.idInn),
+            category: category
+          },
+          product
+        )
+      );
+    },
     startPrinting() {
       document.querySelector("#element-to-print-warm").className =
         "online-table";
@@ -310,23 +331,23 @@ export default {
         this.flagWarmEstimate = true;
       }
     },
-
-    deleteItemWarm(id) {
-      this.flagWarmEstimate = false;
-      delete this.outEstimateWarm[id];
-      if (!isEm.isEmpty(this.outEstimateWarm)) {
-        this.flagWarmEstimate = true;
+    forceRenderReceipt() {
+      this.receiptOnChange += 1;
+    },
+    deleteItemWarm(category, id) {
+      this.receipt.delete(category, id);
+      this.forceRenderReceipt()
+    },
+    selectDataWarm(category, id, selected) {
+      if (selected) {
+        this.receipt.add(category, id);
+      } else {
+        this.receipt.delete(category, id);
       }
+      this.forceRenderReceipt()
     },
-    selectDataWarm(i) {
-      this.flagWarmEstimate = false;
-      this.outEstimateWarm[this.warmWindows[i].type] = this.warmWindows[i];
-      this.changeDataSquare(this.outEstimateWarm);
-      this.flagWarmEstimate = true;
-    },
-    choiceWarm(i) {
-      this.warmWindows = this.categoryWarm[i].materials()
-      this.btnResetWarm = true;
+    chooseCategory(categoryKey) {
+      this.categorySelected = categoryKey;
     }
   }
 };
