@@ -2,7 +2,7 @@ module.exports.decorativePlasterDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "decorativePlaster1",
       customSquare: 0,
       density: 3,
@@ -18,7 +18,7 @@ module.exports.decorativePlasterDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "decorativePlaster2",
       customSquare: 0,
       density: 4,
@@ -34,7 +34,7 @@ module.exports.decorativePlasterDefault = () => {
     },
     {
       idInn: 2,
-      selected: false,
+
       type: "decorativePlaster3",
       customSquare: 0,
       density: 2,
@@ -50,7 +50,7 @@ module.exports.decorativePlasterDefault = () => {
     },
     {
       idInn: 3,
-      selected: false,
+
       type: "decorativePlaster4",
       customSquare: 0,
       density: 3,
@@ -66,7 +66,7 @@ module.exports.decorativePlasterDefault = () => {
     },
     {
       idInn: 4,
-      selected: false,
+
       type: "decorativePlaster5",
       customSquare: 0,
       density: 4,
@@ -82,7 +82,7 @@ module.exports.decorativePlasterDefault = () => {
     },
     {
       idInn: 5,
-      selected: false,
+
       type: "decorativePlaster6",
       customSquare: 0,
       density: 3,
@@ -103,7 +103,7 @@ module.exports.mixBestDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "mixBest1",
       customSquare: 0,
       density: 5,
@@ -119,7 +119,7 @@ module.exports.mixBestDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "mixBest2",
       customSquare: 0,
       density: 5,
@@ -135,7 +135,7 @@ module.exports.mixBestDefault = () => {
     },
     {
       idInn: 2,
-      selected: false,
+
       type: "mixBest3",
       customSquare: 0,
       density: 1.45,
@@ -151,7 +151,7 @@ module.exports.mixBestDefault = () => {
     },
     {
       idInn: 3,
-      selected: false,
+
       type: "mixBest4",
       customSquare: 0,
       density: 1.4,
@@ -172,7 +172,7 @@ module.exports.mixLKMDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "mixLKM1",
       customSquare: 0,
       density: 0.125,
@@ -188,7 +188,7 @@ module.exports.mixLKMDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "mixLKM2",
       customSquare: 0,
       density: 0.275,
@@ -204,7 +204,7 @@ module.exports.mixLKMDefault = () => {
     },
     {
       idInn: 2,
-      selected: false,
+
       type: "mixLKM3",
       customSquare: 0,
       density: 0.2,
@@ -220,7 +220,7 @@ module.exports.mixLKMDefault = () => {
     },
     {
       idInn: 3,
-      selected: false,
+
       type: "mixLKM4",
       customSquare: 0,
       density: 0.35,
@@ -240,7 +240,7 @@ module.exports.cementPlasterDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "cementPlaster1",
       customSquare: 0,
       density: 1.4,
@@ -256,7 +256,7 @@ module.exports.cementPlasterDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "cementPlaster2",
       customSquare: 0,
       density: 0.9,
@@ -276,7 +276,7 @@ module.exports.mixForFloorDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "mixForFloor1",
       customSquare: 0,
       density: 1.3,
@@ -292,7 +292,7 @@ module.exports.mixForFloorDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "mixForFloor2",
       customSquare: 0,
       density: 1.5,
@@ -312,7 +312,7 @@ module.exports.gypsumPlasterDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       customSquare: 0,
       type: "gypsumPlaster1",
       density: 1.25,
@@ -328,7 +328,7 @@ module.exports.gypsumPlasterDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "gypsumPlaster2",
       customSquare: 0,
       density: 1,
@@ -348,7 +348,7 @@ module.exports.mountingMixturesDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "mountingMix1",
       density: 1.4,
       weight: 25,
@@ -363,7 +363,7 @@ module.exports.mountingMixturesDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "mountingMix2",
       customSquare: 0,
       density: 1.5,
@@ -379,7 +379,7 @@ module.exports.mountingMixturesDefault = () => {
     },
     {
       idInn: 2,
-      selected: false,
+
       type: "mountingMix3",
       customSquare: 0,
       density: 1.45,
@@ -395,7 +395,7 @@ module.exports.mountingMixturesDefault = () => {
     },
     {
       idInn: 3,
-      selected: false,
+
       type: "mountingMix4",
       customSquare: 0,
       density: 5,
@@ -411,7 +411,7 @@ module.exports.mountingMixturesDefault = () => {
     },
     {
       idInn: 4,
-      selected: false,
+
       type: "mountingMix5",
       customSquare: 0,
       density: 5,
@@ -428,7 +428,7 @@ module.exports.mountingMixturesDefault = () => {
     },
     {
       idInn: 5,
-      selected: false,
+
       type: "mountingMix6",
       customSquare: 0,
       density: 5,
@@ -444,7 +444,7 @@ module.exports.mountingMixturesDefault = () => {
     },
     {
       idInn: 6,
-      selected: false,
+
       type: "mountingMix7",
       customSquare: 0,
       density: 1.45,
@@ -464,7 +464,7 @@ module.exports.tileAdhesiveDefault = () => {
   return [
     {
       idInn: 0,
-      selected: false,
+
       type: "tileAdhesive1",
       text: "Плиточный клей",
       name: "Плиточный клей Стандарт, 25кг",
@@ -480,7 +480,7 @@ module.exports.tileAdhesiveDefault = () => {
     },
     {
       idInn: 1,
-      selected: false,
+
       type: "tileAdhesive2",
       text: "Плиточный клей",
       name: "Плиточный клей Гранит, 25кг",
@@ -496,7 +496,7 @@ module.exports.tileAdhesiveDefault = () => {
     },
     {
       idInn: 2,
-      selected: false,
+
       type: "tileAdhesive3",
       text: "Плиточный клей",
       name: "Плиточный клей Профи, 25кг",
@@ -512,7 +512,7 @@ module.exports.tileAdhesiveDefault = () => {
     },
     {
       idInn: 3,
-      selected: false,
+
       type: "tileAdhesive4",
       text: "Плиточный клей",
       name: "MIX BEST Клей плиточный базовый, 20кг",

@@ -76,7 +76,7 @@
         >
           <v-checkbox
             @change="
-              selectDataWarm(product.category, product.id, !product.selected)
+              selectDataWarm(product.categoryName, product.productId, product.selected)
             "
             v-model="product.selected"
           ></v-checkbox>
@@ -87,9 +87,9 @@
       </v-col>
     </v-row>
     <v-row
-      class="text-center forPrint justify-center mt-8" key="receipt"
+      class="text-center forPrint justify-center mt-8" :key="receiptOnChange"
     >
-      <v-col class="main-windows" cols="10" :key="receiptOnChange">
+      <v-col class="main-windows" cols="10">
         <div class="d-flex">
           <v-flex class="result-name">Наименование материала</v-flex>
           <v-flex class="result-100 ">Размер</v-flex>
@@ -97,31 +97,31 @@
           <v-flex class="result-100 ">Количество</v-flex>
           <v-flex class="result-100 "></v-flex>
         </div>
-
-        <v-flex
-          :key="product.key"
-          class="d-flex align-content-center choice-table-down"
-          v-for="product in renderReceipt()"
-        >
-          <v-flex class="d-flex align-self-center result-name">
-            {{ product.name }}
-          </v-flex>
-          <v-flex class="d-flex align-self-center justify-center result-110">
-            {{ product.surface }} {{ product.measure }}
-          </v-flex>
           <v-flex
-            class="result-100  d-flex d-flex align-self-center justify-center "
-            >{{ product.resultCalc }} {{ product.unit }}
+                  :key="product.key"
+                  class="d-flex align-content-center choice-table-down"
+                  v-for="product in renderReceipt()"
+          >
+              <v-flex class="d-flex align-self-center result-name">
+                  {{ product.name }}
+              </v-flex>
+              <v-flex class="d-flex align-self-center justify-center result-110">
+                  {{ product.surface }} {{ product.measure }}
+              </v-flex>
+              <v-flex
+                      class="result-100  d-flex d-flex align-self-center justify-center "
+              >{{ product.resultCalc }} {{ product.unit }}
+              </v-flex>
+              <v-flex class="result-100  d-flex align-self-center justify-center "
+              >{{ product.need }} шт.
+              </v-flex>
+              <v-flex class="result-100 d-flex align-self-center justify-center ">
+                  <v-icon :id="`icon-${product.key}`" @click="deleteItemWarm(product.categoryName, product.productId)">
+                      mdi-delete
+                  </v-icon>
+              </v-flex>
           </v-flex>
-          <v-flex class="result-100  d-flex align-self-center justify-center "
-            >{{ product.need }} шт.
-          </v-flex>
-          <v-flex class="result-100 d-flex align-self-center justify-center ">
-            <v-icon :id="`icon-${product.key}`" @click="deleteItemWarm(product.categoryName, product.productId)">
-              mdi-delete
-            </v-icon>
-          </v-flex>
-        </v-flex>
+
       </v-col>
     </v-row>
     <v-row>
@@ -258,7 +258,7 @@ export default {
       const receipt = this.receipt.getAll();
       return Object.keys(receipt).map(key => {
         const entry = receipt[key]
-        const product = allProducts[entry.categoryName].products[entry.productId];
+        const product = allProducts.registry[entry.categoryName].products[entry.productId];
         return {
           key: key,
           name: product.name,
@@ -274,11 +274,12 @@ export default {
     },
     categoryProductsList() {
       const category = this.categorySelected;
-      return warmMaterials.registry[category].products.map(product =>
+      return this.allProducts().registry[category].products.map(product =>
         Object.assign(
           {
             selected: this.receipt.has(category, product.idInn),
-            category: category
+            categoryName: category,
+            productId: product.idInn
           },
           product
         )
