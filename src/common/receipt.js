@@ -26,7 +26,10 @@ class Receipt {
   }
 
   has(categoryName, productId) {
-    return this.get(categoryName, productId) !== null;
+    return (
+      this.get(categoryName, productId) !== undefined &&
+      this.get(categoryName, productId) !== null
+    );
   }
 
   getAll() {

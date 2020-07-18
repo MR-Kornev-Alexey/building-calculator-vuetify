@@ -15,14 +15,15 @@
             id="custom"
             placeholder="...m2"
             required
-            type="text"
+            type="number"
             v-model.number="squareWarm"
           />
         </div>
+        <v-flex class="align-self-center ml-2">m&sup2;</v-flex>
       </div>
       <div class="d-flex col-md-6 item-category">
         <h3 class="d-flex align-self-center mr-4">
-          Введите длину углов здания и дверных проемов.
+          * длина углов здания и дверных проемов.
         </h3>
         <div class="result-100">
           <v-text-field
@@ -32,14 +33,15 @@
             id="custom2"
             placeholder="...m"
             required
-            type="text"
+            type="number"
             v-model.number="lengthDoors"
           />
         </div>
+        <v-flex class="align-self-center ml-2">m</v-flex>
       </div>
       <div class="d-flex col-md-6 item-category">
         <h3 class="d-flex align-self-center mr-4">
-          Введите длину оконных проемов.
+          * длина оконных проемов.
         </h3>
         <div class="result-80">
           <v-text-field
@@ -49,10 +51,11 @@
             id="custom1"
             placeholder="...m"
             required
-            type="text"
+            type="number"
             v-model.number="lengthWin"
           />
         </div>
+        <v-flex class="align-self-center ml-2">m</v-flex>
       </div>
     </v-row>
     <v-row class="text-center justify-center mt-8">
@@ -64,20 +67,18 @@
           color="#444fee"
           outlined
           text
-          v-for="(category, categoryKey) in allProducts()"
+          v-for="(category, categoryKey) in allProducts().registry"
           >{{ category.name }}
         </v-btn>
       </v-col>
-      <v-col class="md-6 main-windows" cols="6">
+      <v-col :key="productSelectionOnChange" class="md-6 main-windows" cols="6">
         <v-flex
           :key="product.idInn"
           class="d-flex align-self-center"
           v-for="product in categoryProductsList()"
         >
           <v-checkbox
-            @change="
-              selectDataWarm(product.categoryName, product.productId, product.selected)
-            "
+            @change="selectDataWarm(product)"
             v-model="product.selected"
           ></v-checkbox>
           <v-flex class="choice-table text-left align-self-center">
@@ -87,7 +88,8 @@
       </v-col>
     </v-row>
     <v-row
-      class="text-center forPrint justify-center mt-8" :key="receiptOnChange"
+      :key="receiptOnChange"
+      class="text-center forPrint justify-center mt-8"
     >
       <v-col class="main-windows" cols="10">
         <div class="d-flex">
@@ -97,31 +99,33 @@
           <v-flex class="result-100 ">Количество</v-flex>
           <v-flex class="result-100 "></v-flex>
         </div>
-          <v-flex
-                  :key="product.key"
-                  class="d-flex align-content-center choice-table-down"
-                  v-for="product in renderReceipt()"
-          >
-              <v-flex class="d-flex align-self-center result-name">
-                  {{ product.name }}
-              </v-flex>
-              <v-flex class="d-flex align-self-center justify-center result-110">
-                  {{ product.surface }} {{ product.measure }}
-              </v-flex>
-              <v-flex
-                      class="result-100  d-flex d-flex align-self-center justify-center "
-              >{{ product.resultCalc }} {{ product.unit }}
-              </v-flex>
-              <v-flex class="result-100  d-flex align-self-center justify-center "
-              >{{ product.need }} шт.
-              </v-flex>
-              <v-flex class="result-100 d-flex align-self-center justify-center ">
-                  <v-icon :id="`icon-${product.key}`" @click="deleteItemWarm(product.categoryName, product.productId)">
-                      mdi-delete
-                  </v-icon>
-              </v-flex>
+        <v-flex
+          :key="product.key"
+          class="d-flex align-content-center choice-table-down"
+          v-for="product in renderReceipt()"
+        >
+          <v-flex class="d-flex align-self-center result-name">
+            {{ product.name }}
           </v-flex>
-
+          <v-flex class="d-flex align-self-center justify-center result-110">
+            {{ product.surface }} {{ product.measure }}
+          </v-flex>
+          <v-flex
+            class="result-100  d-flex d-flex align-self-center justify-center "
+            >{{ product.resultCalc }} {{ product.unit }}
+          </v-flex>
+          <v-flex class="result-100  d-flex align-self-center justify-center "
+            >{{ product.need }} шт.
+          </v-flex>
+          <v-flex class="result-100 d-flex align-self-center justify-center ">
+            <v-icon
+              :id="`icon-${product.key}`"
+              @click="deleteItemWarm(product.categoryName, product.productId)"
+            >
+              mdi-delete
+            </v-icon>
+          </v-flex>
+        </v-flex>
       </v-col>
     </v-row>
     <v-row>
@@ -231,6 +235,7 @@ export default {
     vPrint
   },
   data: () => ({
+    productSelectionOnChange: 0,
     receiptOnChange: 0,
     receipt: new Receipt(),
     categorySelected: "tileInsulation",
@@ -257,8 +262,9 @@ export default {
       const allProducts = this.allProducts();
       const receipt = this.receipt.getAll();
       return Object.keys(receipt).map(key => {
-        const entry = receipt[key]
-        const product = allProducts.registry[entry.categoryName].products[entry.productId];
+        const entry = receipt[key];
+        const product =
+          allProducts.registry[entry.categoryName].products[entry.productId];
         return {
           key: key,
           name: product.name,
@@ -274,16 +280,30 @@ export default {
     },
     categoryProductsList() {
       const category = this.categorySelected;
-      return this.allProducts().registry[category].products.map(product =>
-        Object.assign(
-          {
+      return this.allProducts()
+        .registry[category].products.map(product => {
+          return {
             selected: this.receipt.has(category, product.idInn),
             categoryName: category,
-            productId: product.idInn
-          },
-          product
-        )
-      );
+            productId: product.idInn,
+            shown: this.isShown(product),
+            name: product.name
+          };
+        })
+        .filter(product => product.shown);
+    },
+    isShown(product) {
+      const deps = product.dependsOn;
+      if (deps === undefined || deps === null || deps.length === 0) {
+        return true;
+      }
+      for (let i = 0; i < deps.length; i++) {
+        const dep = deps[i];
+        if (this.receipt.has(dep.categoryName, dep.productId)) {
+          return true;
+        }
+      }
+      return false;
     },
     startPrinting() {
       document.querySelector("#element-to-print-warm").className =
@@ -335,17 +355,24 @@ export default {
     forceRenderReceipt() {
       this.receiptOnChange += 1;
     },
+    forceRenderProductSelection() {
+      this.productSelectionOnChange += 1;
+    },
     deleteItemWarm(category, id) {
       this.receipt.delete(category, id);
-      this.forceRenderReceipt()
+      this.forceRenderReceipt();
+      this.forceRenderProductSelection();
     },
-    selectDataWarm(category, id, selected) {
+    selectDataWarm(product) {
+      const category = product.categoryName;
+      const id = product.productId;
+      const selected = product.selected;
       if (selected) {
         this.receipt.add(category, id);
       } else {
         this.receipt.delete(category, id);
       }
-      this.forceRenderReceipt()
+      this.forceRenderReceipt();
     },
     chooseCategory(categoryKey) {
       this.categorySelected = categoryKey;
