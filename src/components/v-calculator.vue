@@ -1,11 +1,16 @@
 <template>
-  <v-container>
+  <v-container style="z-index: 105">
     <v-row justify="center">
-      <h1>Расчет необходимого количества строительных материалов</h1>
-      <p class="estimate-text">
-        Онлайн расчет носит информативный характер. Детали уточняйте у наших
-        менеждеров.
-      </p>
+      <v-col cols="10">
+        <h1 class="text-center">Расчет необходимого количества строительных материалов</h1>
+      </v-col>
+      <v-col cols="10">
+        <p class="estimate-text text-center">
+          Онлайн расчет носит информативный характер. Детали уточняйте у наших
+          менеждеров.
+        </p>
+      </v-col>
+
     </v-row>
     <v-row class="text-center justify-center mt-8">
       <v-col cols="10" md="4">
@@ -128,27 +133,31 @@
         </v-btn>
       </div>
     </v-row>
-    <v-row>
-      <table id="element-to-print">
-        <tr>
-          <th>Название</th>
-          <th>Рек.Толщина</th>
-          <th>Толщина</th>
-          <th>Площадь</th>
-          <th>Расход</th>
-          <th>Количество</th>
-        </tr>
-        <tr :key="index.idInn" v-for="index in outEstimate">
-          <td>{{ index.name }}</td>
-          <td>{{ index.thickness }}</td>
-          <td>{{ index.customThickness }}</td>
-          <td>{{ index.resultCalc }}</td>
-          <td>{{ index.customSquare }}</td>
-          <td>{{ index.need }} {{ index.unit }}</td>
-        </tr>
-      </table>
+    <v-row id="element-to-print" class="divPDF" justify="center">
+      <v-col cols="10" class="text-center"></v-col>
+      <img src="img/main-print.jpg" alt="logo" />
+      <div class="col-md-10 text-center justify-center">
+        <table>
+          <tr>
+            <th>Название</th>
+            <th>Рек.Толщина</th>
+            <th>Толщина</th>
+            <th>Площадь</th>
+            <th>Расход</th>
+            <th>Количество</th>
+          </tr>
+          <tr :key="index.idInn" v-for="index in outEstimate">
+            <td>{{ index.name }}</td>
+            <td>{{ index.thickness }}</td>
+            <td>{{ index.customThickness }}</td>
+            <td>{{ index.resultCalc }}</td>
+            <td>{{ index.customSquare }}</td>
+            <td>{{ index.need }} {{ index.unit }}</td>
+          </tr>
+        </table>
+      </div>
     </v-row>
-    <v-row class="d-flex mt-6">
+    <v-row class="d-flex mt-6 justify-center">
       <v-btn
         @click="startPrinting()"
         class="btn-cat"
@@ -159,10 +168,10 @@
       </v-btn>
       <vPrint :printChoice="this.flagPrint" />
     </v-row>
-    <v-row>
+    <v-row class="d-flex mt-6 justify-center">
       <social-sharing inline-template url="https://vuejs.org/">
         <div class="ml-6 d-flex">
-          <div class="mr-4 share-network">
+          <div class="mx-4 pt-1 share-network">
             Поделиться
           </div>
           <div class="mr-4 share-network">
@@ -174,31 +183,7 @@
               title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
               url="http://calc.mrk.digital/"
             >
-              Whatsapp
-            </ShareNetwork>
-          </div>
-          <div class="mr-4 share-network">
-            <ShareNetwork
-              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              hashtags="строительныйкалькулятор"
-              network="vk"
-              quote="Онлайн-расчет количества необходимых материалов"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              url="http://calc.mrk.digital/"
-            >
-              ВКонтакте
-            </ShareNetwork>
-          </div>
-          <div class="mr-4 share-network">
-            <ShareNetwork
-              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              hashtags="строительныйкалькулятор"
-              network="facebook"
-              quote="Онлайн-расчет количества необходимых материалов"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              url="http://calc.mrk.digital/"
-            >
-              Facebook
+              <img src="img/whatsapp.png" height="32px" alt="WhatsApp" />
             </ShareNetwork>
           </div>
         </div>
@@ -290,18 +275,19 @@ export default {
       document.querySelector("#element-to-print").className = "online-table";
       const el = document.querySelector("#element-to-print");
       html2PDF(el, {
+        format: "a4",
         mode: "adaptive",
         pagesplit: true,
         offset: {
-          x: 20,
-          y: 20
+          x: 10,
+          y: 10
         },
         outputType: "save",
         isToggleStyle: true,
-        useCORS: true,
+        useCORS: false,
         useDefaultFoot: true
       });
-      document.querySelector("#element-to-print").className = "table";
+      document.querySelector("#element-to-print").className = "divPDF";
     },
     choice(i) {
       this.newTileWindows = JSON.parse(
@@ -427,20 +413,23 @@ export default {
   }
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
+.divPDF {
   display: none;
 }
-
-.online-table {
+table {
   border-collapse: collapse;
-  width: 100%;
+  width: 90vw;
+  font-size: 16px;
+}
+#element-to-print {
+  text-align: center;
+}
+.online-table {
+  width: 100vh;
+  font-size: 18px;
+  text-align: center;
   display: table;
   z-index: 100;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 td,
@@ -457,7 +446,6 @@ tr:nth-child(even) {
 .share-network {
   text-transform: uppercase;
   font-weight: 500;
-
   a {
     color: #4e4e4e !important;
   }
