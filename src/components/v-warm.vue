@@ -115,7 +115,7 @@
             >{{ product.resultCalc }} {{ product.unit }}
           </v-flex>
           <v-flex class="result-100  d-flex align-self-center justify-center "
-            >{{ product.need }} шт.
+            >{{ product.need }} {{ product.unit_size }}
           </v-flex>
           <v-flex class="result-100 d-flex align-self-center justify-center ">
             <v-icon
@@ -128,8 +128,11 @@
         </v-flex>
       </v-col>
     </v-row>
-    <v-row>
-      <table id="element-to-print-warm">
+    <v-row id="element-to-print-warm"  class="divPDF" justify="center">
+      <v-col cols="10" class="text-center">
+        <img src="img/main-print.jpg" alt="logo" />
+      </v-col>
+      <table >
         <tr>
           <th colspan="3">Площадь теплоизоляции</th>
           <th>{{ this.squareWarm }}</th>
@@ -152,11 +155,11 @@
           <td>{{ product.name }}</td>
           <td>{{ product.surface }} {{ product.measure }}</td>
           <td>{{ product.resultCalc }} {{ product.unit }}</td>
-          <td>{{ product.need }} шт.</td>
+          <td>{{ product.need }} {{ product.unit_size }}</td>
         </tr>
       </table>
     </v-row>
-    <v-row class="d-flex mt-6">
+    <v-row class="d-flex mt-6 justify-center">
       <v-btn
         @click="startPrinting()"
         class="btn-cat"
@@ -167,50 +170,32 @@
       </v-btn>
       <vPrint :printChoice="this.flagPrint" />
     </v-row>
-    <v-row>
+    <v-row class="d-flex mt-6 justify-center">
       <social-sharing inline-template url="https://vuejs.org/">
         <div class="ml-6 d-flex">
-          <div class="mr-4 share-network">
+          <div class="mx-4 pt-1 share-network">
             Поделиться
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              hashtags="строительныйкалькулятор"
-              network="whatsapp"
-              quote="Онлайн-расчет количества необходимых материалов"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              url="http://calc.mrk.digital/"
+                    description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+                    hashtags="строительныйкалькулятор"
+                    network="whatsapp"
+                    quote="Онлайн-расчет количества необходимых материалов"
+                    title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+                    url="http://calc.mrk.digital/"
             >
-              Whatsapp
-            </ShareNetwork>
-          </div>
-          <div class="mr-4 share-network">
-            <ShareNetwork
-              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              hashtags="строительныйкалькулятор"
-              network="vk"
-              quote="Онлайн-расчет количества необходимых материалов"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              url="http://calc.mrk.digital/"
-            >
-              ВКонтакте
-            </ShareNetwork>
-          </div>
-          <div class="mr-4 share-network">
-            <ShareNetwork
-              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              hashtags="строительныйкалькулятор"
-              network="facebook"
-              quote="Онлайн-расчет количества необходимых материалов"
-              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-              url="http://calc.mrk.digital/"
-            >
-              Facebook
+              <img src="img/whatsapp.png" height="32px" alt="WhatsApp" />
             </ShareNetwork>
           </div>
         </div>
       </social-sharing>
+    </v-row>
+    <v-row class=" pl-6">
+      <div class="col-10 " style="padding-left: 64px">
+        * необязательный параметр
+      </div>
+
     </v-row>
   </v-container>
 </template>
@@ -245,7 +230,7 @@ export default {
     lengthWin: "",
     outEstimateWarm: {},
     flagWarmEstimate: false,
-    squareWarm: "",
+    squareWarm: 0,
     lengthDoors: "",
     warmWindows: "",
     flagCategoryWarm: "",
@@ -270,11 +255,12 @@ export default {
           name: product.name,
           productId: product.idInn,
           categoryName: entry.categoryName,
-          surface: 0,
-          measure: 0,
-          resultCalc: 0,
-          unit: 0,
-          need: 0
+          surface: this.squareWarm,
+          measure: product.measure,
+          resultCalc:  product.resultCalcFormula(this.squareWarm,0,0,product.density),
+          unit: product.unit,
+          need: product.needFormula(this.squareWarm,0,0,product.density,product.weight),
+          unit_size: product.unit_size
         };
       });
     },
@@ -310,11 +296,12 @@ export default {
         "online-table";
       const el = document.querySelector("#element-to-print-warm");
       html2PDF(el, {
+        format: "a4",
         mode: "adaptive",
         pagesplit: true,
         offset: {
-          x: 20,
-          y: 20
+          x: 10,
+          y: 10
         },
         outputType: "save",
         isToggleStyle: true,

@@ -32,18 +32,18 @@ function resultCalcWithoutSurface(
 }
 
 /* eslint-disable no-unused-vars */
-function resultCalcWithSurface(surfaceArea, lengthDoors, lengthWin, product) {
-  return Math.ceil(+surfaceArea * product.density);
+function resultCalcWithSurface(surfaceArea, lengthDoors, lengthWin, density) {
+  return Math.ceil(+surfaceArea * density);
 }
 
-function needWitSurface(surfaceArea, lengthDoors, lengthWin, product) {
+function needWithSurface(surfaceArea, lengthDoors, lengthWin, density, weight) {
   const resultCalc = resultCalcWithSurface(
     surfaceArea,
     lengthDoors,
     lengthWin,
-    product
+    density
   );
-  return Math.ceil(resultCalc / product.weight);
+  return Math.ceil(resultCalc / weight);
 }
 
 /* eslint-disable no-unused-vars */
@@ -75,7 +75,8 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        needFormula: needWitSurface,
+        unit_size:"упак.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -91,7 +92,8 @@ module.exports.registry = {
         measure: "m2",
         resultCalc: 0,
         need: 0,
-        needFormula: needWitSurface,
+        unit_size:"упак.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -116,7 +118,8 @@ module.exports.registry = {
         measure: "m2",
         resultCalc: 0,
         need: 0,
-        needFormula: needWitSurface,
+        unit_size:"меш.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -141,8 +144,9 @@ module.exports.registry = {
         surface: 0,
         measure: "m2",
         resultCalc: 0,
+        unit_size:"шт.",
         need: 0,
-        needFormula: needWitSurface,
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -167,8 +171,9 @@ module.exports.registry = {
         surface: 0,
         measure: "m2",
         resultCalc: 0,
+        unit_size:"меш.",
         need: 0,
-        needFormula: needWitSurface,
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -192,8 +197,9 @@ module.exports.registry = {
         surface: 0,
         measure: "метров",
         resultCalc: 0,
+        unit_size:"рул.",
         need: 0,
-        needFormula: needWitSurface,
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -219,6 +225,7 @@ module.exports.registry = {
         measure: "метров",
         resultCalc: 0,
         need: 0,
+        unit_size:"шт.",
         needFormula: needWithoutSurface,
         resultCalcFormula: resultCalcWithoutSurface,
         resultSurfaceFormula: resultWithoutSurface
@@ -243,6 +250,7 @@ module.exports.registry = {
         surface: 0,
         resultCalc: 0,
         measure: "метров",
+        unit_size:"шт.",
         need: 0,
         needFormula: needOnlyWindows,
         resultCalcFormula: resultCalcWindows,
@@ -266,8 +274,9 @@ module.exports.registry = {
         surface: 0,
         resultCalc: 0,
         need: 0,
+        unit_size:"меш.",
         measure: "m2",
-        needFormula: needWitSurface,
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -284,7 +293,8 @@ module.exports.registry = {
         resultCalc: 0,
         need: 0,
         measure: "m2",
-        needFormula: needWitSurface,
+        unit_size:"меш.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -301,7 +311,8 @@ module.exports.registry = {
         surface: 0,
         need: 0,
         measure: "m2",
-        needFormula: needWitSurface,
+        unit_size:"меш.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -318,7 +329,8 @@ module.exports.registry = {
         surface: 0,
         need: 0,
         measure: "m2",
-        needFormula: needWitSurface,
+        unit_size:"меш.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -335,7 +347,8 @@ module.exports.registry = {
         resultCalc: 0,
         need: 0,
         measure: "m2",
-        needFormula: needWitSurface,
+        unit_size:"меш.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -365,7 +378,8 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        needFormula: needWitSurface,
+        unit_size:"канистр.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
@@ -391,7 +405,8 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        needFormula: needWitSurface,
+        unit_size:"ведро.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       }
@@ -410,7 +425,8 @@ module.exports.registry = {
         resultCalc: 0,
         need: 0,
         measure: "m2",
-        needFormula: needWitSurface,
+        unit_size:"ведр.",
+        needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       }

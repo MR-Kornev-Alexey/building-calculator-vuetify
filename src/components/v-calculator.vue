@@ -134,8 +134,10 @@
       </div>
     </v-row>
     <v-row id="element-to-print" class="divPDF" justify="center">
-      <v-col cols="10" class="text-center"></v-col>
-      <img src="img/main-print.jpg" alt="logo" />
+      <v-col cols="10" class="text-center">
+        <img src="img/main-print.jpg" alt="logo" />
+      </v-col>
+
       <div class="col-md-10 text-center justify-center">
         <table>
           <tr>
