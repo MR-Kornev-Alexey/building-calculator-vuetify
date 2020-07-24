@@ -66,6 +66,21 @@ module.exports.registry = {
     products: [
       {
         idInn: 0,
+        shown: true,
+        dependsOut: [
+          {
+            categoryName: "tileInsulation",
+            productId: 2
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 3
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 4
+          }
+        ],
         type: "warmAdhesive3",
         name: "Минераловатная плита 1200×600×100 мм ",
         unit: "шт.",
@@ -75,13 +90,28 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        unit_size:"упак.",
+        unit_size: "упак.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 1,
+        shown: true,
+        dependsOut: [
+          {
+            categoryName: "tileInsulation",
+            productId: 2
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 3
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 4
+          }
+        ],
         meta: "all",
         type: "warmAdhesive4",
         name: "Пенополистирол ПСБ-С 25Ф 1200×100×100 мм",
@@ -92,13 +122,14 @@ module.exports.registry = {
         measure: "m2",
         resultCalc: 0,
         need: 0,
-        unit_size:"упак.",
+        unit_size: "упак.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 2,
+        shown: false,
         dependsOn: [
           {
             categoryName: "tileInsulation",
@@ -118,13 +149,14 @@ module.exports.registry = {
         measure: "m2",
         resultCalc: 0,
         need: 0,
-        unit_size:"меш.",
+        unit_size: "меш.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 3,
+        shown: false,
         dependsOn: [
           {
             categoryName: "tileInsulation",
@@ -144,7 +176,7 @@ module.exports.registry = {
         surface: 0,
         measure: "m2",
         resultCalc: 0,
-        unit_size:"шт.",
+        unit_size: "шт.",
         need: 0,
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
@@ -152,6 +184,7 @@ module.exports.registry = {
       },
       {
         idInn: 4,
+        shown: false,
         dependsOn: [
           {
             categoryName: "tileInsulation",
@@ -171,7 +204,7 @@ module.exports.registry = {
         surface: 0,
         measure: "m2",
         resultCalc: 0,
-        unit_size:"меш.",
+        unit_size: "меш.",
         need: 0,
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
@@ -179,6 +212,7 @@ module.exports.registry = {
       },
       {
         idInn: 5,
+        shown: false,
         dependsOn: [
           {
             categoryName: "doorsAndWindows",
@@ -197,7 +231,7 @@ module.exports.registry = {
         surface: 0,
         measure: "метров",
         resultCalc: 0,
-        unit_size:"рул.",
+        unit_size: "рул.",
         need: 0,
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
@@ -205,6 +239,7 @@ module.exports.registry = {
       },
       {
         idInn: 6,
+        shown: false,
         dependsOn: [
           {
             categoryName: "doorsAndWindows",
@@ -225,13 +260,14 @@ module.exports.registry = {
         measure: "метров",
         resultCalc: 0,
         need: 0,
-        unit_size:"шт.",
+        unit_size: "шт.",
         needFormula: needWithoutSurface,
         resultCalcFormula: resultCalcWithoutSurface,
         resultSurfaceFormula: resultWithoutSurface
       },
       {
         idInn: 7,
+        shown: false,
         dependsOn: [
           {
             categoryName: "doorsAndWindows",
@@ -250,7 +286,7 @@ module.exports.registry = {
         surface: 0,
         resultCalc: 0,
         measure: "метров",
-        unit_size:"шт.",
+        unit_size: "шт.",
         need: 0,
         needFormula: needOnlyWindows,
         resultCalcFormula: resultCalcWindows,
@@ -264,6 +300,7 @@ module.exports.registry = {
     products: [
       {
         idInn: 0,
+        shown: true,
         meta: "all",
 
         type: "plastering1",
@@ -274,7 +311,7 @@ module.exports.registry = {
         surface: 0,
         resultCalc: 0,
         need: 0,
-        unit_size:"меш.",
+        unit_size: "меш.",
         measure: "m2",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
@@ -282,7 +319,7 @@ module.exports.registry = {
       },
       {
         idInn: 1,
-
+        shown: true,
         meta: "all",
         type: "plastering2",
         name: "Декоративная штукатурка «Короед» зерно 3,0 мм (25кг)",
@@ -293,14 +330,14 @@ module.exports.registry = {
         resultCalc: 0,
         need: 0,
         measure: "m2",
-        unit_size:"меш.",
+        unit_size: "меш.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 2,
-
+        shown: true,
         meta: "all",
         type: "plastering3",
         name: "Декоративная штукатурка «Шуба» зерно 1,0 мм (25кг)",
@@ -311,14 +348,14 @@ module.exports.registry = {
         surface: 0,
         need: 0,
         measure: "m2",
-        unit_size:"меш.",
+        unit_size: "меш.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 3,
-
+        shown: true,
         meta: "all",
         type: "plastering4",
         name: "Декоративная штукатурка «Шуба» зерно 2,0 мм (25кг)",
@@ -329,14 +366,14 @@ module.exports.registry = {
         surface: 0,
         need: 0,
         measure: "m2",
-        unit_size:"меш.",
+        unit_size: "меш.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 4,
-
+        shown: true,
         meta: "all",
         type: "plastering5",
         name: "Декоративная штукатурка «Шуба» зерно 3,0 мм (25кг)",
@@ -347,13 +384,14 @@ module.exports.registry = {
         resultCalc: 0,
         need: 0,
         measure: "m2",
-        unit_size:"меш.",
+        unit_size: "меш.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 5,
+        shown: false,
         dependsOn: [
           {
             categoryName: "plastering",
@@ -378,13 +416,14 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        unit_size:"канистр.",
+        unit_size: "канистр.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
       },
       {
         idInn: 6,
+        shown: false,
         type: "warmAdhesive2",
         dependsOn: [
           {
@@ -405,7 +444,7 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        unit_size:"ведро.",
+        unit_size: "ведро.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
@@ -416,6 +455,7 @@ module.exports.registry = {
     products: [
       {
         idInn: 0,
+        shown: false,
         type: "tilePainting1",
         name: "Краска фасадная 2 слоя",
         unit: "кг",
@@ -425,7 +465,7 @@ module.exports.registry = {
         resultCalc: 0,
         need: 0,
         measure: "m2",
-        unit_size:"ведр.",
+        unit_size: "ведр.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface

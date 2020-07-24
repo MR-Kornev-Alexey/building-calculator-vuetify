@@ -23,7 +23,7 @@
       </div>
       <div class="d-flex col-md-6 item-category">
         <h3 class="d-flex align-self-center mr-4">
-          * длина углов здания и дверных проемов.
+          Длина углов здания и дверных проемов.
         </h3>
         <div class="result-100">
           <v-text-field
@@ -41,7 +41,7 @@
       </div>
       <div class="d-flex col-md-6 item-category">
         <h3 class="d-flex align-self-center mr-4">
-          * длина оконных проемов.
+          Длина оконных проемов.
         </h3>
         <div class="result-80">
           <v-text-field
@@ -128,11 +128,11 @@
         </v-flex>
       </v-col>
     </v-row>
-    <v-row id="element-to-print-warm"  class="divPDF" justify="center">
+    <v-row id="element-to-print-warm" class="divPDF" justify="center">
       <v-col cols="10" class="text-center">
         <img src="img/main-print.jpg" alt="logo" />
       </v-col>
-      <table >
+      <table>
         <tr>
           <th colspan="3">Площадь теплоизоляции</th>
           <th>{{ this.squareWarm }}</th>
@@ -178,12 +178,12 @@
           </div>
           <div class="mr-4 share-network">
             <ShareNetwork
-                    description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-                    hashtags="строительныйкалькулятор"
-                    network="whatsapp"
-                    quote="Онлайн-расчет количества необходимых материалов"
-                    title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
-                    url="http://calc.mrk.digital/"
+              description="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              hashtags="строительныйкалькулятор"
+              network="whatsapp"
+              quote="Онлайн-расчет количества необходимых материалов"
+              title="Онлайн-расчет количества необходимых материалов. Удобно и быстро"
+              url="http://calc.mrk.digital/"
             >
               <img src="img/whatsapp.png" height="32px" alt="WhatsApp" />
             </ShareNetwork>
@@ -195,7 +195,6 @@
       <div class="col-10 " style="padding-left: 64px">
         * необязательный параметр
       </div>
-
     </v-row>
   </v-container>
 </template>
@@ -230,7 +229,7 @@ export default {
     lengthWin: "",
     outEstimateWarm: {},
     flagWarmEstimate: false,
-    squareWarm: 0,
+    squareWarm: "",
     lengthDoors: "",
     warmWindows: "",
     flagCategoryWarm: "",
@@ -257,9 +256,20 @@ export default {
           categoryName: entry.categoryName,
           surface: this.squareWarm,
           measure: product.measure,
-          resultCalc:  product.resultCalcFormula(this.squareWarm,0,0,product.density),
+          resultCalc: product.resultCalcFormula(
+            this.squareWarm,
+            0,
+            0,
+            product.density
+          ),
           unit: product.unit,
-          need: product.needFormula(this.squareWarm,0,0,product.density,product.weight),
+          need: product.needFormula(
+            this.squareWarm,
+            0,
+            0,
+            product.density,
+            product.weight
+          ),
           unit_size: product.unit_size
         };
       });
@@ -272,8 +282,10 @@ export default {
             selected: this.receipt.has(category, product.idInn),
             categoryName: category,
             productId: product.idInn,
-            shown: this.isShown(product),
-            name: product.name
+            shown: product.shown,
+            // this.isShown(product),
+            name: product.name,
+            dependsOut: product.dependsOut
           };
         })
         .filter(product => product.shown);
@@ -350,12 +362,24 @@ export default {
       this.forceRenderReceipt();
       this.forceRenderProductSelection();
     },
+    addDependsOut(product) {
+      const deps = product.dependsOut
+      alert(deps);
+      for (let i = 0; i < deps.length; i++) {
+        const category = deps[i].categoryName;
+        const id = deps[i].productId;
+        alert(id);
+        this.receipt.add(category, id);
+      }
+    },
     selectDataWarm(product) {
       const category = product.categoryName;
       const id = product.productId;
       const selected = product.selected;
+
       if (selected) {
         this.receipt.add(category, id);
+        this.addDependsOut(product);
       } else {
         this.receipt.delete(category, id);
       }

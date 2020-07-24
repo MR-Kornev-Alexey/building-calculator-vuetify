@@ -2,7 +2,9 @@
   <v-container style="z-index: 105">
     <v-row justify="center">
       <v-col cols="10">
-        <h1 class="text-center">Расчет необходимого количества строительных материалов</h1>
+        <h1 class="text-center">
+          Расчет необходимого количества строительных материалов
+        </h1>
       </v-col>
       <v-col cols="10">
         <p class="estimate-text text-center">
@@ -10,7 +12,6 @@
           менеждеров.
         </p>
       </v-col>
-
     </v-row>
     <v-row class="text-center justify-center mt-8">
       <v-col cols="10" md="4">
