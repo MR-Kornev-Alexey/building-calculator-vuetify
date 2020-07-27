@@ -20,9 +20,9 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Demo
 
-### http://calc.mrk.digital
+
+### https://build-calc-ec319.web.app/
 
 
