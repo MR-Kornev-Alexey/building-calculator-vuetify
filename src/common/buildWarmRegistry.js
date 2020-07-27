@@ -348,7 +348,7 @@ module.exports.registry = {
             categoryName: "plastering",
             productId: 5
           }
-          ],
+        ],
         shown: true,
         meta: "all",
         dependsOut: [
@@ -567,7 +567,7 @@ module.exports.registry = {
             categoryName: "plastering",
             productId: 6
           }
-          ],
+        ],
         shown: false,
         dependsOn: [
           {

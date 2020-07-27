@@ -64,6 +64,7 @@
           :key="categoryKey"
           @click="chooseCategory(categoryKey)"
           class="btn-cat"
+          :id="categoryKey"
           color="#444fee"
           outlined
           text
@@ -233,6 +234,8 @@ export default {
   }),
   mounted() {
     this.flagPrint = "element-to-print-warm";
+    document.querySelector("#tilePainting").className = "divPDF";
+    document.querySelector("#winAndDoors").className = "divPDF";
   },
   methods: {
     inputLengthDoors(value) {
@@ -421,15 +424,14 @@ export default {
       const id = product.productId;
       const selected = product.selected;
       const conflict = product.conflict;
-      if(conflict){
-        for (let i = 0; i < conflict.length ; i++){
-          const conflictCategoryName = product.conflict[i].categoryName
-          const conflictCategoryId = product.conflict[i].productId
-          this.receipt.delete(conflictCategoryName , conflictCategoryId);
+      if (conflict) {
+        for (let i = 0; i < conflict.length; i++) {
+          const conflictCategoryName = product.conflict[i].categoryName;
+          const conflictCategoryId = product.conflict[i].productId;
+          this.receipt.delete(conflictCategoryName, conflictCategoryId);
         }
-
       }
-       if (selected) {
+      if (selected) {
         this.receipt.add(category, id);
         this.addDependsOut(product);
         this.addPaint();
