@@ -55,7 +55,7 @@
       class="text-center forPrint justify-center mt-8"
       v-if="flagOutEstimate"
     >
-      <v-col class="main-windows" cols="10">
+      <v-col class="main-windows" cols="12">
         <div class="d-flex">
           <v-flex class="result-name">Название</v-flex>
           <v-flex class="result-110 ">Рекомендуемая толщина(мм)</v-flex>
@@ -122,7 +122,7 @@
       </v-col>
     </v-row>
     <v-row class="justify-center">
-      <div class="col-md-10 text-right">
+      <div class="col-md-11 text-right">
         <v-btn
           v-if="btnResetEstimate"
           @click="resetMainEstimate()"
@@ -135,10 +135,9 @@
       </div>
     </v-row>
     <v-row id="element-to-print" class="divPDF" justify="center">
-      <v-col cols="10" class="text-center">
+      <v-col cols="11" class="text-center">
         <img src="img/main-print.jpg" alt="logo" />
       </v-col>
-
       <div class="col-md-10 text-center justify-center">
         <table>
           <tr>

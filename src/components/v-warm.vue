@@ -27,8 +27,8 @@
         </h3>
         <div class="result-100">
           <v-text-field
-            @change="inputSquareWarm(squareWarm)"
-            @keyup.enter="inputSquareWarm(lengthDoors)"
+            @change="inputLengthDoors(lengthDoors)"
+            @keyup.enter="inputLengthDoors(lengthDoors)"
             class="result-100"
             id="custom2"
             placeholder="...m"
@@ -45,8 +45,8 @@
         </h3>
         <div class="result-80">
           <v-text-field
-            @change="inputSquareWarm(squareWarm)"
-            @keyup.enter="inputSquareWarm(lengthWin)"
+            @change="inputLengthWin(lengthWin)"
+            @keyup.enter="inputLengthWin(lengthWin)"
             class="result-100"
             id="custom1"
             placeholder="...m"
@@ -91,7 +91,7 @@
       :key="receiptOnChange"
       class="text-center forPrint justify-center mt-8"
     >
-      <v-col class="main-windows" cols="10">
+      <v-col class="main-windows" cols="12">
         <div class="d-flex">
           <v-flex class="result-name">Наименование материала</v-flex>
           <v-flex class="result-100 ">Размер</v-flex>
@@ -129,7 +129,7 @@
       </v-col>
     </v-row>
     <v-row id="element-to-print-warm" class="divPDF" justify="center">
-      <v-col cols="10" class="text-center">
+      <v-col cols="12" class="text-center">
         <img src="img/main-print.jpg" alt="logo" />
       </v-col>
       <table>
@@ -191,11 +191,6 @@
         </div>
       </social-sharing>
     </v-row>
-    <v-row class=" pl-6">
-      <div class="col-10 " style="padding-left: 64px">
-        * необязательный параметр
-      </div>
-    </v-row>
   </v-container>
 </template>
 
@@ -219,6 +214,7 @@ export default {
     vPrint
   },
   data: () => ({
+    paintFlag: true,
     productSelectionOnChange: 0,
     receiptOnChange: 0,
     receipt: new Receipt(),
@@ -226,11 +222,11 @@ export default {
     btnResetWarm: false,
     checked: false,
     flagPrint: "",
-    lengthWin: "",
+    lengthWin: 0,
     outEstimateWarm: {},
     flagWarmEstimate: false,
     squareWarm: "",
-    lengthDoors: "",
+    lengthDoors: 0,
     warmWindows: "",
     flagCategoryWarm: "",
     registry: constantRegistry
@@ -239,13 +235,23 @@ export default {
     this.flagPrint = "element-to-print-warm";
   },
   methods: {
+    inputLengthDoors(value) {
+      this.lengthDoors = value;
+      this.receipt.add("winAndDoors", 0);
+      this.forceRenderReceipt();
+    },
+    inputLengthWin(value) {
+      this.lengthWin = value;
+      this.receipt.add("winAndDoors", 1);
+      this.forceRenderReceipt();
+    },
     allProducts() {
       return warmMaterials;
     },
     renderReceipt() {
       const allProducts = this.allProducts();
       const receipt = this.receipt.getAll();
-      return Object.keys(receipt).map(key => {
+      const newResult = Object.keys(receipt).map(key => {
         const entry = receipt[key];
         const product =
           allProducts.registry[entry.categoryName].products[entry.productId];
@@ -254,25 +260,40 @@ export default {
           name: product.name,
           productId: product.idInn,
           categoryName: entry.categoryName,
-          surface: this.squareWarm,
-          measure: product.measure,
+          measure: product.resultSurfaceFormula(
+            this.squareWarm,
+            this.lengthDoors,
+            this.lengthWin,
+            product
+          ),
           resultCalc: product.resultCalcFormula(
             this.squareWarm,
-            0,
-            0,
-            product.density
+            this.lengthDoors,
+            this.lengthWin,
+            product
           ),
           unit: product.unit,
           need: product.needFormula(
             this.squareWarm,
-            0,
-            0,
-            product.density,
-            product.weight
+            this.lengthDoors,
+            this.lengthWin,
+            product
           ),
-          unit_size: product.unit_size
+          unit_size: product.unit_size,
+          order: product.order
         };
       });
+      newResult.sort(function (a, b) {
+        if (a.order > b.order) {
+          return 1;
+        }
+        if (a.order < b.order) {
+          return -1;
+        }
+        // a должно быть равным b
+        return 0;
+      });
+      return newResult
     },
     categoryProductsList() {
       const category = this.categorySelected;
@@ -283,25 +304,28 @@ export default {
             categoryName: category,
             productId: product.idInn,
             shown: product.shown,
-            // this.isShown(product),
             name: product.name,
-            dependsOut: product.dependsOut
+            dependsOut: product.dependsOut,
+            surface: product.resultSurfaceFormula(
+              this.squareWarm,
+              this.lengthDoors,
+              this.lengthWin
+            ),
+            resultCalc: product.resultCalcFormula(
+              this.squareWarm,
+              this.lengthDoors,
+              this.lengthWin,
+              product
+            ),
+            need: product.needFormula(
+              this.squareWarm,
+              this.lengthDoors,
+              this.lengthWin,
+              product
+            )
           };
         })
         .filter(product => product.shown);
-    },
-    isShown(product) {
-      const deps = product.dependsOn;
-      if (deps === undefined || deps === null || deps.length === 0) {
-        return true;
-      }
-      for (let i = 0; i < deps.length; i++) {
-        const dep = deps[i];
-        if (this.receipt.has(dep.categoryName, dep.productId)) {
-          return true;
-        }
-      }
-      return false;
     },
     startPrinting() {
       document.querySelector("#element-to-print-warm").className =
@@ -320,7 +344,7 @@ export default {
         useCORS: true,
         useDefaultFoot: true
       });
-      document.querySelector("#element-to-print-warm").className = "table";
+      document.querySelector("#element-to-print-warm").className = "divPDF";
     },
     changeDataSquare(newObj) {
       Object.keys(newObj).forEach(index => {
@@ -345,6 +369,7 @@ export default {
       });
     },
     inputSquareWarm(value) {
+      //TODO триггерить перерендер
       this.flagWarmEstimate = false;
       if (!isEm.isEmpty(this.outEstimateWarm)) {
         this.changeDataSquare(this.outEstimateWarm, value);
@@ -358,30 +383,49 @@ export default {
       this.productSelectionOnChange += 1;
     },
     deleteItemWarm(category, id) {
+      if (category === "tilePainting") {
+        this.paintFlag = false;
+      }
       this.receipt.delete(category, id);
       this.forceRenderReceipt();
       this.forceRenderProductSelection();
     },
     addDependsOut(product) {
-      const deps = product.dependsOut
-      alert(deps);
+      const deps = product.dependsOut;
       for (let i = 0; i < deps.length; i++) {
         const category = deps[i].categoryName;
         const id = deps[i].productId;
-        alert(id);
         this.receipt.add(category, id);
+      }
+    },
+    deleteDependsOut(product) {
+      const deps = product.dependsOut;
+      for (let i = 0; i < deps.length; i++) {
+        const category = deps[i].categoryName;
+        const id = deps[i].productId;
+        this.receipt.delete(category, id);
+      }
+    },
+    addPaint() {
+      if (this.paintFlag) {
+        const category = "tilePainting";
+        const id = 0;
+        this.receipt.add(category, id);
+      } else {
+        return false;
       }
     },
     selectDataWarm(product) {
       const category = product.categoryName;
       const id = product.productId;
       const selected = product.selected;
-
       if (selected) {
         this.receipt.add(category, id);
         this.addDependsOut(product);
+        this.addPaint();
       } else {
         this.receipt.delete(category, id);
+        this.deleteDependsOut(product);
       }
       this.forceRenderReceipt();
     },
@@ -411,5 +455,12 @@ export default {
 #custom1,
 #custom2 {
   margin-left: 10px;
+}
+.online-table {
+  width: 100vh;
+  font-size: 18px;
+  text-align: center;
+  display: table;
+  z-index: 100;
 }
 </style>

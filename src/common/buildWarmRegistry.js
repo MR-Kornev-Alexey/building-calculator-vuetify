@@ -32,18 +32,18 @@ function resultCalcWithoutSurface(
 }
 
 /* eslint-disable no-unused-vars */
-function resultCalcWithSurface(surfaceArea, lengthDoors, lengthWin, density) {
-  return Math.ceil(+surfaceArea * density);
+function resultCalcWithSurface(surfaceArea, lengthDoors, lengthWin, product) {
+  return Math.ceil(+surfaceArea * product.density);
 }
 
-function needWithSurface(surfaceArea, lengthDoors, lengthWin, density, weight) {
+function needWithSurface(surfaceArea, lengthDoors, lengthWin, product) {
   const resultCalc = resultCalcWithSurface(
     surfaceArea,
     lengthDoors,
     lengthWin,
-    density
+    product
   );
-  return Math.ceil(resultCalc / weight);
+  return Math.ceil(resultCalc / product.weight);
 }
 
 /* eslint-disable no-unused-vars */
@@ -66,6 +66,7 @@ module.exports.registry = {
     products: [
       {
         idInn: 0,
+        order: 1,
         shown: true,
         dependsOut: [
           {
@@ -79,6 +80,18 @@ module.exports.registry = {
           {
             categoryName: "tileInsulation",
             productId: 4
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 5
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 6
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 7
           }
         ],
         type: "warmAdhesive3",
@@ -97,6 +110,7 @@ module.exports.registry = {
       },
       {
         idInn: 1,
+        order: 1,
         shown: true,
         dependsOut: [
           {
@@ -110,6 +124,18 @@ module.exports.registry = {
           {
             categoryName: "tileInsulation",
             productId: 4
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 5
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 6
+          },
+          {
+            categoryName: "tileInsulation",
+            productId: 7
           }
         ],
         meta: "all",
@@ -129,6 +155,7 @@ module.exports.registry = {
       },
       {
         idInn: 2,
+        order: 2,
         shown: false,
         dependsOn: [
           {
@@ -156,6 +183,7 @@ module.exports.registry = {
       },
       {
         idInn: 3,
+        order: 3,
         shown: false,
         dependsOn: [
           {
@@ -169,7 +197,7 @@ module.exports.registry = {
         ],
         type: "warmAdhesive6",
         name:
-          "Дюбель тарельчатый с металическим стержнем и термоголовкой - размер зависит от толщины утеплителя и вида основания",
+          "Дюбель тарельчатый с металлическим стержнем и термоголовкой - размер зависит от толщины утеплителя и вида основания",
         unit: "шт.",
         density: 5,
         weight: 1,
@@ -184,6 +212,7 @@ module.exports.registry = {
       },
       {
         idInn: 4,
+        order: 4,
         shown: false,
         dependsOn: [
           {
@@ -212,24 +241,15 @@ module.exports.registry = {
       },
       {
         idInn: 5,
+        order: 5,
         shown: false,
-        dependsOn: [
-          {
-            categoryName: "doorsAndWindows",
-            productId: 0
-          },
-          {
-            categoryName: "doorsAndWindows",
-            productId: 1
-          }
-        ],
         type: "warmAdhesive8",
         name: "Армирующая сетка из стекловолокна щелочестойкая (1x50м)",
         unit: "м2",
         density: 1.1,
         weight: 50,
         surface: 0,
-        measure: "метров",
+        measure: "m2",
         resultCalc: 0,
         unit_size: "рул.",
         need: 0,
@@ -239,173 +259,8 @@ module.exports.registry = {
       },
       {
         idInn: 6,
+        order: 0,
         shown: false,
-        dependsOn: [
-          {
-            categoryName: "doorsAndWindows",
-            productId: 0
-          },
-          {
-            categoryName: "doorsAndWindows",
-            productId: 1
-          }
-        ],
-        type: "warmAdhesive9",
-        name:
-          "Уголок с армирующей сеткой и сердечником из ПВХ  150/100мм, (2,5м)",
-        unit: "шт.",
-        density: 2.5,
-        weight: 1,
-        surface: 0,
-        measure: "метров",
-        resultCalc: 0,
-        need: 0,
-        unit_size: "шт.",
-        needFormula: needWithoutSurface,
-        resultCalcFormula: resultCalcWithoutSurface,
-        resultSurfaceFormula: resultWithoutSurface
-      },
-      {
-        idInn: 7,
-        shown: false,
-        dependsOn: [
-          {
-            categoryName: "doorsAndWindows",
-            productId: 0
-          },
-          {
-            categoryName: "doorsAndWindows",
-            productId: 1
-          }
-        ],
-        type: "warmAdhesive10",
-        name: "Профиль примыкания оконный с сеткой (2,4м)",
-        unit: "шт.",
-        density: 2.4,
-        weight: 1,
-        surface: 0,
-        resultCalc: 0,
-        measure: "метров",
-        unit_size: "шт.",
-        need: 0,
-        needFormula: needOnlyWindows,
-        resultCalcFormula: resultCalcWindows,
-        resultSurfaceFormula: resultOnlyWindows
-      }
-    ]
-  },
-  plastering: {
-    id_cat: 1,
-    name: "Декоративная штукатурка",
-    products: [
-      {
-        idInn: 0,
-        shown: true,
-        meta: "all",
-
-        type: "plastering1",
-        name: "Декоративная штукатурка «Короед» зерно 2,0 мм (25кг)",
-        unit: "кг",
-        density: 3,
-        weight: 25,
-        surface: 0,
-        resultCalc: 0,
-        need: 0,
-        unit_size: "меш.",
-        measure: "m2",
-        needFormula: needWithSurface,
-        resultCalcFormula: resultCalcWithSurface,
-        resultSurfaceFormula: resultSurface
-      },
-      {
-        idInn: 1,
-        shown: true,
-        meta: "all",
-        type: "plastering2",
-        name: "Декоративная штукатурка «Короед» зерно 3,0 мм (25кг)",
-        unit: "кг",
-        density: 4,
-        weight: 25,
-        surface: 0,
-        resultCalc: 0,
-        need: 0,
-        measure: "m2",
-        unit_size: "меш.",
-        needFormula: needWithSurface,
-        resultCalcFormula: resultCalcWithSurface,
-        resultSurfaceFormula: resultSurface
-      },
-      {
-        idInn: 2,
-        shown: true,
-        meta: "all",
-        type: "plastering3",
-        name: "Декоративная штукатурка «Шуба» зерно 1,0 мм (25кг)",
-        unit: "кг",
-        density: 2,
-        weight: 25,
-        resultCalc: 0,
-        surface: 0,
-        need: 0,
-        measure: "m2",
-        unit_size: "меш.",
-        needFormula: needWithSurface,
-        resultCalcFormula: resultCalcWithSurface,
-        resultSurfaceFormula: resultSurface
-      },
-      {
-        idInn: 3,
-        shown: true,
-        meta: "all",
-        type: "plastering4",
-        name: "Декоративная штукатурка «Шуба» зерно 2,0 мм (25кг)",
-        unit: "кг",
-        density: 3,
-        weight: 25,
-        resultCalc: 0,
-        surface: 0,
-        need: 0,
-        measure: "m2",
-        unit_size: "меш.",
-        needFormula: needWithSurface,
-        resultCalcFormula: resultCalcWithSurface,
-        resultSurfaceFormula: resultSurface
-      },
-      {
-        idInn: 4,
-        shown: true,
-        meta: "all",
-        type: "plastering5",
-        name: "Декоративная штукатурка «Шуба» зерно 3,0 мм (25кг)",
-        unit: "кг",
-        density: 4,
-        weight: 25,
-        surface: 0,
-        resultCalc: 0,
-        need: 0,
-        measure: "m2",
-        unit_size: "меш.",
-        needFormula: needWithSurface,
-        resultCalcFormula: resultCalcWithSurface,
-        resultSurfaceFormula: resultSurface
-      },
-      {
-        idInn: 5,
-        shown: false,
-        dependsOn: [
-          {
-            categoryName: "plastering",
-            productId: 2
-          },
-          {
-            categoryName: "plastering",
-            productId: 3
-          },
-          {
-            categoryName: "plastering",
-            productId: 4
-          }
-        ],
         type: "warmAdhesive1",
         name:
           "Грунт глубокопроникающий акриловый, 5л (для подготовки основания к монтажу плит)",
@@ -422,7 +277,8 @@ module.exports.registry = {
         resultSurfaceFormula: resultSurface
       },
       {
-        idInn: 6,
+        idInn: 7,
+        order: 0,
         shown: false,
         type: "warmAdhesive2",
         dependsOn: [
@@ -444,7 +300,201 @@ module.exports.registry = {
         resultCalc: 0,
         measure: "m2",
         need: 0,
-        unit_size: "ведро.",
+        unit_size: "ведр.",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      }
+    ]
+  },
+  plastering: {
+    id_cat: 1,
+    order: 8,
+    name: "Декоративная штукатурка",
+    products: [
+      {
+        idInn: 0,
+        order: 8,
+        shown: true,
+        meta: "all",
+        dependsOut: [
+          {
+            categoryName: "plastering",
+            productId: 6
+          }
+        ],
+        type: "plastering1",
+        name: "Декоративная штукатурка «Короед» зерно 2,0 мм (25кг)",
+        unit: "кг",
+        density: 3,
+        weight: 25,
+        surface: 0,
+        resultCalc: 0,
+        need: 0,
+        unit_size: "меш.",
+        measure: "m2",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      },
+      {
+        idInn: 1,
+        order: 8,
+        shown: true,
+        dependsOut: [
+          {
+            categoryName: "plastering",
+            productId: 6
+          }
+        ],
+        meta: "all",
+        type: "plastering2",
+        name: "Декоративная штукатурка «Короед» зерно 3,0 мм (25кг)",
+        unit: "кг",
+        density: 4,
+        weight: 25,
+        surface: 0,
+        resultCalc: 0,
+        need: 0,
+        measure: "m2",
+        unit_size: "меш.",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      },
+      {
+        idInn: 2,
+        order: 8,
+        shown: true,
+        dependsOut: [
+          {
+            categoryName: "plastering",
+            productId: 5
+          }
+        ],
+        meta: "all",
+        type: "plastering3",
+        name: "Декоративная штукатурка «Шуба» зерно 1,0 мм (25кг)",
+        unit: "кг",
+        density: 2,
+        weight: 25,
+        resultCalc: 0,
+        surface: 0,
+        need: 0,
+        measure: "m2",
+        unit_size: "меш.",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      },
+      {
+        idInn: 3,
+        order: 8,
+        shown: true,
+        dependsOut: [
+          {
+            categoryName: "plastering",
+            productId: 5
+          }
+        ],
+        meta: "all",
+        type: "plastering4",
+        name: "Декоративная штукатурка «Шуба» зерно 2,0 мм (25кг)",
+        unit: "кг",
+        density: 3,
+        weight: 25,
+        resultCalc: 0,
+        surface: 0,
+        need: 0,
+        measure: "m2",
+        unit_size: "меш.",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      },
+      {
+        idInn: 4,
+        order: 8,
+        shown: true,
+        dependsOut: [
+          {
+            categoryName: "plastering",
+            productId: 5
+          }
+        ],
+        meta: "all",
+        type: "plastering5",
+        name: "Декоративная штукатурка «Шуба» зерно 3,0 мм (25кг)",
+        unit: "кг",
+        density: 4,
+        weight: 25,
+        surface: 0,
+        resultCalc: 0,
+        need: 0,
+        measure: "m2",
+        unit_size: "меш.",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      },
+      {
+        idInn: 5,
+        order: 7,
+        shown: false,
+        dependsOn: [
+          {
+            categoryName: "plastering",
+            productId: 2
+          },
+          {
+            categoryName: "plastering",
+            productId: 3
+          },
+          {
+            categoryName: "plastering",
+            productId: 4
+          }
+        ],
+        type: "warmAdhesive1",
+        name:
+          "Грунт глубокопроникающий акриловый, 5л (для подготовки основания к монтажу плит)",
+        unit: "литр.",
+        density: 0.15,
+        weight: 5,
+        surface: 0,
+        resultCalc: 0,
+        measure: "m2",
+        need: 0,
+        unit_size: "канистр.",
+        needFormula: needWithSurface,
+        resultCalcFormula: resultCalcWithSurface,
+        resultSurfaceFormula: resultSurface
+      },
+      {
+        idInn: 6,
+        order: 7,
+        shown: false,
+        type: "warmAdhesive2",
+        dependsOn: [
+          {
+            categoryName: "plastering",
+            productId: 0
+          },
+          {
+            categoryName: "plastering",
+            productId: 1
+          }
+        ],
+        name:
+          "Кварц-грунт, 6кг (для подготовки бетонного основания к монтажу плит)",
+        unit: "кг",
+        density: 0.3,
+        weight: 5,
+        surface: 0,
+        resultCalc: 0,
+        measure: "m2",
+        need: 0,
+        unit_size: "ведр.",
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
@@ -455,6 +505,7 @@ module.exports.registry = {
     products: [
       {
         idInn: 0,
+        order: 9,
         shown: false,
         type: "tilePainting1",
         name: "Краска фасадная 2 слоя",
@@ -469,6 +520,47 @@ module.exports.registry = {
         needFormula: needWithSurface,
         resultCalcFormula: resultCalcWithSurface,
         resultSurfaceFormula: resultSurface
+      }
+    ]
+  },
+  winAndDoors: {
+    products: [
+      {
+        idInn: 0,
+        order: 6,
+        shown: true,
+        type: "winAndDoors0",
+        name:
+          "Уголок с армирующей сеткой и сердечником из ПВХ  150/100мм, (2,5м)",
+        unit: "шт.",
+        density: 2.5,
+        weight: 1,
+        surface: 0,
+        measure: "метров",
+        resultCalc: 0,
+        need: 0,
+        unit_size: "шт.",
+        needFormula: needWithoutSurface,
+        resultCalcFormula: resultCalcWithoutSurface,
+        resultSurfaceFormula: resultWithoutSurface
+      },
+      {
+        idInn: 1,
+        order: 6,
+        shown: true,
+        type: "winAndDoors1",
+        name: "Профиль примыкания оконный с сеткой (2,4 м)",
+        unit: "шт.",
+        density: 2.4,
+        weight: 1,
+        surface: 0,
+        resultCalc: 0,
+        measure: "метров",
+        unit_size: "шт.",
+        need: 0,
+        needFormula: needOnlyWindows,
+        resultCalcFormula: resultCalcWindows,
+        resultSurfaceFormula: resultOnlyWindows
       }
     ]
   }
