@@ -68,6 +68,12 @@ module.exports.registry = {
         idInn: 0,
         order: 1,
         shown: true,
+        conflict: [
+          {
+            categoryName: "tileInsulation",
+            productId: 1
+          }
+        ],
         dependsOut: [
           {
             categoryName: "tileInsulation",
@@ -112,6 +118,12 @@ module.exports.registry = {
         idInn: 1,
         order: 1,
         shown: true,
+        conflict: [
+          {
+            categoryName: "tileInsulation",
+            productId: 0
+          }
+        ],
         dependsOut: [
           {
             categoryName: "tileInsulation",
@@ -264,7 +276,7 @@ module.exports.registry = {
         type: "warmAdhesive1",
         name:
           "Грунт глубокопроникающий акриловый, 5л (для подготовки основания к монтажу плит)",
-        unit: "литров",
+        unit: "литр.",
         density: 0.15,
         weight: 5,
         surface: 0,
@@ -315,6 +327,28 @@ module.exports.registry = {
       {
         idInn: 0,
         order: 8,
+        conflict: [
+          {
+            categoryName: "plastering",
+            productId: 1
+          },
+          {
+            categoryName: "plastering",
+            productId: 2
+          },
+          {
+            categoryName: "plastering",
+            productId: 3
+          },
+          {
+            categoryName: "plastering",
+            productId: 4
+          },
+          {
+            categoryName: "plastering",
+            productId: 5
+          }
+          ],
         shown: true,
         meta: "all",
         dependsOut: [
@@ -340,6 +374,28 @@ module.exports.registry = {
       {
         idInn: 1,
         order: 8,
+        conflict: [
+          {
+            categoryName: "plastering",
+            productId: 0
+          },
+          {
+            categoryName: "plastering",
+            productId: 2
+          },
+          {
+            categoryName: "plastering",
+            productId: 3
+          },
+          {
+            categoryName: "plastering",
+            productId: 4
+          },
+          {
+            categoryName: "plastering",
+            productId: 5
+          }
+        ],
         shown: true,
         dependsOut: [
           {
@@ -365,6 +421,28 @@ module.exports.registry = {
       {
         idInn: 2,
         order: 8,
+        conflict: [
+          {
+            categoryName: "plastering",
+            productId: 0
+          },
+          {
+            categoryName: "plastering",
+            productId: 1
+          },
+          {
+            categoryName: "plastering",
+            productId: 3
+          },
+          {
+            categoryName: "plastering",
+            productId: 4
+          },
+          {
+            categoryName: "plastering",
+            productId: 6
+          }
+        ],
         shown: true,
         dependsOut: [
           {
@@ -390,6 +468,28 @@ module.exports.registry = {
       {
         idInn: 3,
         order: 8,
+        conflict: [
+          {
+            categoryName: "plastering",
+            productId: 0
+          },
+          {
+            categoryName: "plastering",
+            productId: 1
+          },
+          {
+            categoryName: "plastering",
+            productId: 2
+          },
+          {
+            categoryName: "plastering",
+            productId: 4
+          },
+          {
+            categoryName: "plastering",
+            productId: 6
+          }
+        ],
         shown: true,
         dependsOut: [
           {
@@ -414,6 +514,28 @@ module.exports.registry = {
       },
       {
         idInn: 4,
+        conflict: [
+          {
+            categoryName: "plastering",
+            productId: 0
+          },
+          {
+            categoryName: "plastering",
+            productId: 1
+          },
+          {
+            categoryName: "plastering",
+            productId: 2
+          },
+          {
+            categoryName: "plastering",
+            productId: 3
+          },
+          {
+            categoryName: "plastering",
+            productId: 6
+          }
+        ],
         order: 8,
         shown: true,
         dependsOut: [
@@ -440,6 +562,12 @@ module.exports.registry = {
       {
         idInn: 5,
         order: 7,
+        conflict: [
+          {
+            categoryName: "plastering",
+            productId: 6
+          }
+          ],
         shown: false,
         dependsOn: [
           {
@@ -457,7 +585,7 @@ module.exports.registry = {
         ],
         type: "warmAdhesive1",
         name:
-          "Грунт глубокопроникающий акриловый, 5л (для подготовки основания к монтажу плит)",
+          "Грунт глубокопроникающий акриловый, 5л (для подготовки основания под нанесение декоративной штукатурки)",
         unit: "литр.",
         density: 0.15,
         weight: 5,
@@ -486,7 +614,7 @@ module.exports.registry = {
           }
         ],
         name:
-          "Кварц-грунт, 6кг (для подготовки бетонного основания к монтажу плит)",
+          "Кварц-грунт, 6кг (для подготовки основания под нанесение декоративной штукатурки)",
         unit: "кг",
         density: 0.3,
         weight: 5,

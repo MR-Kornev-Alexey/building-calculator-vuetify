@@ -283,7 +283,7 @@ export default {
           order: product.order
         };
       });
-      newResult.sort(function (a, b) {
+      newResult.sort(function(a, b) {
         if (a.order > b.order) {
           return 1;
         }
@@ -293,7 +293,7 @@ export default {
         // a должно быть равным b
         return 0;
       });
-      return newResult
+      return newResult;
     },
     categoryProductsList() {
       const category = this.categorySelected;
@@ -306,6 +306,7 @@ export default {
             shown: product.shown,
             name: product.name,
             dependsOut: product.dependsOut,
+            conflict: product.conflict,
             surface: product.resultSurfaceFormula(
               this.squareWarm,
               this.lengthDoors,
@@ -419,7 +420,16 @@ export default {
       const category = product.categoryName;
       const id = product.productId;
       const selected = product.selected;
-      if (selected) {
+      const conflict = product.conflict;
+      if(conflict){
+        for (let i = 0; i < conflict.length ; i++){
+          const conflictCategoryName = product.conflict[i].categoryName
+          const conflictCategoryId = product.conflict[i].productId
+          this.receipt.delete(conflictCategoryName , conflictCategoryId);
+        }
+
+      }
+       if (selected) {
         this.receipt.add(category, id);
         this.addDependsOut(product);
         this.addPaint();
