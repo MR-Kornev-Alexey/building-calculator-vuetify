@@ -132,6 +132,7 @@
     <v-row id="element-to-print-warm" class="divPDF" justify="center">
       <v-col cols="12" class="text-center">
         <img src="img/main-print.jpg" alt="logo" />
+        <h2>Расчет системы теплоизоляции</h2>
       </v-col>
       <table>
         <tr>
@@ -148,17 +149,23 @@
         </tr>
         <tr>
           <th>Название</th>
-          <th>Размер</th>
+<!--          <th>Размер</th>-->
           <th>Расход</th>
-          <th>Требуется</th>
+          <th>Потребуется</th>
         </tr>
         <tr :key="product.idInn" v-for="product in renderReceipt()">
           <td>{{ product.name }}</td>
-          <td>{{ product.surface }} {{ product.measure }}</td>
+<!--          <td>{{ product.surface }} {{ product.measure }}</td>-->
           <td>{{ product.resultCalc }} {{ product.unit }}</td>
           <td>{{ product.need }} {{ product.unit_size }}</td>
         </tr>
       </table>
+       <div class="text-left d-flex justify-space-around mt-8">
+        <div class="contacts">Сайт: www.pssrus.ru</div>
+        <div class="contacts"> Телефон: <br> +7 (8452) 395-725 </div>
+        <div class="contacts"> E-mail: pss1@bk.ru</div>
+      </div>
+
     </v-row>
     <v-row class="d-flex mt-6 justify-center">
       <v-btn
@@ -449,6 +456,9 @@ export default {
 </script>
 
 <style lang="scss">
+  .contacts{
+    width: 205px;
+  }
 .item-category,
 .v-text-field {
   padding: 0;

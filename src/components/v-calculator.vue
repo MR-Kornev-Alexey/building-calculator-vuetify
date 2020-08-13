@@ -85,7 +85,7 @@
             id="custom"
             placeholder="...толщина"
             required
-            type="text"
+            type="number"
             v-if="index.inputThickness"
             v-model.number="index.customThickness"
           />
@@ -102,7 +102,7 @@
             id="square"
             placeholder="...площадь"
             required
-            type="text"
+            type="number"
             v-model.number="index.customSquare"
           />
 
@@ -142,21 +142,26 @@
         <table>
           <tr>
             <th>Название</th>
-            <th>Рек.Толщина</th>
-            <th>Толщина</th>
-            <th>Площадь</th>
-            <th>Расход</th>
-            <th>Количество</th>
+            <th class="text-center">Рек.Толщина</th>
+            <th class="text-center">Толщина</th>
+            <th class="text-center">Площадь</th>
+            <th class="text-center">Расход</th>
+            <th class="text-center">Количество</th>
           </tr>
           <tr :key="index.idInn" v-for="index in outEstimate">
-            <td>{{ index.name }}</td>
-            <td>{{ index.thickness }}</td>
-            <td>{{ index.customThickness }}</td>
-            <td>{{ index.resultCalc }}</td>
-            <td>{{ index.customSquare }}</td>
-            <td>{{ index.need }} {{ index.unit }}</td>
+            <td >{{ index.name }}</td>
+            <td class="text-center"> <div v-show="index.inputThickness">{{ index.thickness }}</div></td>
+            <td class="text-center" ><div v-show="index.inputThickness">{{ index.customThickness }}</div></td>
+            <td class="text-center">{{ index.customSquare }} м <sup><small>2</small></sup>  </td>
+            <td class="text-center">{{ index.resultCalc }} {{ index.measure}}</td>
+            <td class="text-center">{{ index.need }} {{ index.unit }}</td>
           </tr>
         </table>
+        <div class="text-left d-flex justify-space-around mt-8">
+          <div class="contacts">Сайт: www.pssrus.ru</div>
+          <div class="contacts"> Телефон: <br> +7 (8452) 395-725 </div>
+          <div class="contacts"> E-mail: pss1@bk.ru</div>
+        </div>
       </div>
     </v-row>
     <v-row class="d-flex mt-6 justify-center">
@@ -421,7 +426,7 @@ export default {
 table {
   border-collapse: collapse;
   width: 90vw;
-  font-size: 16px;
+  font-size: 20px;
 }
 #element-to-print {
   text-align: center;
